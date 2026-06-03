@@ -1,1025 +1,597 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>GBI Karang Mulia | Gereja Bethel Indonesia</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f0e8;
-            color: #1e2a2e;
-        }
+<title>GBI Karang Mulia</title>
 
-        /* Header dengan 3 kolom: teks kiri | logo tengah? | logo kanan */
-        .header-top {
-            background: #1a3c2c;
-            color: #d4a853;
-            padding: 0.5rem 5%;
-            font-size: 0.8rem;
-            display: flex;
-            justify-content: space-between;
-        }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
-        /* Navbar Utama */
-        .navbar {
-            background: white;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border-bottom: 3px solid #d4a853;
-        }
+<style>
 
-        /* Area Kiri - Teks Sinode */
-        .sinode-text {
-            text-align: left;
-        }
+:root{
+    --primary:#0b4ea2;
+    --secondary:#ff8c00;
+    --light:#f8f9fa;
+    --dark:#1b1b1b;
+}
 
-        .sinode-text h3 {
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            color: #8b7355;
-            font-weight: 500;
-        }
+body{
+    font-family:'Segoe UI',sans-serif;
+    overflow-x:hidden;
+}
 
-        .sinode-text h1 {
-            font-size: 1.5rem;
-            color: #1a3c2c;
-            line-height: 1.2;
-        }
+/* Navbar */
 
-        .sinode-text h1 span {
-            font-size: 1rem;
-            display: block;
-            color: #d4a853;
-        }
+.navbar{
+    background:rgba(11,78,162,.95);
+    backdrop-filter:blur(10px);
+}
 
-        /* Logo GBI di Kanan */
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
+.navbar-brand img{
+    width:55px;
+    height:55px;
+    object-fit:contain;
+}
 
-        .logo-img {
-            width: 65px;
-            height: 65px;
-            object-fit: contain;
-            border-radius: 50%;
-            background: #f0e8d8;
-            padding: 5px;
-        }
+.nav-link{
+    color:white !important;
+    font-weight:500;
+}
 
-        .logo-text {
-            text-align: right;
-        }
+.nav-link:hover{
+    color:#ffd54f !important;
+}
 
-        .logo-text h2 {
-            font-size: 1.2rem;
-            color: #1a3c2c;
-        }
+/* Hero */
 
-        .logo-text p {
-            font-size: 0.7rem;
-            color: #d4a853;
-            letter-spacing: 1px;
-        }
+.hero{
+    min-height:100vh;
+    background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url('https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=1600');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    color:white;
+}
 
-        /* Menu Navigasi */
-        .nav-menu-container {
-            background: #fff;
-            border-bottom: 1px solid #eee;
-            padding: 0.5rem 5%;
-        }
+.hero-title{
+    font-size:4rem;
+    font-weight:800;
+}
 
-        .nav-menu {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
+.hero-subtitle{
+    font-size:1.3rem;
+}
 
-        .nav-item {
-            background: none;
-            border: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #1a3c2c;
-            cursor: pointer;
-            padding: 0.5rem 0;
-            transition: 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.btn-gbi{
+    background:var(--secondary);
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:50px;
+}
 
-        .nav-item:hover {
-            color: #d4a853;
-            border-bottom: 2px solid #d4a853;
-        }
+/* Section */
 
-        .cms-btn {
-            background: #1a3c2c;
-            color: white;
-            border: none;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: 0.2s;
-            margin-left: 1rem;
-        }
+.section-title{
+    color:var(--primary);
+    font-weight:800;
+    margin-bottom:20px;
+}
 
-        .cms-btn:hover {
-            background: #d4a853;
-            color: #1a3c2c;
-        }
+.section{
+    padding:90px 0;
+}
 
-        /* Main Content */
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
+/* Cards */
 
-        /* Slideshow */
-        .slider-container {
-            position: relative;
-            border-radius: 1rem;
-            overflow: hidden;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
+.menu-card{
+    border:none;
+    border-radius:20px;
+    transition:.3s;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
 
-        .slide-track {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
+.menu-card:hover{
+    transform:translateY(-8px);
+}
 
-        .slide {
-            min-width: 100%;
-            height: 420px;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: flex-end;
-            padding: 2rem;
-            color: white;
-            position: relative;
-        }
+.menu-icon{
+    font-size:50px;
+    color:var(--primary);
+}
 
-        .slide::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: linear-gradient(transparent, rgba(0,0,0,0.7));
-        }
+/* Jadwal */
 
-        .slide-content {
-            position: relative;
-            z-index: 2;
-        }
+.schedule-card{
+    border-left:5px solid var(--secondary);
+}
 
-        .slide-content h2 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
+/* Form */
 
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.8);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            z-index: 10;
-        }
+.form-control{
+    border-radius:12px;
+}
 
-        .prev {
-            left: 10px;
-        }
+.btn-submit{
+    background:var(--primary);
+    color:white;
+    border:none;
+}
 
-        .next {
-            right: 10px;
-        }
+/* Footer */
 
-        .dots {
-            position: absolute;
-            bottom: 15px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            z-index: 10;
-        }
+footer{
+    background:#0b2545;
+    color:white;
+    padding:40px 0;
+}
 
-        .dot {
-            width: 10px;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            cursor: pointer;
-        }
+.watermark{
+    opacity:.7;
+    font-size:14px;
+}
 
-        .dot.active {
-            background: #d4a853;
-            width: 24px;
-            border-radius: 10px;
-        }
+@media(max-width:768px){
 
-        /* Welcome Section */
-        .welcome-section {
-            text-align: center;
-            margin: 2rem 0;
-            padding: 2rem;
-            background: white;
-            border-radius: 1rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
+.hero-title{
+    font-size:2.3rem;
+}
 
-        .welcome-section h2 {
-            font-size: 2rem;
-            color: #1a3c2c;
-            margin-bottom: 1rem;
-        }
+.hero-subtitle{
+    font-size:1rem;
+}
 
-        /* Rubrik Grid */
-        .rubrik-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
+.section{
+    padding:60px 0;
+}
 
-        .rubrik-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            text-align: center;
-            transition: 0.3s;
-            cursor: pointer;
-            border: 1px solid #e8e0d0;
-        }
+}
 
-        .rubrik-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            border-color: #d4a853;
-        }
-
-        .rubrik-card i {
-            font-size: 2.5rem;
-            color: #d4a853;
-            margin-bottom: 1rem;
-        }
-
-        .rubrik-card h3 {
-            color: #1a3c2c;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Berita List */
-        .berita-list {
-            display: grid;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .berita-item {
-            background: white;
-            padding: 1.2rem;
-            border-radius: 0.8rem;
-            border-left: 4px solid #d4a853;
-            transition: 0.2s;
-        }
-
-        .berita-item strong {
-            font-size: 1.1rem;
-            color: #1a3c2c;
-        }
-
-        .berita-item .rubrik-tag {
-            color: #d4a853;
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
-        }
-
-        .berita-item .date {
-            color: #999;
-            font-size: 0.7rem;
-            margin-top: 0.5rem;
-        }
-
-        /* Modal CMS */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            overflow: auto;
-        }
-
-        .modal-content {
-            background: white;
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 1.5rem;
-            border-radius: 1rem;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #d4a853;
-        }
-
-        .cms-tabs {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .cms-tab {
-            background: #e9e9e9;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
-        .cms-tab:hover {
-            background: #d4a853;
-            color: white;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.6rem;
-            border: 1px solid #ddd;
-            border-radius: 0.5rem;
-        }
-
-        button {
-            background: #1a3c2c;
-            color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 2rem;
-            cursor: pointer;
-            margin: 0.2rem;
-        }
-
-        .btn-danger {
-            background: #c0392b;
-        }
-
-        .btn-secondary {
-            background: #666;
-        }
-
-        .footer {
-            background: #1a3c2c;
-            color: #ddd;
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-            .sinode-text {
-                text-align: center;
-            }
-            .logo-area {
-                justify-content: center;
-            }
-            .logo-text {
-                text-align: center;
-            }
-            .slide {
-                height: 300px;
-            }
-            .slide-content h2 {
-                font-size: 1.3rem;
-            }
-            .nav-menu {
-                gap: 1rem;
-            }
-        }
-    </style>
+</style>
 </head>
+
 <body>
 
-<!-- Header Atas -->
-<div class="header-top">
-    <span>✝️ Soli Deo Gloria</span>
-    <span>📅 Minggu, 09:00 & 17:00 WIB</span>
-</div>
+<!-- NAVBAR -->
 
-<!-- Navbar Utama: Teks Sinode di Kiri, Logo GBI di Kanan -->
-<nav class="navbar">
-    <div class="sinode-text">
-        <h3>SINODE</h3>
-        <h1>GEREJA<br>PRESBYTERIAN<br>INDONESIA</h1>
-        <h3>PRESBYTERI RANTEN</h3>
-    </div>
-    
-    <div class="logo-area">
-        <div class="logo-text">
-            <h2>GBI Karang Mulia</h2>
-            <p>GEREJA BETHEL INDONESIA</p>
-        </div>
-        <img src="logo_gbi.png" alt="Logo GBI" class="logo-img" 
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-        <div style="display:none;">⛪</div>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<div class="container">
+
+<a class="navbar-brand d-flex align-items-center" href="#">
+<img src="logo_gbi.png" alt="Logo GBI">
+<div class="ms-2">
+<strong>GBI Karang Mulia</strong>
+</div>
+</a>
+
+<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="menu">
+
+<ul class="navbar-nav ms-auto">
+
+<li class="nav-item">
+<a class="nav-link" href="#sejarah">
+<i class="fa-solid fa-landmark"></i> Sejarah
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="#profil">
+<i class="fa-solid fa-church"></i> Profil
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="#organisasi">
+<i class="fa-solid fa-sitemap"></i> Organisasi
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="#pelayanan">
+<i class="fa-solid fa-hands-praying"></i> Pelayanan
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="#jadwal">
+<i class="fa-solid fa-calendar-days"></i> Jadwal
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="#jemaat">
+<i class="fa-solid fa-users"></i> Jemaat
+</a>
+</li>
+
+</ul>
+
+</div>
+</div>
 </nav>
 
-<!-- Menu Navigasi -->
-<div class="nav-menu-container">
-    <div class="nav-menu" id="navMenu"></div>
-    <div style="text-align: center; margin-top: 0.5rem;">
-        <button class="cms-btn" id="openCmsBtn">📋 Admin CMS</button>
-    </div>
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="container text-center">
+
+<img src="logo_gbi.png" width="180" class="mb-4">
+
+<h1 class="hero-title">
+GEREJA BETHEL INDONESIA
+</h1>
+
+<h2 class="mb-4">
+GBI KARANG MULIA
+</h2>
+
+<p class="hero-subtitle mb-4">
+Menjadi Gereja yang Berdampak, Bertumbuh dan Menjangkau Jiwa bagi Kemuliaan Tuhan.
+</p>
+
+<a href="#profil" class="btn btn-gbi">
+<i class="fa-solid fa-arrow-down"></i>
+ Jelajahi Website
+</a>
+
 </div>
 
-<main class="container" id="mainContent"></main>
+</section>
 
-<footer class="footer">
-    <p>© 2025 GBI Karang Mulia | Jl. Karang Mulia Raya No. 88, Jakarta</p>
-    <p style="font-size: 0.8rem; margin-top: 0.5rem;">Tuhan Yesus Memberkati</p>
+<!-- MENU CEPAT -->
+
+<section class="section bg-light">
+
+<div class="container">
+
+<div class="row g-4">
+
+<div class="col-6 col-md-4">
+<div class="card menu-card text-center p-4">
+<i class="fa-solid fa-landmark menu-icon"></i>
+<h5 class="mt-3">Sejarah</h5>
+</div>
+</div>
+
+<div class="col-6 col-md-4">
+<div class="card menu-card text-center p-4">
+<i class="fa-solid fa-church menu-icon"></i>
+<h5 class="mt-3">Profil</h5>
+</div>
+</div>
+
+<div class="col-6 col-md-4">
+<div class="card menu-card text-center p-4">
+<i class="fa-solid fa-sitemap menu-icon"></i>
+<h5 class="mt-3">Organisasi</h5>
+</div>
+</div>
+
+<div class="col-6 col-md-4">
+<div class="card menu-card text-center p-4">
+<i class="fa-solid fa-hands-praying menu-icon"></i>
+<h5 class="mt-3">Pelayanan</h5>
+</div>
+</div>
+
+<div class="col-6 col-md-4">
+<div class="card menu-card text-center p-4">
+<i class="fa-solid fa-calendar-days menu-icon"></i>
+<h5 class="mt-3">Jadwal</h5>
+</div>
+</div>
+
+<div class="col-6 col-md-4">
+<div class="card menu-card text-center p-4">
+<i class="fa-solid fa-users menu-icon"></i>
+<h5 class="mt-3">Jemaat</h5>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- SEJARAH -->
+
+<section id="sejarah" class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+<i class="fa-solid fa-landmark"></i>
+ Sejarah Gereja
+</h2>
+
+<p>
+Tuliskan sejarah berdirinya GBI Karang Mulia di sini.
+Mulai dari awal pelayanan, visi pendirian gereja,
+perkembangan jemaat hingga saat ini.
+</p>
+
+</div>
+
+</section>
+
+<!-- PROFIL -->
+
+<section id="profil" class="section bg-light">
+
+<div class="container">
+
+<h2 class="section-title">
+<i class="fa-solid fa-church"></i>
+ Profil Gereja
+</h2>
+
+<div class="row">
+
+<div class="col-md-6">
+<h5>Visi</h5>
+<p>
+Menjadi gereja yang bertumbuh, berdampak dan memenangkan jiwa.
+</p>
+</div>
+
+<div class="col-md-6">
+<h5>Misi</h5>
+<ul>
+<li>Membawa jemaat kepada Kristus.</li>
+<li>Memuridkan jemaat.</li>
+<li>Mengembangkan pelayanan.</li>
+<li>Melayani masyarakat.</li>
+</ul>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ORGANISASI -->
+
+<section id="organisasi" class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+<i class="fa-solid fa-sitemap"></i>
+ Struktur Organisasi
+</h2>
+
+<div class="table-responsive">
+
+<table class="table table-bordered">
+
+<tr>
+<th>Jabatan</th>
+<th>Nama</th>
+</tr>
+
+<tr>
+<td>Gembala Sidang</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>Wakil Gembala</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>Sekretaris</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>Bendahara</td>
+<td>-</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- PELAYANAN -->
+
+<section id="pelayanan" class="section bg-light">
+
+<div class="container">
+
+<h2 class="section-title">
+<i class="fa-solid fa-hands-praying"></i>
+ Pelayanan Kami
+</h2>
+
+<div class="row g-4">
+
+<div class="col-md-3">
+<div class="card p-4 text-center">
+<i class="fa-solid fa-child-reaching fa-3x text-primary"></i>
+<h5 class="mt-3">Sekolah Minggu</h5>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card p-4 text-center">
+<i class="fa-solid fa-music fa-3x text-primary"></i>
+<h5 class="mt-3">Worship</h5>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card p-4 text-center">
+<i class="fa-solid fa-people-group fa-3x text-primary"></i>
+<h5 class="mt-3">Komsel</h5>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card p-4 text-center">
+<i class="fa-solid fa-heart fa-3x text-primary"></i>
+<h5 class="mt-3">Diakonia</h5>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- JADWAL -->
+
+<section id="jadwal" class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+<i class="fa-solid fa-calendar-days"></i>
+ Jadwal Ibadah
+</h2>
+
+<div class="card schedule-card p-4 mb-3">
+<h5>Ibadah Raya</h5>
+<p>Minggu | 09.00 WIT</p>
+</div>
+
+<div class="card schedule-card p-4 mb-3">
+<h5>Doa Pagi</h5>
+<p>Selasa | 06.00 WIT</p>
+</div>
+
+<div class="card schedule-card p-4">
+<h5>Komsel</h5>
+<p>Jumat | 19.00 WIT</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- INPUT JEMAAT -->
+
+<section id="jemaat" class="section bg-light">
+
+<div class="container">
+
+<h2 class="section-title">
+<i class="fa-solid fa-users"></i>
+ Input Data Jemaat
+</h2>
+
+<div class="card p-4 shadow">
+
+<form id="memberForm">
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label>Nama Lengkap</label>
+<input type="text" class="form-control" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>No HP</label>
+<input type="text" class="form-control">
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Alamat</label>
+<input type="text" class="form-control">
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Status Baptis</label>
+<select class="form-control">
+<option>Sudah</option>
+<option>Belum</option>
+</select>
+</div>
+
+</div>
+
+<button class="btn btn-submit">
+<i class="fa-solid fa-floppy-disk"></i>
+ Simpan Data
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="container text-center">
+
+<img src="logo_gbi.png" width="90" class="mb-3">
+
+<h5>GEREJA BETHEL INDONESIA</h5>
+<h6>GBI Karang Mulia</h6>
+
+<div class="watermark mt-3">
+@GBIKarangMulia 2026<br>
+Jl. Ujung Pandang, Karang Mulia,
+Distrik Nabire, Kabupaten Nabire,
+Papua Tengah 98815
+</div>
+
+</div>
+
 </footer>
 
-<!-- Modal CMS -->
-<div id="cmsModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>✝️ CMS GBI Karang Mulia</h2>
-            <button onclick="closeCmsModal()" style="background: #c0392b; padding: 0.3rem 0.8rem;">×</button>
-        </div>
-        <div class="cms-tabs">
-            <button class="cms-tab" onclick="showCmsTab('slides')">🎨 Slide Hero</button>
-            <button class="cms-tab" onclick="showCmsTab('rubrik')">🏷️ Rubrik</button>
-            <button class="cms-tab" onclick="showCmsTab('berita')">📰 Berita</button>
-            <button class="cms-tab" onclick="showCmsTab('pages')">📄 Halaman</button>
-            <button class="cms-tab" onclick="showCmsTab('info')">⚙️ Info Gereja</button>
-        </div>
-        <div id="cmsPanelContent" style="margin-top: 1rem; max-height: 500px; overflow-y: auto;"></div>
-    </div>
-</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // ===================== DATA DEFAULT =====================
-    let appData = {
-        siteName: "GBI Karang Mulia",
-        tagline: "Gereja Bethel Indonesia - Karang Mulia",
-        address: "Jl. Karang Mulia Raya No. 88, Jakarta Timur",
-        phone: "(021) 8061-2345",
-        email: "info@gbikarangmulia.org",
-        slides: [
-            { title: "Ibadah Kebangunan Rohani", desc: "Mari beribadah dengan sukacita setiap Minggu pukul 09.00", bgColor: "#1a3c2c" },
-            { title: "Youth Revival 2025", desc: "Persiapan generasi terang bagi Kristus", bgColor: "#d4a853" },
-            { title: "Pelayanan Sosial", desc: "Kasih bagi sesama - Jumat 15.00 WIB", bgColor: "#2c6e3a" },
-            { title: "Doa Puasa 40 Hari", desc: "Menggumuli kota dan bangsa", bgColor: "#8b5e2c" },
-            { title: "Kebaktian Natal", desc: "Sukacita Natal bagi semua - 24 Desember 2025", bgColor: "#c0392b" }
-        ],
-        rubriks: ["Renungan", "Pengumuman", "Kesaksian", "Artikel", "Jadwal Ibadah"],
-        beritaList: [
-            { id: "1", title: "Kebaktian Kebangunan Rohani", rubrik: "Pengumuman", content: "Akan diadakan pada 15 Maret 2025 pukul 18.00 WIB. Hadirkan jiwa-jiwa baru!", date: "2025-02-10" },
-            { id: "2", title: "Kesaksian Kesembuhan", rubrik: "Kesaksian", content: "Seorang jemaat disembuhkan dari sakit berat setelah didoakan bersama.", date: "2025-02-09" },
-            { id: "3", title: "Renungan Pagi: Kasih Yang Menyelamatkan", rubrik: "Renungan", content: "Yohanes 3:16 mengingatkan kita akan kasih Allah yang luar biasa.", date: "2025-02-08" }
-        ],
-        customPages: [
-            { id: "about", title: "Tentang Kami", content: "GBI Karang Mulia adalah gereja yang berdiri sejak tahun 1995, melayani masyarakat dengan kasih Kristus dan memberitakan Injil Keselamatan." },
-            { id: "visi", title: "Visi & Misi", content: "Visi: Menjadi gereja yang bertumbuh dalam iman dan kasih. Misi: Menginjili, Mendewasakan, dan Mengutus." }
-        ]
-    };
 
-    let currentPage = "home";
-    let slideIndex = 0;
-    let autoInterval;
+// Smooth Scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+anchor.addEventListener('click',function(e){
+e.preventDefault();
+document.querySelector(this.getAttribute('href'))
+.scrollIntoView({
+behavior:'smooth'
+});
+});
+});
 
-    // Load/Save localStorage
-    function loadData() {
-        const saved = localStorage.getItem("gbikarangmuliaCMS");
-        if (saved) {
-            try {
-                appData = JSON.parse(saved);
-            } catch(e) {}
-        }
-    }
+// Dummy Submit
 
-    function saveData() {
-        localStorage.setItem("gbikarangmuliaCMS", JSON.stringify(appData));
-    }
+document.getElementById('memberForm')
+.addEventListener('submit',function(e){
 
-    // ===================== RENDER FRONTEND =====================
-    function renderFrontend() {
-        const navMenu = document.getElementById("navMenu");
-        const menuItems = [
-            { label: "BERANDA", page: "home" },
-            { label: "TENTANG", page: "about" },
-            { label: "VISI & MISI", page: "visi" },
-            { label: "BERITA", page: "news" },
-            ...appData.customPages.filter(p => p.id !== "about" && p.id !== "visi").map(p => ({ label: p.title.toUpperCase(), page: p.id }))
-        ];
-        navMenu.innerHTML = "";
-        menuItems.forEach(item => {
-            const btn = document.createElement("button");
-            btn.className = "nav-item";
-            btn.innerText = item.label;
-            btn.onclick = () => {
-                currentPage = item.page;
-                renderFrontendPage();
-            };
-            navMenu.appendChild(btn);
-        });
+e.preventDefault();
 
-        renderFrontendPage();
-    }
+alert('Data jemaat berhasil disimpan');
 
-    function renderFrontendPage() {
-        const main = document.getElementById("mainContent");
-        if (currentPage === "home") {
-            main.innerHTML = `
-                <div class="slider-container">
-                    <div class="slide-track" id="slideTrack"></div>
-                    <button class="slider-btn prev" onclick="changeSlide(-1)">❮</button>
-                    <button class="slider-btn next" onclick="changeSlide(1)">❯</button>
-                    <div class="dots" id="dotsContainer"></div>
-                </div>
-                <div class="welcome-section">
-                    <h2>Selamat Datang di ${appData.siteName}</h2>
-                    <p>${appData.tagline}</p>
-                </div>
-                <div class="rubrik-grid" id="rubrikGrid"></div>
-                <div style="margin-top: 2rem;">
-                    <h3 style="color: #1a3c2c;">📰 Berita Terkini</h3>
-                    <div class="berita-list" id="beritaPreview"></div>
-                </div>
-            `;
-            renderSlideshow();
-            renderRubrikGrid();
-            renderBeritaPreview();
-        } 
-        else if (currentPage === "about") {
-            const aboutPage = appData.customPages.find(p => p.id === "about");
-            main.innerHTML = `
-                <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                    <h2 style="color: #1a3c2c;">${aboutPage.title}</h2>
-                    <p style="margin: 1rem 0; line-height: 1.6;">${aboutPage.content}</p>
-                    <hr style="margin: 1rem 0;">
-                    <p><strong>📍 Alamat:</strong> ${appData.address}</p>
-                    <p><strong>📞 Telepon:</strong> ${appData.phone}</p>
-                    <p><strong>✉️ Email:</strong> ${appData.email}</p>
-                </div>
-            `;
-        }
-        else if (currentPage === "visi") {
-            const visiPage = appData.customPages.find(p => p.id === "visi");
-            main.innerHTML = `
-                <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                    <h2 style="color: #1a3c2c;">${visiPage.title}</h2>
-                    <p style="margin: 1rem 0; line-height: 1.6;">${visiPage.content}</p>
-                </div>
-            `;
-        }
-        else if (currentPage === "news") {
-            main.innerHTML = `
-                <h2 style="color: #1a3c2c; margin-bottom: 1rem;">📰 Semua Berita</h2>
-                <div id="filterRubrik" style="display: flex; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap;"></div>
-                <div class="berita-list" id="allBerita"></div>
-            `;
-            renderAllBerita();
-        }
-        else {
-            const custom = appData.customPages.find(p => p.id === currentPage);
-            if (custom) {
-                main.innerHTML = `
-                    <div style="background: white; padding: 2rem; border-radius: 1rem;">
-                        <h2 style="color: #1a3c2c;">${custom.title}</h2>
-                        <p style="margin-top: 1rem;">${custom.content}</p>
-                    </div>
-                `;
-            } else {
-                main.innerHTML = `<p style="text-align: center; padding: 3rem;">Halaman tidak ditemukan</p>`;
-            }
-        }
-        window.scrollTo(0, 0);
-    }
+});
 
-    function renderSlideshow() {
-        const track = document.getElementById("slideTrack");
-        const dotsDiv = document.getElementById("dotsContainer");
-        if (!track) return;
-        track.innerHTML = "";
-        appData.slides.forEach((slide, i) => {
-            const div = document.createElement("div");
-            div.className = "slide";
-            div.style.backgroundColor = slide.bgColor || "#1a3c2c";
-            div.innerHTML = `<div class="slide-content"><h2>${escapeHtml(slide.title)}</h2><p>${escapeHtml(slide.desc)}</p></div>`;
-            track.appendChild(div);
-        });
-        dotsDiv.innerHTML = "";
-        appData.slides.forEach((_, i) => {
-            const dot = document.createElement("div");
-            dot.className = `dot ${i === slideIndex ? "active" : ""}`;
-            dot.onclick = () => { slideIndex = i; updateSlidePosition(); resetAutoSlide(); };
-            dotsDiv.appendChild(dot);
-        });
-        updateSlidePosition();
-        startAutoSlide();
-    }
-
-    function updateSlidePosition() {
-        const track = document.getElementById("slideTrack");
-        if (track) track.style.transform = `translateX(-${slideIndex * 100}%)`;
-        document.querySelectorAll(".dot").forEach((dot, i) => {
-            if (i === slideIndex) dot.classList.add("active");
-            else dot.classList.remove("active");
-        });
-    }
-
-    window.changeSlide = function(direction) {
-        slideIndex = (slideIndex + direction + appData.slides.length) % appData.slides.length;
-        updateSlidePosition();
-        resetAutoSlide();
-    };
-
-    function startAutoSlide() {
-        if (autoInterval) clearInterval(autoInterval);
-        autoInterval = setInterval(() => {
-            slideIndex = (slideIndex + 1) % appData.slides.length;
-            updateSlidePosition();
-        }, 6000);
-    }
-
-    function resetAutoSlide() {
-        startAutoSlide();
-    }
-
-    function renderRubrikGrid() {
-        const grid = document.getElementById("rubrikGrid");
-        if (grid) {
-            grid.innerHTML = appData.rubriks.map(r => `
-                <div class="rubrik-card" onclick="goToNewsWithRubrik('${escapeHtml(r)}')">
-                    <i>📖</i>
-                    <h3>${escapeHtml(r)}</h3>
-                    <p>Temukan berita terbaru kategori ini</p>
-                    <button style="margin-top: 0.5rem; background: #d4a853; color:#1a3c2c;">Lihat →</button>
-                </div>
-            `).join('');
-        }
-    }
-
-    window.goToNewsWithRubrik = function(rubrik) {
-        currentPage = "news";
-        renderFrontendPage();
-        setTimeout(() => filterBeritaByRubrik(rubrik), 100);
-    };
-
-    function renderBeritaPreview() {
-        const previewDiv = document.getElementById("beritaPreview");
-        if (previewDiv) {
-            const latest = [...appData.beritaList].reverse().slice(0, 3);
-            previewDiv.innerHTML = latest.map(b => `
-                <div class="berita-item">
-                    <strong>${escapeHtml(b.title)}</strong>
-                    <span class="rubrik-tag">[${b.rubrik}]</span>
-                    <p style="margin-top: 0.5rem;">${escapeHtml(b.content.substring(0, 120))}${b.content.length > 120 ? '...' : ''}</p>
-                    <div class="date">📅 ${b.date}</div>
-                </div>
-            `).join('');
-            if (latest.length === 0) previewDiv.innerHTML = "<p>Belum ada berita. Silakan tambah berita di CMS.</p>";
-        }
-    }
-
-    function renderAllBerita() {
-        const filterDiv = document.getElementById("filterRubrik");
-        const beritaDiv = document.getElementById("allBerita");
-        const rubriksAll = ["Semua", ...appData.rubriks];
-        filterDiv.innerHTML = rubriksAll.map(r => `<button onclick="filterBeritaByRubrik('${r}')" style="background:#e8dcc8; color:#1a3c2c;">${r}</button>`).join('');
-        filterBeritaByRubrik("Semua");
-    }
-
-    window.filterBeritaByRubrik = function(rubrik) {
-        const beritaDiv = document.getElementById("allBerita");
-        if (!beritaDiv) return;
-        const filtered = rubrik === "Semua" ? appData.beritaList : appData.beritaList.filter(b => b.rubrik === rubrik);
-        beritaDiv.innerHTML = filtered.map(b => `
-            <div class="berita-item">
-                <strong>${escapeHtml(b.title)}</strong>
-                <span class="rubrik-tag">[${b.rubrik}]</span>
-                <p style="margin-top: 0.5rem;">${escapeHtml(b.content)}</p>
-                <div class="date">📅 ${b.date}</div>
-            </div>
-        `).join('');
-        if (filtered.length === 0) beritaDiv.innerHTML = "<p style='text-align:center; padding:2rem;'>Tidak ada berita dalam rubrik ini.</p>";
-    };
-
-    function escapeHtml(str) {
-        if (!str) return "";
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-
-    // ===================== CMS PANEL =====================
-    function openCmsModal() {
-        document.getElementById("cmsModal").style.display = "block";
-        showCmsTab('slides');
-    }
-
-    function closeCmsModal() {
-        document.getElementById("cmsModal").style.display = "none";
-    }
-
-    window.showCmsTab = function(tab) {
-        const panel = document.getElementById("cmsPanelContent");
-        if (tab === 'slides') {
-            panel.innerHTML = `<h3>📸 Edit 5 Slide Hero</h3>
-                ${appData.slides.map((s, i) => `
-                    <div class="form-group">
-                        <label>Slide ${i+1} - Judul</label>
-                        <input type="text" id="slide_title_${i}" value="${escapeHtml(s.title)}">
-                        <label>Deskripsi</label>
-                        <input type="text" id="slide_desc_${i}" value="${escapeHtml(s.desc)}">
-                        <label>Warna Background</label>
-                        <input type="color" id="slide_color_${i}" value="${s.bgColor || '#1a3c2c'}">
-                    </div>
-                `).join('')}
-                <button onclick="saveSlides()">💾 Simpan Semua Slide</button>
-            `;
-        } 
-        else if (tab === 'rubrik') {
-            panel.innerHTML = `<h3>🏷️ Kelola Rubrik Kategori</h3>
-                <div id="rubrikList"></div>
-                <div class="form-group">
-                    <input type="text" id="newRubrik" placeholder="Nama rubrik baru">
-                    <button onclick="addRubrik()">+ Tambah Rubrik</button>
-                </div>`;
-            refreshRubrikList();
-        }
-        else if (tab === 'berita') {
-            panel.innerHTML = `<h3>📰 Manajemen Berita</h3>
-                <button onclick="showAddBeritaForm()">+ Tambah Berita Baru</button>
-                <div id="beritaListCms" style="margin-top: 1rem;"></div>`;
-            refreshBeritaListCms();
-        }
-        else if (tab === 'pages') {
-            panel.innerHTML = `<h3>📄 Halaman Kustom</h3>
-                <button onclick="addCustomPage()">+ Tambah Halaman Baru</button>
-                <div id="pagesListCms" style="margin-top: 1rem;"></div>`;
-            refreshPagesList();
-        }
-        else if (tab === 'info') {
-            panel.innerHTML = `<h3>⚙️ Informasi Gereja</h3>
-                <div class="form-group"><label>Nama Gereja</label><input type="text" id="siteName" value="${escapeHtml(appData.siteName)}"></div>
-                <div class="form-group"><label>Tagline</label><input type="text" id="tagline" value="${escapeHtml(appData.tagline)}"></div>
-                <div class="form-group"><label>Alamat</label><input type="text" id="address" value="${escapeHtml(appData.address)}"></div>
-                <div class="form-group"><label>Telepon</label><input type="text" id="phone" value="${escapeHtml(appData.phone)}"></div>
-                <div class="form-group"><label>Email</label><input type="email" id="email" value="${escapeHtml(appData.email)}"></div>
-                <button onclick="saveInfo()">💾 Simpan Info</button>
-            `;
-        }
-    };
-
-    window.saveSlides = function() {
-        for (let i = 0; i < appData.slides.length; i++) {
-            appData.slides[i].title = document.getElementById(`slide_title_${i}`).value;
-            appData.slides[i].desc = document.getElementById(`slide_desc_${i}`).value;
-            appData.slides[i].bgColor = document.getElementById(`slide_color_${i}`).value;
-        }
-        saveData();
-        renderFrontend();
-        alert("✅ Slide berhasil disimpan!");
-    };
-
-    function refreshRubrikList() {
-        const container = document.getElementById("rubrikList");
-        if (container) {
-            container.innerHTML = appData.rubriks.map((r, i) => `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.5rem 0; padding: 0.5rem; background: #f5f5f5; border-radius: 0.5rem;">
-                    <span>📌 ${escapeHtml(r)}</span>
-                    <button onclick="deleteRubrik(${i})" class="btn-danger" style="padding: 0.2rem 0.8rem;">Hapus</button>
-                </div>
-            `).join('');
-        }
-    }
-
-    window.addRubrik = function() {
-        const newRub = document.getElementById("newRubrik").value.trim();
-        if (newRub && !appData.rubriks.includes(newRub)) {
-            appData.rubriks.push(newRub);
-            saveData();
-            refreshRubrikList();
-            renderFrontend();
-            document.getElementById("newRubrik").value = "";
-        } else {
-            alert("Rubrik sudah ada atau tidak boleh kosong!");
-        }
-    };
-
-    window.deleteRubrik = function(index) {
-        if (confirm("Hapus rubrik ini?")) {
-            appData.rubriks.splice(index, 1);
-            saveData();
-            refreshRubrikList();
-            renderFrontend();
-        }
-    };
-
-    function refreshBeritaListCms() {
-        const container = document.getElementById("beritaListCms");
-        if (container) {
-            container.innerHTML = appData.beritaList.map((b, i) => `
-                <div class="berita-item" style="margin-bottom: 0.5rem;">
-                    <strong>${escapeHtml(b.title)}</strong> <span class="rubrik-tag">[${b.rubrik}]</span>
-                    <div style="margin-top: 0.5rem;">
-                        <button onclick="editBerita(${i})">✏️ Edit</button>
-                        <button onclick="deleteBerita(${i})" class="btn-danger">🗑️ Hapus</button>
-                    </div>
-                </div>
-            `).join('');
-            if (appData.beritaList.length === 0) container.innerHTML = "<p>Belum ada berita.</p>";
-        }
-    }
-
-    window.showAddBeritaForm = function() {
-        const panel = document.getElementById("cmsPanelContent");
-        panel.innerHTML = `<h3>➕ Tambah Berita Baru</h3>
-            <div class="form-group"><label>Judul Berita</label><input type="text" id="newTitle" placeholder="Masukkan judul berita"></div>
-            <div class="form-group"><label>Rubrik</label><select id="newRubrikSelect">${appData.rubriks.map(r => `<option>${r}</option>`).join('')}</select></div>
-            <div class="form-group"><label>Tanggal</label><input type="date" id="newDate" value="${new Date().toISOString().slice(0,10)}"></div>
-            <div class="form-group"><label>Konten Berita</label><textarea id="newContent" rows="4" placeholder="Tulis isi berita di sini..."></textarea></div>
-            <button onclick="saveNewBerita()">💾 Simpan Berita</button>
-            <button onclick="showCmsTab('berita')" class="btn-secondary">Batal</button>`;
-    };
-
-    window.saveNewBerita = function() {
-        const title = document.getElementById("newTitle").value;
-        const rubrik = document.getElementById("newRubrikSelect").value;
-        const date = document.getElementById("newDate").value;
-        const content = document.getElementById("newContent").value;
-        if (title && content) {
-            appData.beritaList.push({
-                id: Date.now().toString(),
-                title: title,
-                rubrik: rubrik,
-                content: content,
-                date: date
-            });
-            saveData();
-            showCmsTab('berita');
-            renderFrontend();
-            alert("✅ Berita berhasil ditambahkan!");
-        } else {
-            alert("Judul dan konten harus diisi!");
-        }
-    };
-
-    window.editBerita = function(index) {
-        const b = appData.beritaList[index];
-        const panel = document.getElementById("cmsPanelContent");
-        panel.innerHTML = `<h3>✏️ Edit Berita</h3>
-            <div class="form-group"><label>Judul</label><input type="text" id="editTitle" value="${escapeHtml(b.title)}"></div>
-            <div class="form-group"><label>Rubrik</label><select id="editRubrik">${appData.rubriks.map(r => `<option ${r === b.rubrik ? 'selected' : ''}>${r}</option>`).join('')}</select></div>
-            <div class="form-group"><label>Tanggal</label><input type="date" id="editDate" value="${b.date}"></div>
-            <div class="form-group"><label>Konten</label><textarea id="editContent" rows="4">${escapeHtml(b.content)}</textarea></div>
-            <button onclick="updateBerita(${index})">💾 Update</button>
-            <button onclick="showCmsTab('berita')" class="btn-secondary">Batal</button>`;
-    };
-
-    window.updateBerita = function(index) {
-        appData.beritaList[index].title = document.getElementById("editTitle").value;
-        appData.beritaList[index].rubrik = document.getElementById("editRubrik").value;
-        appData.beritaList[index].date = document.getElementById("editDate").value;
-        appData.beritaList[index].content = document.getElementById("editContent").value;
-        saveData();
-        showCmsTab('berita');
-        renderFrontend();
-        alert("✅ Berita berhasil diupdate!");
-    };
-
-    window.deleteBerita = function(index) {
-        if (confirm("Hapus berita ini?")) {
-            appData.beritaList.splice(index, 1);
-            saveData();
-            refreshBeritaListCms();
-            renderFrontend();
-        }
-    };
-
-    function refreshPagesList() {
-        const container = document.getElementById("pagesListCms");
-        if (container) {
-            container.innerHTML = appData.customPages.map((p, i) => `
-                <div style="border: 1px solid #ddd; margin: 0.5rem 0; padding: 0.8rem; border-radius: 0.5rem;">
-                    <strong>📄 ${escapeHtml(p.title)}</strong>
-                    <div style="margin-top: 0.5rem;">
-                        <button onclick="editCustomPage(${i})">✏️ Edit</button>
-                        ${p.id !== "about" && p.id !== "visi" ? `<button onclick="deleteCustomPage(${i})" class="btn-danger">🗑️ Hapus</button>` : '<span style="color:#999; font-size:0.8rem;"> (halaman sistem)</span>'}
-                    </div>
-                </div>
-            `).join('');
-        }
-    }
-
-    window.addCustomPage = function() {
-        const title = prompt("Masukkan judul halaman baru:");
-        if (title) {
-            const id = "page_" + Date.now();
-            appData.customPages.push({ id: id, title: title, content: "Konten halaman baru. Edit melalui CMS." });
-            saveData();
-            refreshPagesList();
-            renderFrontend();
-        }
-    };
-
-    window.editCustomPage = function(index) {
-        const newTitle = prompt("Edit Judul", appData.customPages[index].title);
-        const newContent = prompt("Edit Konten", appData.customPages[index].content);
-        if (newTitle) appData.customPages[index].title = newTitle;
-        if (newContent) appData.customPages[index].content = newContent;
-        saveData();
-        refreshPagesList();
-        renderFrontend();
-    };
-
-    window.deleteCustomPage = function(index) {
-        if (confirm("Hapus halaman ini?")) {
-            appData.customPages.splice(index, 1);
-            saveData();
-            refreshPagesList();
-            renderFrontend();
-        }
-    };
-
-    window.saveInfo = function() {
-        appData.siteName = document.getElementById("siteName").value;
-        appData.tagline = document.getElementById("tagline").value;
-        appData.address = document.getElementById("address").value;
-        appData.phone = document.getElementById("phone").value;
-        appData.email = document.getElementById("email").value;
-        saveData();
-        renderFrontend();
-        alert("✅ Informasi gereja berhasil disimpan!");
-    };
-
-    // Event binding
-    document.getElementById("openCmsBtn").onclick = openCmsModal;
-    window.onclick = function(e) {
-        const modal = document.getElementById("cmsModal");
-        if (e.target === modal) closeCmsModal();
-    };
-
-    // Inisialisasi
-    loadData();
-    renderFrontend();
 </script>
+
 </body>
 </html>
