@@ -69,6 +69,41 @@ body {
     transform: translateY(-2px);
 }
 
+/* Dropdown menu styling */
+.dropdown-menu {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    margin-top: 10px;
+    padding: 8px 0;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    font-weight: 500;
+    color: #0b4ea2;
+    transition: 0.2s;
+    border-radius: 8px;
+    margin: 2px 8px;
+}
+
+.dropdown-item i {
+    width: 24px;
+    margin-right: 10px;
+    color: #ff8c00;
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(135deg, #ff8c00, #e07a00);
+    color: white;
+    transform: translateX(5px);
+}
+
+.dropdown-item:hover i {
+    color: white;
+}
+
 /* Tombol CMS */
 .cms-fixed-btn {
     position: fixed;
@@ -224,49 +259,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* Menu Jemaat 3 tombol */
-.jemaat-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.jemaat-card {
-    background: linear-gradient(135deg, #fff, #f8f9fa);
-    border-radius: 20px;
-    padding: 25px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(0,0,0,0.05);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
-
-.jemaat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    border-color: var(--secondary);
-}
-
-.jemaat-card i {
-    font-size: 3rem;
-    color: var(--primary);
-    margin-bottom: 15px;
-}
-
-.jemaat-card h4 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 10px;
-}
-
-.jemaat-card p {
-    color: #6c757d;
-    margin-bottom: 0;
-    font-size: 0.9rem;
-}
-
 .org-table {
     border-radius: 12px;
     overflow: hidden;
@@ -340,9 +332,7 @@ footer {
     .slide-carousel .carousel-inner img { height: 250px; }
     .cms-fixed-btn { padding: 6px 16px; font-size: 0.7rem; }
     .cms-fixed-btn span { display: none; }
-    .jemaat-card { padding: 15px; }
-    .jemaat-card i { font-size: 2rem; }
-    .jemaat-card h4 { font-size: 1rem; }
+    .dropdown-menu { position: absolute !important; }
 }
 </style>
 </head>
@@ -367,12 +357,35 @@ footer {
     </button>
     <div class="collapse navbar-collapse" id="menu">
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" onclick="showTab('sejarah')">Sejarah</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('profil')">Profil</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('organisasi')">Organisasi</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('pelayanan')">Pelayanan</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('jadwal')">Jadwal</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('jemaat')">Jemaat</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('sejarah')"><i class="fa-solid fa-landmark"></i> Sejarah</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('profil')"><i class="fa-solid fa-church"></i> Profil</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('organisasi')"><i class="fa-solid fa-sitemap"></i> Organisasi</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('pelayanan')"><i class="fa-solid fa-hands-praying"></i> Pelayanan</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('jadwal')"><i class="fa-solid fa-calendar-days"></i> Jadwal</a></li>
+            
+            <!-- DROPDOWN MENU JEMAAT -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="jemaatDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-users"></i> Jemaat
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="jemaatDropdown">
+                    <li>
+                        <a class="dropdown-item" href="pages/kontak-pemimpin.html">
+                            <i class="fa-solid fa-address-card"></i> Kontak Para Pemimpin & Koordinator
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="pages/layanan-jemaat.html">
+                            <i class="fa-solid fa-hand-holding-heart"></i> Permohonan Layanan Jemaat
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="pages/pendaftaran-jemaat.html">
+                            <i class="fa-solid fa-user-plus"></i> Pendaftaran Anggota Jemaat
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>
@@ -458,27 +471,6 @@ footer {
     <div id="jadwal" class="tab-content">
         <h3 class="section-title">Jadwal Ibadah</h3>
         <div id="jadwalList"></div>
-    </div>
-
-    <div id="jemaat" class="tab-content">
-        <h3 class="section-title">Menu Jemaat</h3>
-        <div class="jemaat-menu">
-            <div class="jemaat-card" onclick="window.location.href='pages/kontak-pemimpin.html'">
-                <i class="fa-solid fa-address-card"></i>
-                <h4>Kontak Para Pemimpin & Koordinator</h4>
-                <p>Informasi kontak pengurus gereja, gembala sidang, dan koordinator pelayanan</p>
-            </div>
-            <div class="jemaat-card" onclick="window.location.href='pages/layanan-jemaat.html'">
-                <i class="fa-solid fa-hand-holding-heart"></i>
-                <h4>Permohonan Layanan Jemaat</h4>
-                <p>Ajukan permohonan doa, kunjungan pastoral, pernikahan, baptisan, dan lain-lain</p>
-            </div>
-            <div class="jemaat-card" onclick="window.location.href='pages/pendaftaran-jemaat.html'">
-                <i class="fa-solid fa-user-plus"></i>
-                <h4>Pendaftaran Anggota Jemaat</h4>
-                <p>Daftar menjadi anggota jemaat GBI Karang Mulia</p>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -568,7 +560,7 @@ footer {
         const data = [];
         snapshot.forEach(doc => data.push(doc.data()));
         const container = document.getElementById('organisasiBody');
-        if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada data</td></tr>'; return; }
+        if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada数据</td><tr>'; return; }
         container.innerHTML = data.map(o => `<tr><td>${escapeHtml(o.jabatan)}</td><td>${escapeHtml(o.nama)}</td><td>${escapeHtml(o.keterangan || '')}</td></tr>`).join('');
     }
     
@@ -577,7 +569,7 @@ footer {
         const data = [];
         snapshot.forEach(doc => data.push(doc.data()));
         const container = document.getElementById('serviceGrid');
-        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data pelayanan</div>'; return; }
+        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada数据 pelayanan</div>'; return; }
         container.innerHTML = data.map(p => `<div class="service-card"><i class="${p.icon}"></i><h6>${escapeHtml(p.name)}</h6><small>${escapeHtml(p.schedule || '')}</small></div>`).join('');
     }
     
