@@ -26,7 +26,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+    background: white;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -66,37 +66,44 @@ body {
     transform: translateY(-2px);
 }
 
-/* Hero Section */
+/* Hero Section - Tanpa background gambar/gradasi */
 .hero {
-    min-height: 60vh;
-    background: linear-gradient(135deg, rgba(11, 78, 162, 0.9), rgba(0, 0, 0, 0.7)),
-                url('https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=1600');
-    background-size: cover;
-    background-position: center;
+    min-height: 50vh;
+    background: white;
     display: flex;
     align-items: center;
-    color: white;
+    color: var(--primary);
     text-align: center;
-    padding: 100px 0 50px;
+    padding: 100px 0 40px;
 }
 
 .hero img {
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
     width: 120px;
     margin-bottom: 1rem;
+    border-radius: 50%;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .hero-title {
     font-size: 2.5rem;
     font-weight: 800;
     letter-spacing: 2px;
+    color: var(--primary);
 }
 
-.hero-subtitle {
-    font-size: 1rem;
+.hero-church-name {
+    font-size: 1.3rem;
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+.hero-motto {
+    font-size: 0.95rem;
     max-width: 600px;
     margin: 0 auto;
-    opacity: 0.9;
+    color: #6c757d;
 }
 
 /* Tab Navigation */
@@ -105,21 +112,22 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 12px;
-    padding: 25px 20px 15px;
-    background: transparent;
+    padding: 20px 20px 15px;
+    background: white;
+    border-bottom: 1px solid #e9ecef;
 }
 
 .tab-btn {
-    background: white;
+    background: #f8f9fa;
     border: none;
-    padding: 12px 24px;
-    font-size: 0.95rem;
+    padding: 10px 22px;
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--primary);
     border-radius: 50px;
     transition: 0.3s;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .tab-btn i {
@@ -130,19 +138,17 @@ body {
     background: var(--primary);
     color: white;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(11, 78, 162, 0.3);
 }
 
 .tab-btn.active {
     background: var(--primary);
     color: white;
-    box-shadow: 0 4px 12px rgba(11, 78, 162, 0.3);
 }
 
 /* Tab Content */
 .tab-content-wrapper {
     max-width: 1100px;
-    margin: 0 auto 40px;
+    margin: 30px auto 50px;
     padding: 0 20px;
 }
 
@@ -152,7 +158,7 @@ body {
     background: white;
     border-radius: 20px;
     padding: 30px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    border: 1px solid #e9ecef;
 }
 
 .tab-content.active {
@@ -204,11 +210,6 @@ body {
     font-weight: 600;
 }
 
-.schedule-item p {
-    margin-bottom: 0;
-    color: #6c757d;
-}
-
 /* Service Grid */
 .service-grid {
     display: grid;
@@ -235,11 +236,6 @@ body {
     font-size: 2rem;
     color: var(--primary);
     margin-bottom: 10px;
-}
-
-.service-card h6 {
-    margin-bottom: 0;
-    font-weight: 600;
 }
 
 /* Table */
@@ -314,20 +310,10 @@ body {
     font-size: 0.85rem;
 }
 
-.jemaat-table td {
-    vertical-align: middle;
-}
-
 .empty-state {
     text-align: center;
     padding: 30px;
     color: #6c757d;
-}
-
-.empty-state i {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    opacity: 0.5;
 }
 
 /* Footer */
@@ -363,8 +349,8 @@ footer {
     }
     
     .hero {
-        padding: 80px 0 40px;
-        min-height: 50vh;
+        padding: 80px 0 30px;
+        min-height: 40vh;
     }
     
     .hero img {
@@ -372,8 +358,8 @@ footer {
     }
     
     .tab-btn {
-        padding: 8px 16px;
-        font-size: 0.8rem;
+        padding: 6px 14px;
+        font-size: 0.75rem;
     }
     
     .section-title {
@@ -396,13 +382,16 @@ footer {
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
 <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="#">
-        <!-- Logo dengan multiple fallback -->
+        <!-- Logo dengan fallback ke teks jika gambar tidak ada -->
         <img src="logo_gbi.png" alt="Logo GBI" 
-             onerror="this.onerror=null; this.src='https://placehold.co/45x45/0b4ea2/white?text=GBI'"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
              style="width:45px; height:45px; object-fit:contain; border-radius:50%; background:white; padding:5px;">
-        <div class="ms-2">
+        <div class="ms-2" style="display: block;">
             <strong>GBI Karang Mulia</strong><br>
             <small style="font-size: 0.65rem;">Gereja Bethel Indonesia</small>
+        </div>
+        <div style="display: none; align-items: center; justify-content: center; width:45px; height:45px; background:#0b4ea2; border-radius:50%;">
+            <span style="color:white; font-weight:bold;">GBI</span>
         </div>
     </a>
 
@@ -423,16 +412,20 @@ footer {
 </div>
 </nav>
 
-<!-- HERO SECTION -->
+<!-- HERO SECTION - Tanpa background gambar, putih bersih -->
 <section class="hero">
 <div class="container text-center">
-    <!-- Logo dengan multiple fallback -->
+    <!-- Logo dengan fallback -->
     <img src="logo_gbi.png" alt="Logo GBI Karang Mulia" 
-         onerror="this.onerror=null; this.src='https://placehold.co/120x120/0b4ea2/white?text=GBI'"
-         style="width:120px; margin-bottom:1rem; border-radius:50%; padding:10px; background:white;">
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block'"
+         style="width:120px; margin-bottom:1rem; border-radius:50%; padding:10px; background:#f8f9fa; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+    <div style="display: none; width:120px; height:120px; margin:0 auto 1rem; background:linear-gradient(135deg,#0b4ea2,#ff8c00); border-radius:50%; display:flex; align-items:center; justify-content:center;">
+        <span style="color:white; font-size:1.8rem; font-weight:bold;">GBI</span>
+    </div>
+    
     <h1 class="hero-title">GEREJA BETHEL INDONESIA</h1>
-    <h2 class="hero-subtitle" style="color: var(--gold); font-size: 1.3rem;">GBI KARANG MULIA</h2>
-    <p class="hero-subtitle mt-3">
+    <h2 class="hero-church-name">GBI KARANG MULIA</h2>
+    <p class="hero-motto mt-3">
         "Menjadi Gereja yang Berdampak, Bertumbuh dan Menjangkau Jiwa bagi Kemuliaan Tuhan."
     </p>
 </div>
@@ -467,6 +460,178 @@ footer {
             </div>
         </div>
     </div>
+
+    <!-- PROFIL -->
+    <div id="profil" class="tab-content">
+        <h3 class="section-title"><i class="fa-solid fa-church"></i> Profil Gereja</h3>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="content-card">
+                    <i class="fa-solid fa-eye fa-2x text-primary mb-2"></i>
+                    <h4>Visi</h4>
+                    <p>Menjadi gereja yang bertumbuh dalam iman, berdampak bagi masyarakat, dan memenangkan jiwa bagi kemuliaan Tuhan Yesus Kristus.</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="content-card">
+                    <i class="fa-solid fa-bullseye fa-2x text-primary mb-2"></i>
+                    <h4>Misi</h4>
+                    <ul class="mb-0">
+                        <li>Memuridkan setiap jemaat untuk bertumbuh dalam Firman Tuhan</li>
+                        <li>Mengembangkan pelayanan yang relevan dengan kebutuhan zaman</li>
+                        <li>Melayani masyarakat melalui program sosial dan kerohanian</li>
+                        <li>Menjangkau jiwa-jiwa baru dengan Injil Keselamatan</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORGANISASI -->
+    <div id="organisasi" class="tab-content">
+        <h3 class="section-title"><i class="fa-solid fa-sitemap"></i> Struktur Organisasi</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered org-table">
+                <thead><tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr></thead>
+                <tbody>
+                    <tr><td>Gembala Sidang</td><td>Pdt. Dr. Markus Wenas, M.Th</td><td>Ketua Majelis Gereja</td></tr>
+                    <tr><td>Wakil Gembala</td><td>Pdt. Samuel Kakiay, S.Th</td><td>Koordinasi Pelayanan</td></tr>
+                    <tr><td>Sekretaris</td><td>Yulianti Pattikawa, S.Pd</td><td>Administrasi & Kesekretariatan</td></tr>
+                    <tr><td>Bendahara</td><td>Eliaser Rumbiak, S.E</td><td>Pengelolaan Keuangan</td></tr>
+                    <tr><td>Koordinator Pelayanan</td><td>Yohanes Mambraku</td><td>Koordinasi Komisi Pelayanan</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PELAYANAN -->
+    <div id="pelayanan" class="tab-content">
+        <h3 class="section-title"><i class="fa-solid fa-hands-praying"></i> Pelayanan Kami</h3>
+        <div class="service-grid">
+            <div class="service-card"><i class="fa-solid fa-child-reaching"></i><h6>Sekolah Minggu</h6><small>Minggu, 08.00</small></div>
+            <div class="service-card"><i class="fa-solid fa-music"></i><h6>Worship Ministry</h6><small>Sabtu, 16.00</small></div>
+            <div class="service-card"><i class="fa-solid fa-people-group"></i><h6>Komsel</h6><small>Jumat, 19.00</small></div>
+            <div class="service-card"><i class="fa-solid fa-heart"></i><h6>Diakonia</h6><small>Pelayanan Sosial</small></div>
+            <div class="service-card"><i class="fa-solid fa-pray"></i><h6>Doa Pagi</h6><small>Selasa-Kamis, 06.00</small></div>
+            <div class="service-card"><i class="fa-solid fa-bible"></i><h6>PA. Pemuda</h6><small>Sabtu, 17.00</small></div>
+        </div>
+    </div>
+
+    <!-- JADWAL -->
+    <div id="jadwal" class="tab-content">
+        <h3 class="section-title"><i class="fa-solid fa-calendar-days"></i> Jadwal Ibadah</h3>
+        <div class="schedule-item"><h5><i class="fa-solid fa-church me-2"></i> Ibadah Raya</h5><p>Minggu | 09.00 - 11.00 WIT</p></div>
+        <div class="schedule-item"><h5><i class="fa-solid fa-hands-praying me-2"></i> Doa Pagi</h5><p>Selasa - Kamis | 06.00 - 07.00 WIT</p></div>
+        <div class="schedule-item"><h5><i class="fa-solid fa-people-group me-2"></i> Komsel</h5><p>Jumat | 19.00 - 21.00 WIT</p></div>
+        <div class="schedule-item"><h5><i class="fa-solid fa-child-reaching me-2"></i> Sekolah Minggu</h5><p>Minggu | 08.00 - 09.00 WIT</p></div>
+    </div>
+
+    <!-- JEMAAT -->
+    <div id="jemaat" class="tab-content">
+        <h3 class="section-title"><i class="fa-solid fa-users"></i> Input Data Jemaat</h3>
+        <div class="row">
+            <div class="col-md-5 mb-3">
+                <div class="jemaat-form-card">
+                    <form id="memberForm">
+                        <div class="mb-3"><label class="form-label">Nama Lengkap <span class="text-danger">*</span></label><input type="text" id="namaLengkap" class="form-control" placeholder="Masukkan nama lengkap" required></div>
+                        <div class="mb-3"><label class="form-label">No HP / WhatsApp</label><input type="tel" id="noHp" class="form-control" placeholder="0812xxxxxx"></div>
+                        <div class="mb-3"><label class="form-label">Alamat</label><input type="text" id="alamat" class="form-control" placeholder="Alamat lengkap"></div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3"><label class="form-label">Status Baptis</label><select id="baptis" class="form-select"><option>Belum Baptis</option><option>Sudah Baptis Anak</option><option>Sudah Baptis Dewasa</option></select></div>
+                            <div class="col-md-6 mb-3"><label class="form-label">Status Pernikahan</label><select id="pernikahan" class="form-select"><option>Belum Menikah</option><option>Menikah</option><option>Janda/Duda</option></select></div>
+                        </div>
+                        <div class="mb-3"><label class="form-label">Komisi</label><select id="komisi" class="form-select"><option>Umum</option><option>Pemuda</option><option>Remaja</option><option>Sekolah Minggu</option><option>Lansia</option></select></div>
+                        <button type="submit" class="btn-submit"><i class="fa-solid fa-floppy-disk"></i> Simpan Data</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="table-responsive"><div id="jemaatListContainer"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<div class="container text-center">
+    <img src="logo_gbi.png" width="60" class="mb-2" onerror="this.style.display='none'">
+    <h6>GEREJA BETHEL INDONESIA</h6>
+    <p class="small mb-2">GBI Karang Mulia</p>
+    <div class="social-icons mb-2">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    <div class="watermark">
+        <i class="fa-solid fa-location-dot"></i> Jl. Ujung Pandang, Karang Mulia, Nabire, Papua Tengah<br>
+        <i class="fa-regular fa-copyright"></i> GBI Karang Mulia 2026
+    </div>
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    const clickedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.innerText.toLowerCase().includes(tabId.toLowerCase()));
+    if (clickedBtn) clickedBtn.classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded', function() { showTab('sejarah'); displayJemaatList(); });
+
+let jemaatData = JSON.parse(localStorage.getItem('gbiJemaatData')) || [];
+
+function escapeHtml(str) { if (!str) return '-'; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;')); }
+
+function displayJemaatList() {
+    const container = document.getElementById('jemaatListContainer');
+    if (!container) return;
+    if (jemaatData.length === 0) { container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-users-slash"></i><p>Belum ada data jemaat</p><small>Isi formulir di samping</small></div>'; return; }
+    const sortedData = [...jemaatData].reverse();
+    container.innerHTML = `<table class="table table-sm jemaat-table"><thead class="table-primary"><tr><th>No</th><th>Nama</th><th>Kontak</th><th>Komisi</th><th>Aksi</th></tr></thead><tbody>${sortedData.map((j, idx) => `<tr><td>${idx+1}</td>}<td><strong>${escapeHtml(j.nama)}</strong><br><small>${j.tanggal||''}</small></td><td>${escapeHtml(j.noHp)||'-'}</td><td><span class="badge bg-info">${escapeHtml(j.komisi)}</span></td>}<td><button class="btn-edit" onclick="editJemaat('${j.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-delete" onclick="deleteJemaat('${j.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('')}</tbody>}</table><div class="mt-2 small text-muted">Total: ${jemaatData.length} jemaat</div>`;
+}
+
+window.editJemaat = function(id) {
+    const j = jemaatData.find(j => j.id === id);
+    if(j){
+        document.getElementById('namaLengkap').value = j.nama;
+        document.getElementById('noHp').value = j.noHp||'';
+        document.getElementById('alamat').value = j.alamat||'';
+        document.getElementById('baptis').value = j.baptis;
+        document.getElementById('pernikahan').value = j.pernikahan;
+        document.getElementById('komisi').value = j.komisi;
+        window.editingId = id;
+        const btn = document.querySelector('#memberForm button[type="submit"]');
+        btn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Update Data';
+        btn.style.background = '#ff8c00';
+    }
+};
+
+window.deleteJemaat = function(id) { if(confirm('Hapus data ini?')){ jemaatData = jemaatData.filter(j => j.id !== id); localStorage.setItem('gbiJemaatData', JSON.stringify(jemaatData)); displayJemaatList(); alert('Data dihapus'); } };
+
+document.getElementById('memberForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const nama = document.getElementById('namaLengkap').value.trim();
+    if(!nama) return alert('Nama harus diisi');
+    const newData = { id: window.editingId || Date.now().toString(), nama: nama, noHp: document.getElementById('noHp').value, alamat: document.getElementById('alamat').value, baptis: document.getElementById('baptis').value, pernikahan: document.getElementById('pernikahan').value, komisi: document.getElementById('komisi').value, tanggal: new Date().toLocaleDateString('id-ID') };
+    if(window.editingId){ const idx = jemaatData.findIndex(j => j.id === window.editingId); if(idx !== -1) jemaatData[idx] = newData; alert('Data diupdate'); }
+    else { jemaatData.unshift(newData); alert('Data disimpan'); }
+    localStorage.setItem('gbiJemaatData', JSON.stringify(jemaatData));
+    document.getElementById('memberForm').reset();
+    window.editingId = null;
+    const btn = document.querySelector('#memberForm button[type="submit"]');
+    btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Data';
+    btn.style.background = '#0b4ea2';
+    displayJemaatList();
+});
+</script>
+</body>
+</html>    </div>
 
     <!-- PROFIL -->
     <div id="profil" class="tab-content">
