@@ -17,7 +17,7 @@
             color: #1e2a2e;
         }
 
-        /* Navbar */
+        /* Navbar - logo di kiri pojok */
         .navbar {
             background: white;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -35,25 +35,30 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            flex-shrink: 0;
         }
 
         .logo-img {
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             object-fit: contain;
+            border-radius: 12px;
         }
 
         .logo-text h1 {
             font-size: 1.4rem;
             color: #1a5d2a;
             letter-spacing: -0.5px;
+            margin: 0;
         }
 
         .logo-text p {
             font-size: 0.7rem;
             color: #b78c3f;
+            margin: 0;
         }
 
+        /* Nav Menu - di tengah */
         .nav-menu {
             display: flex;
             gap: 1.5rem;
@@ -76,6 +81,7 @@
             color: #b78c3f;
         }
 
+        /* CMS Button - di kanan */
         .cms-btn {
             background: #1a5d2a;
             color: white;
@@ -85,6 +91,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: 0.2s;
+            flex-shrink: 0;
         }
 
         .cms-btn:hover {
@@ -371,8 +378,15 @@
 
         @media (max-width: 768px) {
             .navbar {
-                flex-direction: column;
-                gap: 1rem;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .nav-menu {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin-top: 0.5rem;
             }
             .slide {
                 height: 300px;
@@ -380,8 +394,12 @@
             .slide-content h2 {
                 font-size: 1.3rem;
             }
-            .nav-menu {
-                justify-content: center;
+            .logo-text h1 {
+                font-size: 1.1rem;
+            }
+            .logo-img {
+                width: 40px;
+                height: 40px;
             }
         }
     </style>
@@ -390,7 +408,9 @@
 
 <nav class="navbar">
     <div class="logo-area">
-        <img src="logo_gbi.png" alt="Logo GBI Karang Mulia" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+        <!-- Perbaikan: nama file logo_gbi.png (bukan logo_gbipng) -->
+        <img src="logo_gbi.png" alt="Logo GBI Karang Mulia" class="logo-img" 
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
         <div class="logo-text">
             <h1>GBI Karang Mulia</h1>
             <p>Gereja Bethel Indonesia</p>
@@ -434,11 +454,11 @@
         phone: "(021) 8061-2345",
         email: "info@gbikarangmulia.org",
         slides: [
-            { title: "Ibadah Kebangunan Rohani", desc: "Mari beribadah dengan sukacita setiap Minggu pukul 09.00", bgColor: "#1a5d2a", textColor: "white" },
-            { title: "Youth Revival 2025", desc: "Persiapan generasi terang bagi Kristus", bgColor: "#b78c3f", textColor: "white" },
-            { title: "Pelayanan Sosial", desc: "Kasih bagi sesama - Jumat 15.00 WIB", bgColor: "#2c6e3a", textColor: "white" },
-            { title: "Doa Puasa 40 Hari", desc: "Menggumuli kota dan bangsa", bgColor: "#8b5e2c", textColor: "white" },
-            { title: "Kebaktian Natal", desc: "Sukacita Natal bagi semua - 24 Desember 2025", bgColor: "#c0392b", textColor: "white" }
+            { title: "Ibadah Kebangunan Rohani", desc: "Mari beribadah dengan sukacita setiap Minggu pukul 09.00", bgColor: "#1a5d2a" },
+            { title: "Youth Revival 2025", desc: "Persiapan generasi terang bagi Kristus", bgColor: "#b78c3f" },
+            { title: "Pelayanan Sosial", desc: "Kasih bagi sesama - Jumat 15.00 WIB", bgColor: "#2c6e3a" },
+            { title: "Doa Puasa 40 Hari", desc: "Menggumuli kota dan bangsa", bgColor: "#8b5e2c" },
+            { title: "Kebaktian Natal", desc: "Sukacita Natal bagi semua - 24 Desember 2025", bgColor: "#c0392b" }
         ],
         rubriks: ["Renungan", "Pengumuman", "Kesaksian", "Artikel", "Jadwal Ibadah"],
         beritaList: [
@@ -475,10 +495,10 @@
         // Render Menu
         const navMenu = document.getElementById("navMenu");
         const menuItems = [
-            { label: "Beranda", page: "home" },
-            { label: "Tentang", page: "about" },
-            { label: "Visi & Misi", page: "visi" },
-            { label: "Berita", page: "news" },
+            { label: "🏠 Beranda", page: "home" },
+            { label: "📖 Tentang", page: "about" },
+            { label: "🎯 Visi & Misi", page: "visi" },
+            { label: "📰 Berita", page: "news" },
             ...appData.customPages.filter(p => p.id !== "about" && p.id !== "visi").map(p => ({ label: p.title, page: p.id }))
         ];
         navMenu.innerHTML = "";
@@ -544,7 +564,7 @@
         }
         else if (currentPage === "news") {
             main.innerHTML = `
-                <h2 style="color: #1a5d2a; margin-bottom: 1rem;">Semua Berita</h2>
+                <h2 style="color: #1a5d2a; margin-bottom: 1rem;">📰 Semua Berita</h2>
                 <div id="filterRubrik" style="display: flex; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap;"></div>
                 <div class="berita-list" id="allBerita"></div>
             `;
@@ -575,7 +595,6 @@
             const div = document.createElement("div");
             div.className = "slide";
             div.style.backgroundColor = slide.bgColor || "#1a5d2a";
-            div.style.backgroundImage = slide.image ? `url(${slide.image})` : "none";
             div.innerHTML = `<div class="slide-content"><h2>${escapeHtml(slide.title)}</h2><p>${escapeHtml(slide.desc)}</p></div>`;
             track.appendChild(div);
         });
