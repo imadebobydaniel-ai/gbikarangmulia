@@ -50,7 +50,6 @@ body {
     border-radius: 50%;
     background: rgba(255,255,255,0.9);
     padding: 5px;
-    image-rendering: crisp-edges;
 }
 
 .navbar-brand strong {
@@ -70,7 +69,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* Tombol CMS - Pojok Kanan Atas */
+/* Tombol CMS */
 .cms-fixed-btn {
     position: fixed;
     top: 20px;
@@ -92,12 +91,9 @@ body {
 }
 
 .cms-fixed-btn:hover {
-    background: linear-gradient(135deg, #e07a00, #cc6d00);
     transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
 
-/* Hero Section */
 .hero {
     min-height: 40vh;
     background: transparent;
@@ -114,20 +110,13 @@ body {
     background: rgba(255,255,255,0.9);
     padding: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    image-rendering: crisp-edges;
 }
 
 .hero-title {
     font-size: 2.5rem;
     font-weight: 800;
-    letter-spacing: normal;
     color: #ff8c00;
-    text-shadow: 
-        -1px -1px 0 white,
-        1px -1px 0 white,
-        -1px 1px 0 white,
-        1px 1px 0 white,
-        0 0 5px white;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
     margin-bottom: 10px;
 }
 
@@ -135,22 +124,14 @@ body {
     font-size: 2rem;
     font-weight: 800;
     color: #000000;
-    text-shadow: 
-        -1px -1px 0 white,
-        1px -1px 0 white,
-        -1px 1px 0 white,
-        1px 1px 0 white,
-        0 0 5px white;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
     margin-bottom: 15px;
-    letter-spacing: 1px;
 }
 
 .hero-motto {
     font-size: 0.95rem;
     max-width: 600px;
     margin: 0 auto;
-    color: #1e2a3a;
-    font-weight: 500;
     background: rgba(255,255,255,0.7);
     padding: 8px 16px;
     border-radius: 30px;
@@ -170,7 +151,6 @@ body {
     border-radius: 24px;
     padding: 30px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-    border: 1px solid rgba(255,255,255,0.5);
 }
 
 .tab-content.active {
@@ -189,17 +169,12 @@ body {
     border-left: 4px solid var(--secondary);
     padding-left: 15px;
     font-size: 1.5rem;
-    letter-spacing: normal;
-}
-
-.slide-gallery {
-    margin: 20px 0 30px;
 }
 
 .slide-carousel {
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
 }
 
 .slide-carousel .carousel-inner img {
@@ -208,16 +183,11 @@ body {
     width: 100%;
 }
 
-.slide-carousel .carousel-caption {
-    background: linear-gradient(0deg, rgba(0,0,0,0.6), transparent);
-}
-
 .content-card {
     background: rgba(255, 255, 255, 0.98);
     border-radius: 16px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .schedule-item {
@@ -239,8 +209,8 @@ body {
     border-radius: 12px;
     padding: 20px;
     text-align: center;
-    transition: 0.3s;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .service-card:hover {
@@ -254,6 +224,49 @@ body {
     margin-bottom: 10px;
 }
 
+/* Menu Jemaat 3 tombol */
+.jemaat-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.jemaat-card {
+    background: linear-gradient(135deg, #fff, #f8f9fa);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.jemaat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    border-color: var(--secondary);
+}
+
+.jemaat-card i {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.jemaat-card h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.jemaat-card p {
+    color: #6c757d;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
 .org-table {
     border-radius: 12px;
     overflow: hidden;
@@ -264,12 +277,6 @@ body {
     color: white;
 }
 
-.org-table th, .org-table td {
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.95);
-}
-
-/* ============ FOOTER - POSISI TENGAH (CENTER) ============ */
 footer {
     background: rgba(11, 37, 69, 0.95);
     color: white;
@@ -283,24 +290,6 @@ footer {
     margin: 0 auto;
 }
 
-footer img {
-    image-rendering: crisp-edges;
-    margin-bottom: 12px;
-}
-
-footer h6 {
-    font-weight: 700;
-    margin-bottom: 5px;
-    letter-spacing: 1px;
-    font-size: 1rem;
-}
-
-footer .small {
-    font-size: 0.85rem;
-    opacity: 0.9;
-    margin-bottom: 15px;
-}
-
 .social-icons {
     display: flex;
     justify-content: center;
@@ -312,7 +301,6 @@ footer .small {
     color: white;
     font-size: 1.4rem;
     transition: 0.3s;
-    display: inline-block;
 }
 
 .social-icons a:hover {
@@ -323,17 +311,6 @@ footer .small {
 .watermark {
     opacity: 0.8;
     font-size: 12px;
-    line-height: 1.6;
-    margin-top: 10px;
-}
-/* ============ END FOOTER ============ */
-
-.empty-state {
-    text-align: center;
-    padding: 30px;
-    background: white;
-    border-radius: 12px;
-    color: #6c757d;
 }
 
 .loading-spinner {
@@ -361,18 +338,16 @@ footer .small {
     .hero-church-name { font-size: 1.3rem; }
     .hero img { width: 80px; }
     .slide-carousel .carousel-inner img { height: 250px; }
-    .section-title { font-size: 1.2rem; }
-    .cms-fixed-btn { padding: 6px 16px; font-size: 0.7rem; top: 15px; right: 15px; }
+    .cms-fixed-btn { padding: 6px 16px; font-size: 0.7rem; }
     .cms-fixed-btn span { display: none; }
-    .cms-fixed-btn i { margin: 0; }
-    .social-icons { gap: 15px; }
-    .social-icons a { font-size: 1.2rem; }
+    .jemaat-card { padding: 15px; }
+    .jemaat-card i { font-size: 2rem; }
+    .jemaat-card h4 { font-size: 1rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- TOMBOL CMS - POJOK KANAN ATAS -->
 <button class="cms-fixed-btn" onclick="window.location.href='cms.html'">
     <i class="fa-solid fa-user-shield"></i>
     <span>CMS</span>
@@ -384,22 +359,20 @@ footer .small {
         <img src="logo_gbi.png" alt="Logo GBI" onerror="this.style.display='none'">
         <div class="ms-2">
             <strong>GBI Karang Mulia</strong><br>
-            <small style="font-size: 0.65rem;">Gereja Bethel Indonesia</small>
+            <small>Gereja Bethel Indonesia</small>
         </div>
     </a>
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
         <span class="navbar-toggler-icon"></span>
     </button>
-    
     <div class="collapse navbar-collapse" id="menu">
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" onclick="showTab('sejarah')"><i class="fa-solid fa-landmark"></i> Sejarah</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('profil')"><i class="fa-solid fa-church"></i> Profil</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('organisasi')"><i class="fa-solid fa-sitemap"></i> Organisasi</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('pelayanan')"><i class="fa-solid fa-hands-praying"></i> Pelayanan</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('jadwal')"><i class="fa-solid fa-calendar-days"></i> Jadwal</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('jemaat')"><i class="fa-solid fa-users"></i> Jemaat</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('sejarah')">Sejarah</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('profil')">Profil</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('organisasi')">Organisasi</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('pelayanan')">Pelayanan</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('jadwal')">Jadwal</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('jemaat')">Jemaat</a></li>
         </ul>
     </div>
 </div>
@@ -415,41 +388,35 @@ footer .small {
 </section>
 
 <div class="tab-content-wrapper">
-    <!-- SEJARAH -->
     <div id="sejarah" class="tab-content">
-        <h3 class="section-title"><i class="fa-solid fa-landmark"></i> Sejarah Gereja</h3>
-        
-        <div class="slide-gallery">
-            <div id="historyCarousel" class="carousel slide slide-carousel carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
-                <div class="carousel-indicators" id="slideIndicators"></div>
-                <div class="carousel-inner" id="slideInner"></div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#historyCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#historyCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </button>
-            </div>
+        <h3 class="section-title">Sejarah Gereja</h3>
+        <div id="historyCarousel" class="carousel slide slide-carousel carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-indicators" id="slideIndicators"></div>
+            <div class="carousel-inner" id="slideInner"></div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#historyCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#historyCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
         </div>
-        
         <div class="row">
             <div class="col-md-8">
-                <p class="lead">GBI Karang Mulia berdiri sejak tahun 1995 sebagai wadah persekutuan bagi warga Kristen di wilayah Karang Mulia, Nabire.</p>
+                <p><strong>GBI Karang Mulia</strong> berdiri sejak tahun 1995 sebagai wadah persekutuan bagi warga Kristen di wilayah Karang Mulia, Nabire.</p>
                 <p>Awal mula pelayanan dimulai dari sebuah rumah sederhana yang dijadikan tempat doa bersama. Seiring berjalannya waktu, Tuhan memberkati dengan pertumbuhan jemaat yang pesat. Pada tahun 2000, gereja resmi memperoleh tanah dan membangun gedung pertama.</p>
                 <p>Hingga saat ini, GBI Karang Mulia terus bertumbuh dan melayani masyarakat sekitar dengan kasih Kristus, serta menjadi berkat bagi banyak orang.</p>
             </div>
             <div class="col-md-4">
                 <div class="content-card">
                     <i class="fa-solid fa-quote-left fa-2x text-primary mb-2"></i>
-                    <p class="mb-0"><em>"Hati kami bersukacita karena Dia, sebab kepada nama-Nya yang kudus kami percaya." - Mazmur 33:21</em></p>
+                    <p><em>"Hati kami bersukacita karena Dia, sebab kepada nama-Nya yang kudus kami percaya." - Mazmur 33:21</em></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- PROFIL -->
     <div id="profil" class="tab-content">
-        <h3 class="section-title"><i class="fa-solid fa-church"></i> Profil Gereja</h3>
+        <h3 class="section-title">Profil Gereja</h3>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <div class="content-card">
@@ -473,9 +440,8 @@ footer .small {
         </div>
     </div>
 
-    <!-- ORGANISASI -->
     <div id="organisasi" class="tab-content">
-        <h3 class="section-title"><i class="fa-solid fa-sitemap"></i> Struktur Organisasi</h3>
+        <h3 class="section-title">Struktur Organisasi</h3>
         <div class="table-responsive">
             <table class="table table-bordered org-table">
                 <thead><tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr></thead>
@@ -484,39 +450,49 @@ footer .small {
         </div>
     </div>
 
-    <!-- PELAYANAN -->
     <div id="pelayanan" class="tab-content">
-        <h3 class="section-title"><i class="fa-solid fa-hands-praying"></i> Pelayanan Kami</h3>
+        <h3 class="section-title">Pelayanan Kami</h3>
         <div class="service-grid" id="serviceGrid"></div>
     </div>
 
-    <!-- JADWAL -->
     <div id="jadwal" class="tab-content">
-        <h3 class="section-title"><i class="fa-solid fa-calendar-days"></i> Jadwal Ibadah</h3>
+        <h3 class="section-title">Jadwal Ibadah</h3>
         <div id="jadwalList"></div>
     </div>
 
-    <!-- JEMAAT -->
     <div id="jemaat" class="tab-content">
-        <h3 class="section-title"><i class="fa-solid fa-users"></i> Data Jemaat</h3>
-        <div id="jemaatListContainer" class="table-responsive"></div>
+        <h3 class="section-title">Menu Jemaat</h3>
+        <div class="jemaat-menu">
+            <div class="jemaat-card" onclick="window.location.href='pages/kontak-pemimpin.html'">
+                <i class="fa-solid fa-address-card"></i>
+                <h4>Kontak Para Pemimpin & Koordinator</h4>
+                <p>Informasi kontak pengurus gereja, gembala sidang, dan koordinator pelayanan</p>
+            </div>
+            <div class="jemaat-card" onclick="window.location.href='pages/layanan-jemaat.html'">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+                <h4>Permohonan Layanan Jemaat</h4>
+                <p>Ajukan permohonan doa, kunjungan pastoral, pernikahan, baptisan, dan lain-lain</p>
+            </div>
+            <div class="jemaat-card" onclick="window.location.href='pages/pendaftaran-jemaat.html'">
+                <i class="fa-solid fa-user-plus"></i>
+                <h4>Pendaftaran Anggota Jemaat</h4>
+                <p>Daftar menjadi anggota jemaat GBI Karang Mulia</p>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- FOOTER - POSISI TENGAH (CENTER) -->
 <footer>
     <div class="footer-content">
         <img src="logo_gbi.png" width="60" alt="Logo" onerror="this.style.display='none'">
         <h6>GEREJA BETHEL INDONESIA</h6>
-        <p class="small mb-2">GBI Karang Mulia</p>
-        
+        <p class="small">GBI Karang Mulia</p>
         <div class="social-icons">
             <a href="#"><i class="fab fa-facebook"></i></a>
             <a href="#"><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-youtube"></i></a>
             <a href="#"><i class="fab fa-whatsapp"></i></a>
         </div>
-        
         <div class="watermark">
             <i class="fa-solid fa-location-dot"></i> Jl. Ujung Pandang, Karang Mulia, Nabire, Papua Tengah<br>
             <i class="fa-regular fa-copyright"></i> GBI Karang Mulia 2026
@@ -525,9 +501,7 @@ footer .small {
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
-    // ============ KONFIGURASI FIREBASE ============
     const firebaseConfig = {
         apiKey: "YOUR_API_KEY",
         authDomain: "YOUR_AUTH_DOMAIN",
@@ -551,162 +525,65 @@ footer .small {
     }
     
     async function loadSlides() {
-        try {
-            const snapshot = await db.collection('slides').orderBy('order', 'asc').get();
-            const slidesData = [];
-            snapshot.forEach(doc => slidesData.push({ id: doc.id, ...doc.data() }));
-            
-            const inner = document.getElementById('slideInner');
-            const indicators = document.getElementById('slideIndicators');
-            
-            if (slidesData.length === 0) {
-                inner.innerHTML = `<div class="carousel-item active"><img src="https://via.placeholder.com/1200x400?text=Belum+Ada+Slide" class="d-block w-100"><div class="carousel-caption"><h5>Belum Ada Slide</h5><p>Silakan tambah melalui CMS</p></div></div>`;
-                indicators.innerHTML = '<button data-bs-target="#historyCarousel" data-bs-slide-to="0" class="active"></button>';
-                return;
-            }
-            
-            inner.innerHTML = slidesData.map((s, idx) => `
-                <div class="carousel-item ${idx === 0 ? 'active' : ''}">
-                    <img src="${s.imageUrl}" class="d-block w-100" alt="${s.title}" onerror="this.src='https://via.placeholder.com/1200x400?text=Gambar+Error'">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>${escapeHtml(s.title)}</h5>
-                        <p>${escapeHtml(s.description || '')}</p>
-                    </div>
-                </div>
-            `).join('');
-            
-            indicators.innerHTML = slidesData.map((_, idx) => `
-                <button type="button" data-bs-target="#historyCarousel" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>
-            `).join('');
-            
-            let carouselEl = document.querySelector('#historyCarousel');
-            if (carouselEl) {
-                let bsCarousel = bootstrap.Carousel.getInstance(carouselEl);
-                if (bsCarousel) bsCarousel.dispose();
-                new bootstrap.Carousel(carouselEl, { interval: 4000, wrap: true, ride: 'carousel' });
-            }
-        } catch (error) {
-            console.error("Error loading slides:", error);
+        const snapshot = await db.collection('slides').orderBy('order', 'asc').get();
+        const slidesData = [];
+        snapshot.forEach(doc => slidesData.push(doc.data()));
+        
+        const inner = document.getElementById('slideInner');
+        const indicators = document.getElementById('slideIndicators');
+        
+        if (slidesData.length === 0) {
+            inner.innerHTML = `<div class="carousel-item active"><img src="https://via.placeholder.com/1200x400?text=Belum+Ada+Slide" class="d-block w-100"></div>`;
+            return;
         }
+        
+        inner.innerHTML = slidesData.map((s, idx) => `
+            <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                <img src="${s.imageUrl}" class="d-block w-100" alt="${s.title}">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>${escapeHtml(s.title)}</h5>
+                    <p>${escapeHtml(s.description || '')}</p>
+                </div>
+            </div>
+        `).join('');
+        
+        indicators.innerHTML = slidesData.map((_, idx) => `
+            <button type="button" data-bs-target="#historyCarousel" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>
+        `).join('');
+        
+        new bootstrap.Carousel(document.querySelector('#historyCarousel'), { interval: 4000, wrap: true });
     }
     
     async function loadJadwal() {
-        try {
-            const snapshot = await db.collection('jadwal').orderBy('order', 'asc').get();
-            const jadwalData = [];
-            snapshot.forEach(doc => jadwalData.push(doc.data()));
-            
-            const container = document.getElementById('jadwalList');
-            if (jadwalData.length === 0) {
-                container.innerHTML = '<div class="empty-state">Belum ada jadwal</div>';
-                return;
-            }
-            
-            container.innerHTML = jadwalData.map(j => `
-                <div class="schedule-item">
-                    <h5><i class="fa-solid fa-church me-2"></i> ${escapeHtml(j.name)}</h5>
-                    <p>${escapeHtml(j.time)}</p>
-                </div>
-            `).join('');
-        } catch (error) {
-            console.error("Error loading jadwal:", error);
-        }
+        const snapshot = await db.collection('jadwal').orderBy('order', 'asc').get();
+        const data = [];
+        snapshot.forEach(doc => data.push(doc.data()));
+        const container = document.getElementById('jadwalList');
+        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada jadwal</div>'; return; }
+        container.innerHTML = data.map(j => `<div class="schedule-item"><h5><i class="fa-solid fa-church me-2"></i> ${escapeHtml(j.name)}</h5><p>${escapeHtml(j.time)}</p></div>`).join('');
     }
     
     async function loadOrganisasi() {
-        try {
-            const snapshot = await db.collection('organisasi').orderBy('order', 'asc').get();
-            const organisasiData = [];
-            snapshot.forEach(doc => organisasiData.push(doc.data()));
-            
-            const container = document.getElementById('organisasiBody');
-            if (organisasiData.length === 0) {
-                container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada数据</td></tr>';
-                return;
-            }
-            
-            container.innerHTML = organisasiData.map(o => `
-                <tr>
-                    <td>${escapeHtml(o.jabatan)}</br></td>
-                    <td>${escapeHtml(o.nama)}</br></br></td>
-                    <td>${escapeHtml(o.keterangan || '')}</br></br></td>
-                </tr>
-            `).join('');
-        } catch (error) {
-            console.error("Error loading organisasi:", error);
-        }
+        const snapshot = await db.collection('organisasi').orderBy('order', 'asc').get();
+        const data = [];
+        snapshot.forEach(doc => data.push(doc.data()));
+        const container = document.getElementById('organisasiBody');
+        if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada data</td></tr>'; return; }
+        container.innerHTML = data.map(o => `<tr><td>${escapeHtml(o.jabatan)}</td><td>${escapeHtml(o.nama)}</td><td>${escapeHtml(o.keterangan || '')}</td></tr>`).join('');
     }
     
     async function loadPelayanan() {
-        try {
-            const snapshot = await db.collection('pelayanan').orderBy('order', 'asc').get();
-            const pelayananData = [];
-            snapshot.forEach(doc => pelayananData.push(doc.data()));
-            
-            const container = document.getElementById('serviceGrid');
-            if (pelayananData.length === 0) {
-                container.innerHTML = '<div class="empty-state">Belum ada data pelayanan</div>';
-                return;
-            }
-            
-            container.innerHTML = pelayananData.map(p => `
-                <div class="service-card">
-                    <i class="${escapeHtml(p.icon)}"></i>
-                    <h6>${escapeHtml(p.name)}</h6>
-                    <small>${escapeHtml(p.schedule || '')}</small>
-                </div>
-            `).join('');
-        } catch (error) {
-            console.error("Error loading pelayanan:", error);
-        }
-    }
-    
-    async function loadJemaat() {
-        try {
-            const snapshot = await db.collection('jemaat').orderBy('createdAt', 'desc').get();
-            const jemaatData = [];
-            snapshot.forEach(doc => jemaatData.push({ id: doc.id, ...doc.data() }));
-            
-            const container = document.getElementById('jemaatListContainer');
-            if (jemaatData.length === 0) {
-                container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-users-slash"></i><p>Belum ada data jemaat</p><small>Data jemaat akan muncul setelah diisi</small></div>';
-                return;
-            }
-            
-            container.innerHTML = `
-                <table class="table table-bordered">
-                    <thead class="table-primary">
-                        <tr><th>No</th><th>Nama</th><th>No HP</th><th>Alamat</th><th>Baptis</th><th>Komisi</th></tr>
-                    </thead>
-                    <tbody>${jemaatData.map((j, idx) => `
-                        <tr>
-                            <td>${idx+1}</td>
-                            <td><strong>${escapeHtml(j.nama)}</strong><br><small class="text-muted">${j.tanggal || ''}</small></td>
-                            <td>${escapeHtml(j.noHp) || '-'}</td>
-                            <td>${escapeHtml(j.alamat) || '-'}</td>
-                            <td>${escapeHtml(j.baptis)}</br></td>
-                            <td><span class="badge bg-info">${escapeHtml(j.komisi)}</span></td>
-                        </tr>
-                    `).join('')}</tbody>
-                </table>
-                <div class="small text-muted mt-2">Total: ${jemaatData.length} jemaat</div>
-            `;
-        } catch (error) {
-            console.error("Error loading jemaat:", error);
-        }
+        const snapshot = await db.collection('pelayanan').orderBy('order', 'asc').get();
+        const data = [];
+        snapshot.forEach(doc => data.push(doc.data()));
+        const container = document.getElementById('serviceGrid');
+        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data pelayanan</div>'; return; }
+        container.innerHTML = data.map(p => `<div class="service-card"><i class="${p.icon}"></i><h6>${escapeHtml(p.name)}</h6><small>${escapeHtml(p.schedule || '')}</small></div>`).join('');
     }
     
     document.addEventListener('DOMContentLoaded', async () => {
         showTab('sejarah');
-        document.getElementById('slideInner').innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>Memuat data...</p></div>';
-        
-        await Promise.all([
-            loadSlides(),
-            loadJadwal(),
-            loadOrganisasi(),
-            loadPelayanan(),
-            loadJemaat()
-        ]);
+        await Promise.all([loadSlides(), loadJadwal(), loadOrganisasi(), loadPelayanan()]);
     });
 </script>
 </body>
