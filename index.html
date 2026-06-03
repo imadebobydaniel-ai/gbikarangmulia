@@ -1,293 +1,720 @@
-Saya memahami Anda menginginkan sistem CMS yang lebih lengkap dengan file terpisah, namun perlu saya jelaskan bahwa **saya tidak dapat membuat multiple file atau sistem backend yang sebenarnya** dalam lingkungan obrolan ini karena keterbatasan teknis (saya hanya bisa mengirimkan satu file HTML/CSS/JS).
-
-Namun, saya akan membuat **simulasi CMS yang sangat canggih dalam satu file HTML** dengan semua fungsi yang Anda minta:
-- ✅ Manajemen halaman (tambah/edit/delete page sendiri)
-- ✅ Manajemen berita/artikel dengan rubrik
-- ✅ Upload & download file (simulasi dengan localStorage/Base64)
-- ✅ Edit informasi gereja
-- ✅ Menu dinamis yang bisa diatur
-- ✅ Redaksi berita dan rubrik (kategori)
-
-CMS ini akan menyimpan semua data di `localStorage` sehingga fungsi-fungsi seperti upload gambar, download data, dan manajemen konten berfungsi penuh dalam browser.
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Gereja Gloria | CMS Lengkap + Frontend Dinamis</title>
-  <!-- Google Fonts + Font Awesome + Tailwind CDN -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    * { font-family: 'Inter', sans-serif; }
-    .glass-card { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); }
-    .slide-bg { background-size: cover; background-position: center; transition: transform 0.5s ease; }
-    .cms-sidebar { max-height: 80vh; overflow-y: auto; }
-    .animate-fade { animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .trend-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15); }
-  </style>
-</head>
-<body class="bg-gray-50">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Gereja Gloria | CMS Lengkap + Frontend Stabil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- NAVBAR DINAMIS (akan diupdate dari CMS) -->
-<nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm border-b border-amber-200">
-  <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center flex-wrap">
-    <div class="flex items-center gap-2">
-      <i class="fas fa-church text-3xl text-amber-600"></i>
-      <span class="font-bold text-xl md:text-2xl bg-gradient-to-r from-amber-700 to-amber-500 bg-clip-text text-transparent" id="siteTitleDisplay">Gereja Gloria</span>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fef9f0;
+            color: #1e2a2e;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo h1 {
+            font-size: 1.6rem;
+            color: #b78c3f;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2c3e2f;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            transition: 0.2s;
+        }
+
+        .nav-item:hover {
+            color: #b78c3f;
+        }
+
+        .cms-btn {
+            background: #b78c3f;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Slideshow */
+        .slider-container {
+            position: relative;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .slide-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #2c5f2d, #97bc62);
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            color: white;
+        }
+
+        .slide-content h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #b78c3f;
+            width: 24px;
+            border-radius: 10px;
+        }
+
+        /* Card & Layout */
+        .rubrik-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .rubrik-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .rubrik-card i {
+            font-size: 2rem;
+            color: #b78c3f;
+            margin-bottom: 1rem;
+        }
+
+        .berita-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .berita-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            border-left: 4px solid #b78c3f;
+        }
+
+        /* Modal CMS */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow: auto;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            border-radius: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+        }
+
+        button {
+            background: #b78c3f;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            margin: 0.2rem;
+        }
+
+        .btn-danger {
+            background: #c0392b;
+        }
+
+        .footer {
+            background: #1e2a2e;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .slide {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <h1>⛪ Gereja Gloria</h1>
     </div>
-    <div class="flex gap-3 items-center">
-      <div id="dynamicNavMenu" class="hidden md:flex gap-5 mr-3"></div>
-      <button id="openCmsBtn" class="bg-amber-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-amber-700 transition flex items-center gap-2"><i class="fas fa-crown"></i> CMS Panel</button>
-      <button id="mobileMenuBtn" class="md:hidden text-2xl text-amber-700"><i class="fas fa-bars"></i></button>
-    </div>
-  </div>
-  <div id="mobileNavMenu" class="md:hidden hidden flex-col bg-white border-t border-amber-100 p-4 gap-3"></div>
+    <div class="nav-menu" id="navMenu"></div>
+    <button class="cms-btn" id="openCmsBtn">📋 CMS Panel</button>
 </nav>
 
-<!-- MAIN CONTENT DINAMIS (berdasarkan halaman yang dipilih) -->
-<main id="mainContent" class="max-w-7xl mx-auto px-4 md:px-6 py-8 min-h-[70vh]"></main>
+<main class="container" id="mainContent"></main>
 
-<footer class="bg-gray-900 text-gray-400 py-8 mt-12 text-center">
-  <p>© 2025 Gereja Gloria CMS | Sistem Manajemen Konten Terintegrasi</p>
-  <p class="text-sm mt-2"><i class="fas fa-heart text-amber-500"></i> Memberkati banyak jiwa</p>
+<footer class="footer">
+    <p>© 2025 Gereja Gloria | Kasih · Iman · Pengharapan</p>
 </footer>
 
-<!-- MODAL CMS FULL FEATURE -->
-<div id="cmsModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden justify-center items-start overflow-auto py-8">
-  <div class="bg-white rounded-2xl w-full max-w-5xl mx-4 shadow-2xl animate-fade max-h-[90vh] overflow-hidden flex flex-col">
-    <div class="flex justify-between items-center p-5 border-b bg-amber-50">
-      <h2 class="text-2xl font-bold text-amber-800"><i class="fas fa-tachometer-alt"></i> CMS Gereja Gloria - Full Control</h2>
-      <button id="closeCmsBtn" class="text-3xl text-gray-500 hover:text-amber-700">&times;</button>
+<!-- Modal CMS -->
+<div id="cmsModal" class="modal">
+    <div class="modal-content">
+        <h2 style="margin-bottom: 1rem;">✝️ CMS Gereja Gloria</h2>
+        <div id="cmsTabs">
+            <button onclick="showCmsTab('slides')">🎨 Slide</button>
+            <button onclick="showCmsTab('rubrik')">🏷️ Rubrik</button>
+            <button onclick="showCmsTab('berita')">📰 Berita</button>
+            <button onclick="showCmsTab('pages')">📄 Halaman</button>
+            <button onclick="showCmsTab('info')">⚙️ Info</button>
+        </div>
+        <div id="cmsPanelContent" style="margin-top: 1rem; max-height: 500px; overflow-y: auto;"></div>
+        <button onclick="closeCmsModal()" style="margin-top: 1rem; background: #666;">Tutup</button>
     </div>
-    <div class="flex flex-col md:flex-row flex-1 overflow-hidden">
-      <!-- Sidebar Menu CMS -->
-      <div class="md:w-64 bg-gray-100 p-4 space-y-2 border-r">
-        <button class="cms-tab-btn w-full text-left px-3 py-2 rounded-lg hover:bg-amber-100 transition" data-tab="dashboard">📊 Dashboard</button>
-        <button class="cms-tab-btn w-full text-left px-3 py-2 rounded-lg hover:bg-amber-100 transition" data-tab="pages">📄 Manajemen Halaman (Page Builder)</button>
-        <button class="cms-tab-btn w-full text-left px-3 py-2 rounded-lg hover:bg-amber-100 transition" data-tab="news">📰 Berita & Rubrik</button>
-        <button class="cms-tab-btn w-full text-left px-3 py-2 rounded-lg hover:bg-amber-100 transition" data-tab="slides">🎨 Slideshow (5 Slide)</button>
-        <button class="cms-tab-btn w-full text-left px-3 py-2 rounded-lg hover:bg-amber-100 transition" data-tab="settings">⚙️ Info Gereja & Menu</button>
-        <button class="cms-tab-btn w-full text-left px-3 py-2 rounded-lg hover:bg-amber-100 transition" data-tab="files">📁 Upload/Download File</button>
-        <button class="cms-tab-btn w-full text-left px-3 py-2 rounded-lg hover:bg-amber-100 transition" data-tab="rubrik">🏷️ Rubrik Kategori</button>
-      </div>
-      <!-- Area Konten CMS Dinamis -->
-      <div id="cmsTabContent" class="flex-1 p-5 overflow-y-auto cms-sidebar"></div>
-    </div>
-    <div class="p-3 border-t bg-gray-50 text-xs text-gray-500 flex justify-between">
-      <span>✅ Semua data tersimpan di localStorage | Support Upload (Base64) & Download JSON</span>
-      <button id="exportBackupBtn" class="text-amber-600 text-xs underline">📥 Backup Data (Download)</button>
-    </div>
-  </div>
 </div>
 
 <script>
-  // ------------------------------- DATA STRUCTURE -------------------------------
-  let appData = {
-    siteInfo: { name: "Gereja Gloria", tagline: "Rumah Ibadah Modern", address: "Jl. Kemuliaan No.10, Jakarta", phone: "(021) 1234-8888", email: "info@gloriachurch.id", logoIcon: "fas fa-church" },
-    navMenu: [{ label: "Beranda", pageId: "home", type: "system" }, { label: "Tentang Kami", pageId: "about", type: "system" }, { label: "Berita", pageId: "news_index", type: "system" }],
-    customPages: [], // { id, title, content, slug, createdAt }
-    slides: [ // default 5 slide
-      { title: "Ibadah Kebangunan", desc: "Mari beribadah dengan sukacita", img: "https://images.pexels.com/photos/931937/pexels-photo-931937.jpeg?auto=compress&cs=tinysrgb&w=1200" },
-      { title: "Youth Camp 2025", desc: "Persiapan generasi terang", img: "https://images.pexels.com/photos/2603517/pexels-photo-2603517.jpeg?auto=compress&cs=tinysrgb&w=1200" },
-      { title: "Pelayanan Sosial", desc: "Kasih bagi sesama", img: "https://images.pexels.com/photos/2347070/pexels-photo-2347070.jpeg?auto=compress&cs=tinysrgb&w=1200" },
-      { title: "Doa Puasa 40 Hari", desc: "Menggumuli kota", img: "https://images.pexels.com/photos/2732531/pexels-photo-2732531.jpeg?auto=compress&cs=tinysrgb&w=1200" },
-      { title: "Kebaktian Natal", desc: "Sukacita Natal bagi semua", img: "https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=1200" }
-    ],
-    rubriks: ["Renungan", "Pengumuman", "Kesaksian", "Artikel"], // kategori berita
-    beritaList: [ // { id, title, rubrik, content, date, image }
-      { id: "news1", title: "Kebaktian Kebangunan Rohani", rubrik: "Pengumuman", content: "Akan diadakan pada 15 Maret 2025 pukul 18.00.", date: "2025-02-10", image: "" }
-    ]
-  };
+    // ===================== DATA DEFAULT (TIDAK ADA GAMBAR EKSTERNAL) =====================
+    let appData = {
+        siteName: "Gereja Gloria",
+        tagline: "Rumah Ibadah yang Menginspirasi",
+        address: "Jl. Kemuliaan No.10, Jakarta",
+        phone: "(021) 1234-8888",
+        email: "info@gloriachurch.id",
+        slides: [
+            { title: "Ibadah Kebangunan", desc: "Mari beribadah dengan sukacita", color: "#2c5f2d" },
+            { title: "Youth Camp 2025", desc: "Persiapan generasi terang", color: "#97bc62" },
+            { title: "Pelayanan Sosial", desc: "Kasih bagi sesama", color: "#b78c3f" },
+            { title: "Doa Puasa 40 Hari", desc: "Menggumuli kota", color: "#5a3e2b" },
+            { title: "Kebaktian Natal", desc: "Sukacita Natal bagi semua", color: "#c0392b" }
+        ],
+        rubriks: ["Renungan", "Pengumuman", "Kesaksian", "Artikel"],
+        beritaList: [
+            { id: "1", title: "Kebaktian Kebangunan Rohani", rubrik: "Pengumuman", content: "Akan diadakan pada 15 Maret 2025 pukul 18.00 WIB.", date: "2025-02-10" },
+            { id: "2", title: "Kesaksian Kesembuhan", rubrik: "Kesaksian", content: "Seorang jemaat disembuhkan dari sakit berat.", date: "2025-02-09" }
+        ],
+        customPages: [
+            { id: "about", title: "Tentang Kami", content: "Gereja Gloria berdiri sejak 1995, melayani masyarakat dengan kasih Kristus." }
+        ]
+    };
 
-  // Load & Save
-  function loadData() { const saved = localStorage.getItem("gloriaChurchCMS"); if(saved) { appData = JSON.parse(saved); } else { saveData(); } }
-  function saveData() { localStorage.setItem("gloriaChurchCMS", JSON.stringify(appData)); }
-  
-  // State CMS
-  let currentTab = "dashboard";
-  let currentFrontendPage = "home"; // halaman yang ditampilkan di frontend
-  
-  // Render Frontend (Menu dinamis, konten halaman, slideshow jika home)
-  function renderFrontend() {
-    document.getElementById("siteTitleDisplay").innerText = appData.siteInfo.name;
-    // menu dinamis
-    const navContainer = document.getElementById("dynamicNavMenu");
-    const mobileNav = document.getElementById("mobileNavMenu");
-    if(navContainer) {
-      navContainer.innerHTML = "";
-      appData.navMenu.forEach(item => {
-        const btn = document.createElement("button");
-        btn.innerText = item.label;
-        btn.className = "text-gray-700 hover:text-amber-600 font-medium transition";
-        btn.onclick = () => { currentFrontendPage = item.pageId; renderFrontendPage(); };
-        navContainer.appendChild(btn);
-      });
-      // custom pages tambahan
-      appData.customPages.forEach(page => {
-        const btn = document.createElement("button");
-        btn.innerText = page.title;
-        btn.className = "text-gray-700 hover:text-amber-600 font-medium transition";
-        btn.onclick = () => { currentFrontendPage = page.id; renderFrontendPage(); };
-        navContainer.appendChild(btn);
-      });
-      // berita link 
-      const newsBtn = document.createElement("button");
-      newsBtn.innerText = "📰 Semua Berita";
-      newsBtn.className = "text-gray-700 hover:text-amber-600 font-medium transition";
-      newsBtn.onclick = () => { currentFrontendPage = "news_index"; renderFrontendPage(); };
-      navContainer.appendChild(newsBtn);
+    let currentPage = "home";
+    let slideIndex = 0;
+    let autoInterval;
+
+    // Load/Save localStorage
+    function loadData() {
+        const saved = localStorage.getItem("gloriaStableCMS");
+        if (saved) {
+            try {
+                appData = JSON.parse(saved);
+            } catch(e) {}
+        }
     }
-    // mobile nav
-    if(mobileNav) {
-      mobileNav.innerHTML = "";
-      [...appData.navMenu, ...appData.customPages.map(p => ({ label: p.title, pageId: p.id })), { label: "📰 Semua Berita", pageId: "news_index" }].forEach(item => {
-        const a = document.createElement("a");
-        a.innerText = item.label;
-        a.className = "block py-2 text-gray-700 border-b";
-        a.onclick = () => { currentFrontendPage = item.pageId; renderFrontendPage(); document.getElementById("mobileNavMenu").classList.add("hidden"); };
-        mobileNav.appendChild(a);
-      });
+
+    function saveData() {
+        localStorage.setItem("gloriaStableCMS", JSON.stringify(appData));
     }
-    renderFrontendPage();
-  }
-  
-  function renderFrontendPage() {
-    const main = document.getElementById("mainContent");
-    if(!main) return;
-    if(currentFrontendPage === "home") {
-      // tampilkan slideshow + welcome
-      main.innerHTML = `
-        <div class="relative overflow-hidden rounded-2xl mb-12 shadow-xl" id="homeSlider">
-          <div class="relative h-[450px] md:h-[550px] overflow-hidden" id="sliderTrackWrapper"><div class="flex transition-transform duration-500 ease-out" id="slideTrack"></div></div>
-          <button id="sliderPrev" class="absolute left-3 top-1/2 bg-white/60 p-2 rounded-full"><i class="fas fa-chevron-left"></i></button>
-          <button id="sliderNext" class="absolute right-3 top-1/2 bg-white/60 p-2 rounded-full"><i class="fas fa-chevron-right"></i></button>
-          <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2" id="sliderDots"></div>
-        </div>
-        <div class="text-center py-8"><h2 class="text-4xl font-bold text-amber-800">${appData.siteInfo.name}</h2><p class="text-gray-600 mt-2">${appData.siteInfo.tagline}</p><div class="mt-6 grid md:grid-cols-3 gap-6">${appData.rubriks.map(r => `<div class="bg-white p-5 rounded-xl shadow hover:shadow-lg"><i class="fas fa-star text-amber-500 text-3xl mb-2"></i><h3 class="font-bold">Rubrik ${r}</h3><p>Temukan berita terbaru kategori ini.</p><button class="text-amber-600 text-sm mt-2" onclick="window.changePageToNewsWithRubrik('${r}')">Lihat Berita →</button></div>`).join('')}</div></div>
-        <div class="mt-12"><h3 class="text-2xl font-bold">Berita Terbaru</h3><div id="latestNewsPreview" class="grid md:grid-cols-2 gap-4 mt-4"></div></div>
-      `;
-      // render slideshow
-      renderSlideshowWidget();
-      // preview 2 berita terbaru
-      const previewDiv = document.getElementById("latestNewsPreview");
-      if(previewDiv) {
-        const latest = [...appData.beritaList].reverse().slice(0,2);
-        previewDiv.innerHTML = latest.map(n => `<div class="bg-white p-4 rounded-xl shadow"><h4 class="font-bold">${n.title}</h4><span class="text-xs text-amber-600">${n.rubrik}</span><p class="text-sm text-gray-600 mt-1">${n.content.substring(0,80)}...</p></div>`).join('');
-        if(latest.length===0) previewDiv.innerHTML = "<p>Belum ada berita, silahkan tambah di CMS.</p>";
-      }
-    } 
-    else if(currentFrontendPage === "about") {
-      main.innerHTML = `<div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow"><h1 class="text-3xl font-bold text-amber-800">Tentang Kami</h1><p class="mt-4">${appData.siteInfo.name} hadir untuk menjadi berkat. Alamat: ${appData.siteInfo.address}, Telepon: ${appData.siteInfo.phone}, Email: ${appData.siteInfo.email}</p><p class="mt-4">Gereja modern dengan semangat kekeluargaan dan ibadah yang dinamis.</p></div>`;
+
+    // ===================== RENDER FRONTEND =====================
+    function renderFrontend() {
+        // Render Menu
+        const navMenu = document.getElementById("navMenu");
+        const menuItems = [
+            { label: "Beranda", page: "home" },
+            { label: "Tentang", page: "about" },
+            { label: "Berita", page: "news" },
+            ...appData.customPages.map(p => ({ label: p.title, page: p.id }))
+        ];
+        navMenu.innerHTML = "";
+        menuItems.forEach(item => {
+            const btn = document.createElement("button");
+            btn.className = "nav-item";
+            btn.innerText = item.label;
+            btn.onclick = () => {
+                currentPage = item.page;
+                renderFrontendPage();
+            };
+            navMenu.appendChild(btn);
+        });
+
+        renderFrontendPage();
     }
-    else if(currentFrontendPage === "news_index") {
-      // tampilkan semua berita dengan filter rubrik
-      main.innerHTML = `<div><h1 class="text-3xl font-bold text-amber-800">Semua Berita</h1><div class="flex gap-2 my-4 flex-wrap" id="rubrikFilter"></div><div id="beritaListContainer" class="grid md:grid-cols-2 gap-6"></div></div>`;
-      const rubrikSet = ["Semua", ...appData.rubriks];
-      document.getElementById("rubrikFilter").innerHTML = rubrikSet.map(r => `<button class="rubrik-filter-btn px-4 py-1 rounded-full bg-amber-100 text-amber-800 text-sm" data-rubrik="${r}">${r}</button>`).join('');
-      const beritaContainer = document.getElementById("beritaListContainer");
-      function filterBerita(rubrik = "Semua") {
+
+    function renderFrontendPage() {
+        const main = document.getElementById("mainContent");
+        if (currentPage === "home") {
+            main.innerHTML = `
+                <div class="slider-container">
+                    <div class="slide-track" id="slideTrack"></div>
+                    <button class="slider-btn prev" onclick="changeSlide(-1)">❮</button>
+                    <button class="slider-btn next" onclick="changeSlide(1)">❯</button>
+                    <div class="dots" id="dotsContainer"></div>
+                </div>
+                <div style="text-align: center; margin: 2rem 0;">
+                    <h2>Selamat Datang di ${appData.siteName}</h2>
+                    <p>${appData.tagline}</p>
+                </div>
+                <div class="rubrik-grid" id="rubrikGrid"></div>
+                <div style="margin-top: 2rem;">
+                    <h3>📰 Berita Terbaru</h3>
+                    <div class="berita-list" id="beritaPreview"></div>
+                </div>
+            `;
+            renderSlideshow();
+            renderRubrikGrid();
+            renderBeritaPreview();
+        } 
+        else if (currentPage === "about") {
+            const aboutPage = appData.customPages.find(p => p.id === "about") || { title: "Tentang", content: "Informasi gereja" };
+            main.innerHTML = `<div style="background: white; padding: 2rem; border-radius: 1rem;"><h2>${aboutPage.title}</h2><p>${aboutPage.content}</p><p><strong>Alamat:</strong> ${appData.address}</p><p><strong>Telepon:</strong> ${appData.phone}</p><p><strong>Email:</strong> ${appData.email}</p></div>`;
+        }
+        else if (currentPage === "news") {
+            main.innerHTML = `<h2>Semua Berita</h2><div id="filterRubrik" style="display: flex; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap;"></div><div class="berita-list" id="allBerita"></div>`;
+            renderAllBerita();
+        }
+        else {
+            const custom = appData.customPages.find(p => p.id === currentPage);
+            if (custom) {
+                main.innerHTML = `<div style="background: white; padding: 2rem; border-radius: 1rem;"><h2>${custom.title}</h2><p>${custom.content}</p></div>`;
+            } else {
+                main.innerHTML = `<p>Halaman tidak ditemukan</p>`;
+            }
+        }
+        window.scrollTo(0, 0);
+    }
+
+    function renderSlideshow() {
+        const track = document.getElementById("slideTrack");
+        const dotsDiv = document.getElementById("dotsContainer");
+        if (!track) return;
+        track.innerHTML = "";
+        appData.slides.forEach((slide, i) => {
+            const div = document.createElement("div");
+            div.className = "slide";
+            div.style.background = slide.color || "#b78c3f";
+            div.innerHTML = `<div class="slide-content"><h2>${escapeHtml(slide.title)}</h2><p>${escapeHtml(slide.desc)}</p></div>`;
+            track.appendChild(div);
+        });
+        dotsDiv.innerHTML = "";
+        appData.slides.forEach((_, i) => {
+            const dot = document.createElement("div");
+            dot.className = `dot ${i === slideIndex ? "active" : ""}`;
+            dot.onclick = () => { slideIndex = i; updateSlidePosition(); resetAutoSlide(); };
+            dotsDiv.appendChild(dot);
+        });
+        updateSlidePosition();
+        startAutoSlide();
+    }
+
+    function updateSlidePosition() {
+        const track = document.getElementById("slideTrack");
+        if (track) track.style.transform = `translateX(-${slideIndex * 100}%)`;
+        document.querySelectorAll(".dot").forEach((dot, i) => {
+            if (i === slideIndex) dot.classList.add("active");
+            else dot.classList.remove("active");
+        });
+    }
+
+    window.changeSlide = function(direction) {
+        slideIndex = (slideIndex + direction + appData.slides.length) % appData.slides.length;
+        updateSlidePosition();
+        resetAutoSlide();
+    };
+
+    function startAutoSlide() {
+        if (autoInterval) clearInterval(autoInterval);
+        autoInterval = setInterval(() => {
+            slideIndex = (slideIndex + 1) % appData.slides.length;
+            updateSlidePosition();
+        }, 6000);
+    }
+
+    function resetAutoSlide() {
+        startAutoSlide();
+    }
+
+    function renderRubrikGrid() {
+        const grid = document.getElementById("rubrikGrid");
+        if (grid) {
+            grid.innerHTML = appData.rubriks.map(r => `
+                <div class="rubrik-card">
+                    <i>📖</i>
+                    <h3>Rubrik ${escapeHtml(r)}</h3>
+                    <p>Temukan berita terbaru kategori ini.</p>
+                    <button onclick="goToNewsWithRubrik('${escapeHtml(r)}')" style="margin-top: 0.5rem; background: #b78c3f;">Lihat Berita →</button>
+                </div>
+            `).join('');
+        }
+    }
+
+    window.goToNewsWithRubrik = function(rubrik) {
+        currentPage = "news";
+        renderFrontendPage();
+        setTimeout(() => filterBeritaByRubrik(rubrik), 100);
+    };
+
+    function renderBeritaPreview() {
+        const previewDiv = document.getElementById("beritaPreview");
+        if (previewDiv) {
+            const latest = [...appData.beritaList].reverse().slice(0, 3);
+            previewDiv.innerHTML = latest.map(b => `<div class="berita-item"><strong>${escapeHtml(b.title)}</strong> <span style="color:#b78c3f;">[${b.rubrik}]</span><p>${escapeHtml(b.content.substring(0, 100))}</p></div>`).join('');
+        }
+    }
+
+    function renderAllBerita() {
+        const filterDiv = document.getElementById("filterRubrik");
+        const beritaDiv = document.getElementById("allBerita");
+        const rubriksAll = ["Semua", ...appData.rubriks];
+        filterDiv.innerHTML = rubriksAll.map(r => `<button onclick="filterBeritaByRubrik('${r}')" style="background:#e0c8a0; color:#2c3e2f;">${r}</button>`).join('');
+        filterBeritaByRubrik("Semua");
+    }
+
+    window.filterBeritaByRubrik = function(rubrik) {
+        const beritaDiv = document.getElementById("allBerita");
+        if (!beritaDiv) return;
         const filtered = rubrik === "Semua" ? appData.beritaList : appData.beritaList.filter(b => b.rubrik === rubrik);
-        beritaContainer.innerHTML = filtered.map(b => `<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold">${b.title}</h2><div class="text-amber-600 text-xs my-1">${b.rubrik} | ${b.date}</div><p>${b.content}</p>${b.image ? `<img src="${b.image}" class="mt-2 rounded max-h-40 object-cover">` : ""}</div>`).join('');
-        if(filtered.length===0) beritaContainer.innerHTML = "<p>Tidak ada berita dalam rubrik ini.</p>";
-      }
-      filterBerita("Semua");
-      document.querySelectorAll(".rubrik-filter-btn").forEach(btn => { btn.onclick = () => filterBerita(btn.getAttribute("data-rubrik")); });
-    } 
-    else {
-      // custom page
-      const found = appData.customPages.find(p => p.id === currentFrontendPage);
-      if(found) { main.innerHTML = `<div class="bg-white p-8 rounded-2xl shadow"><h1 class="text-3xl font-bold text-amber-800">${found.title}</h1><div class="mt-4 prose">${found.content}</div></div>`; }
-      else { main.innerHTML = "<div class='text-center py-20'><h2>Halaman tidak ditemukan</h2></div>"; }
+        beritaDiv.innerHTML = filtered.map(b => `<div class="berita-item"><strong>${escapeHtml(b.title)}</strong> <span style="color:#b78c3f;">[${b.rubrik}]</span><p>${escapeHtml(b.content)}</p><small>${b.date}</small></div>`).join('');
+        if (filtered.length === 0) beritaDiv.innerHTML = "<p>Tidak ada berita.</p>";
+    };
+
+    function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
     }
-    window.scrollTo(0,0);
-  }
-  
-  window.changePageToNewsWithRubrik = (rubrik) => { currentFrontendPage = "news_index"; renderFrontendPage(); setTimeout(() => { const btns = document.querySelectorAll(".rubrik-filter-btn"); btns.forEach(btn => { if(btn.innerText === rubrik) btn.click(); }); }, 100); };
-  
-  let slideIndex = 0;
-  function renderSlideshowWidget() {
-    const track = document.getElementById("slideTrack");
-    const dotsDiv = document.getElementById("sliderDots");
-    if(!track) return;
-    track.innerHTML = "";
-    appData.slides.forEach((s, idx) => {
-      const div = document.createElement("div");
-      div.className = "min-w-full h-[450px] md:h-[550px] bg-cover bg-center flex items-end";
-      div.style.backgroundImage = `linear-gradient(0deg, rgba(0,0,0,0.5), rgba(0,0,0,0.2)), url('${s.img}')`;
-      div.innerHTML = `<div class="p-8 text-white w-full bg-black/30"><h2 class="text-3xl font-bold">${s.title}</h2><p>${s.desc}</p></div>`;
-      track.appendChild(div);
-    });
-    function updateSlide() { track.style.transform = `translateX(-${slideIndex * 100}%)`; document.querySelectorAll(".slider-dot-item").forEach((dot,i)=>{ if(i===slideIndex) dot.classList.add("bg-amber-500","w-6"); else dot.classList.remove("bg-amber-500","w-6"); }); }
-    dotsDiv.innerHTML = appData.slides.map((_,i)=>`<span class="slider-dot-item w-2 h-2 rounded-full bg-white/70 cursor-pointer transition-all ${i===slideIndex?'bg-amber-500 w-6':''}" data-index="${i}"></span>`).join('');
-    document.querySelectorAll(".slider-dot-item").forEach(dot => dot.addEventListener("click", (e) => { slideIndex = parseInt(e.target.dataset.index); updateSlide(); }));
-    document.getElementById("sliderPrev")?.addEventListener("click",()=>{ slideIndex = (slideIndex-1+appData.slides.length)%appData.slides.length; updateSlide(); });
-    document.getElementById("sliderNext")?.addEventListener("click",()=>{ slideIndex = (slideIndex+1)%appData.slides.length; updateSlide(); });
-    updateSlide();
-  }
-  
-  // --------------------------- CMS PANEL FULL ---------------------------
-  function renderCmsTab() {
-    const container = document.getElementById("cmsTabContent");
-    if(!container) return;
-    if(currentTab === "dashboard") container.innerHTML = `<div><h3 class="text-xl font-bold">Dashboard</h3><p>Total Halaman Kustom: ${appData.customPages.length} | Berita: ${appData.beritaList.length} | Rubrik: ${appData.rubriks.length}</p><div class="mt-4 bg-green-50 p-4 rounded">Selamat datang di CMS lengkap. Anda bisa kelola halaman, berita, slide, upload file & rubrik</div></div>`;
-    else if(currentTab === "pages") {
-      container.innerHTML = `<div><h3 class="text-xl font-bold">📄 Halaman Statis (Page Builder)</h3><button id="addPageBtn" class="bg-amber-600 text-white px-3 py-1 rounded mb-3">+ Tambah Halaman Baru</button><div id="customPagesList"></div></div>`;
-      const pagesDiv = document.getElementById("customPagesList");
-      pagesDiv.innerHTML = appData.customPages.map((pg, idx) => `<div class="border p-3 rounded mb-2"><b>${pg.title}</b> (ID: ${pg.id})<button class="editPageBtn text-blue-600 ml-3" data-idx="${idx}">Edit</button><button class="deletePageBtn text-red-600 ml-2" data-idx="${idx}">Hapus</button><p class="text-sm">${pg.content.substring(0,80)}</p></div>`).join('');
-      document.querySelectorAll(".editPageBtn").forEach(btn => btn.onclick = () => { const idx = btn.dataset.idx; const page = appData.customPages[idx]; const newTitle = prompt("Judul Halaman", page.title); const newContent = prompt("Konten (HTML/Text)", page.content); if(newTitle && newContent) { page.title = newTitle; page.content = newContent; saveData(); renderCmsTab(); renderFrontend(); } });
-      document.querySelectorAll(".deletePageBtn").forEach(btn => btn.onclick = () => { if(confirm("Hapus halaman?")) { appData.customPages.splice(btn.dataset.idx,1); saveData(); renderCmsTab(); renderFrontend(); } });
-      document.getElementById("addPageBtn").onclick = () => { const title = prompt("Judul Halaman Baru"); if(title) { const id = "page_"+Date.now(); appData.customPages.push({ id, title, content: "Isi konten halaman disini", createdAt: new Date().toISOString() }); saveData(); renderCmsTab(); renderFrontend(); } };
+
+    // ===================== CMS PANEL =====================
+    function openCmsModal() {
+        document.getElementById("cmsModal").style.display = "block";
+        showCmsTab('slides');
     }
-    else if(currentTab === "news") {
-      container.innerHTML = `<h3 class="text-xl font-bold">📰 Manajemen Berita & Rubrik</h3><button id="addNewsBtn" class="bg-amber-600 text-white px-3 py-1 rounded my-2">+ Tambah Berita</button><div id="newsListAdmin"></div>`;
-      const newsDiv = document.getElementById("newsListAdmin");
-      newsDiv.innerHTML = appData.beritaList.map((n,i)=>`<div class="border p-2 mb-2"><b>${n.title}</b> (${n.rubrik})<button class="editNewsBtn ml-2 text-blue-600" data-idx="${i}">Edit</button><button class="delNewsBtn text-red-600" data-idx="${i}">Hapus</button><p>${n.content.substring(0,50)}</p></div>`).join('');
-      document.querySelectorAll(".editNewsBtn").forEach(btn => btn.onclick = () => { const idx=btn.dataset.idx; const n=appData.beritaList[idx]; const newTitle=prompt("Judul", n.title); const newRub=prompt("Rubrik (pilih: "+appData.rubriks.join()+")", n.rubrik); const newCont=prompt("Konten", n.content); if(newTitle && newCont) { n.title=newTitle; n.rubrik=newRub || n.rubrik; n.content=newCont; saveData(); renderCmsTab(); renderFrontend(); } });
-      document.querySelectorAll(".delNewsBtn").forEach(btn => btn.onclick = () => { if(confirm("hapus?")){ appData.beritaList.splice(btn.dataset.idx,1); saveData(); renderCmsTab(); renderFrontend(); } });
-      document.getElementById("addNewsBtn").onclick = () => { const title = prompt("Judul Berita"); if(title){ appData.beritaList.push({ id:"n"+Date.now(), title, rubrik:appData.rubriks[0], content:"isi berita", date:new Date().toISOString().slice(0,10), image:"" }); saveData(); renderCmsTab(); renderFrontend(); } };
+
+    function closeCmsModal() {
+        document.getElementById("cmsModal").style.display = "none";
     }
-    else if(currentTab === "slides") {
-      container.innerHTML = `<h3 class="text-xl font-bold">🎨 5 Slide Hero</h3><div id="slideEditor"></div><button id="saveSlidesCMSBtn" class="bg-green-600 text-white px-4 py-2 rounded mt-3">Simpan Semua Slide</button>`;
-      const slideDiv = document.getElementById("slideEditor");
-      slideDiv.innerHTML = appData.slides.map((s,i)=>`<div class="border p-3 mb-3"><label>Slide ${i+1} Judul</label><input id="slide_title_${i}" class="w-full border p-1" value="${s.title.replace(/"/g, '&quot;')}"><label>Deskripsi</label><input id="slide_desc_${i}" class="w-full border p-1" value="${s.desc.replace(/"/g, '&quot;')}"><label>URL Gambar</label><input id="slide_img_${i}" class="w-full border p-1" value="${s.img}"></div>`).join('');
-      document.getElementById("saveSlidesCMSBtn").onclick = () => { const newSlides = []; for(let i=0;i<5;i++){ newSlides.push({ title: document.getElementById(`slide_title_${i}`).value, desc: document.getElementById(`slide_desc_${i}`).value, img: document.getElementById(`slide_img_${i}`).value }); } appData.slides = newSlides; saveData(); renderFrontend(); alert("Slide tersimpan!"); };
+
+    window.showCmsTab = function(tab) {
+        const panel = document.getElementById("cmsPanelContent");
+        if (tab === 'slides') {
+            panel.innerHTML = `<h3>Edit 5 Slide Hero</h3>${appData.slides.map((s, i) => `
+                <div class="form-group">
+                    <label>Slide ${i+1} - Judul</label>
+                    <input type="text" id="slide_title_${i}" value="${escapeHtml(s.title)}">
+                    <label>Deskripsi</label>
+                    <input type="text" id="slide_desc_${i}" value="${escapeHtml(s.desc)}">
+                    <label>Warna Background (opsional)</label>
+                    <input type="color" id="slide_color_${i}" value="${s.color || '#b78c3f'}">
+                </div>
+            `).join('')}<button onclick="saveSlides()">Simpan Slide</button>`;
+        } 
+        else if (tab === 'rubrik') {
+            panel.innerHTML = `<h3>Kelola Rubrik</h3><div id="rubrikList"></div><div class="form-group"><input type="text" id="newRubrik" placeholder="Rubrik baru"><button onclick="addRubrik()">Tambah</button></div>`;
+            refreshRubrikList();
+        }
+        else if (tab === 'berita') {
+            panel.innerHTML = `<h3>Manajemen Berita</h3><button onclick="showAddBeritaForm()">+ Tambah Berita</button><div id="beritaListCms"></div>`;
+            refreshBeritaListCms();
+        }
+        else if (tab === 'pages') {
+            panel.innerHTML = `<h3>Halaman Kustom</h3><button onclick="addCustomPage()">+ Tambah Halaman</button><div id="pagesListCms"></div>`;
+            refreshPagesList();
+        }
+        else if (tab === 'info') {
+            panel.innerHTML = `<h3>Informasi Gereja</h3>
+                <div class="form-group"><label>Nama Gereja</label><input type="text" id="siteName" value="${escapeHtml(appData.siteName)}"></div>
+                <div class="form-group"><label>Tagline</label><input type="text" id="tagline" value="${escapeHtml(appData.tagline)}"></div>
+                <div class="form-group"><label>Alamat</label><input type="text" id="address" value="${escapeHtml(appData.address)}"></div>
+                <div class="form-group"><label>Telepon</label><input type="text" id="phone" value="${escapeHtml(appData.phone)}"></div>
+                <button onclick="saveInfo()">Simpan Info</button>`;
+        }
+    };
+
+    window.saveSlides = function() {
+        for (let i = 0; i < appData.slides.length; i++) {
+            appData.slides[i].title = document.getElementById(`slide_title_${i}`).value;
+            appData.slides[i].desc = document.getElementById(`slide_desc_${i}`).value;
+            appData.slides[i].color = document.getElementById(`slide_color_${i}`).value;
+        }
+        saveData();
+        renderFrontend();
+        alert("Slide tersimpan!");
+    };
+
+    function refreshRubrikList() {
+        const container = document.getElementById("rubrikList");
+        if (container) {
+            container.innerHTML = appData.rubriks.map((r, i) => `<div style="display: flex; justify-content: space-between; margin: 0.5rem 0;"><span>${escapeHtml(r)}</span><button onclick="deleteRubrik(${i})" class="btn-danger">Hapus</button></div>`).join('');
+        }
     }
-    else if(currentTab === "settings") {
-      container.innerHTML = `<h3 class="text-xl font-bold">⚙️ Info Gereja & Menu Navigasi</h3><div><label>Nama Gereja</label><input id="siteNameInput" class="w-full border p-2 my-1" value="${appData.siteInfo.name}"><label>Tagline</label><input id="taglineInput" class="w-full border p-2" value="${appData.siteInfo.tagline}"><label>Alamat</label><input id="addressInput" value="${appData.siteInfo.address}" class="w-full border p-2"><label>Menu Navigasi (JSON: [{\"label\":\"Beranda\",\"pageId\":\"home\"}])</label><textarea id="menuEditor" rows="4" class="w-full border p-2">${JSON.stringify(appData.navMenu,null,2)}</textarea><button id="saveSettingsBtn" class="bg-amber-600 text-white px-4 py-2 rounded mt-3">Simpan Perubahan</button></div>`;
-      document.getElementById("saveSettingsBtn").onclick = () => { appData.siteInfo.name = document.getElementById("siteNameInput").value; appData.siteInfo.tagline = document.getElementById("taglineInput").value; appData.siteInfo.address = document.getElementById("addressInput").value; try{ appData.navMenu = JSON.parse(document.getElementById("menuEditor").value); }catch(e){ alert("JSON menu salah"); } saveData(); renderFrontend(); alert("tersimpan"); };
+
+    window.addRubrik = function() {
+        const newRub = document.getElementById("newRubrik").value.trim();
+        if (newRub && !appData.rubriks.includes(newRub)) {
+            appData.rubriks.push(newRub);
+            saveData();
+            refreshRubrikList();
+            renderFrontend();
+            document.getElementById("newRubrik").value = "";
+        }
+    };
+
+    window.deleteRubrik = function(index) {
+        appData.rubriks.splice(index, 1);
+        saveData();
+        refreshRubrikList();
+        renderFrontend();
+    };
+
+    function refreshBeritaListCms() {
+        const container = document.getElementById("beritaListCms");
+        if (container) {
+            container.innerHTML = appData.beritaList.map((b, i) => `
+                <div class="berita-item" style="margin-bottom: 0.5rem;">
+                    <strong>${escapeHtml(b.title)}</strong> (${b.rubrik})
+                    <button onclick="editBerita(${i})">Edit</button>
+                    <button onclick="deleteBerita(${i})" class="btn-danger">Hapus</button>
+                </div>
+            `).join('');
+        }
     }
-    else if(currentTab === "files") {
-      container.innerHTML = `<h3 class="text-xl font-bold">📁 Upload & Download File (Base64)</h3><input type="file" id="uploadFileInput" accept="image/*,application/pdf"><button id="uploadFileBtn" class="bg-blue-600 text-white px-3 py-1 rounded">Upload & Simpan ke Storage</button><div id="fileList" class="mt-4"></div><button id="downloadBackupBtn" class="bg-green-600 text-white px-3 py-1 rounded mt-2">Download Backup Data (JSON)</button>`;
-      let uploadedFiles = JSON.parse(localStorage.getItem("gloriaUploadedFiles") || "[]");
-      function refreshFileList() { document.getElementById("fileList").innerHTML = uploadedFiles.map((f,i)=>`<div class="border p-2 mb-1"><a href="${f.data}" target="_blank">${f.name}</a> <button class="delFileBtn text-red-600" data-idx="${i}">Hapus</button></div>`).join(''); document.querySelectorAll(".delFileBtn").forEach(btn=>btn.onclick=()=>{ uploadedFiles.splice(btn.dataset.idx,1); localStorage.setItem("gloriaUploadedFiles",JSON.stringify(uploadedFiles)); refreshFileList(); }); }
-      document.getElementById("uploadFileBtn").onclick = () => { const file = document.getElementById("uploadFileInput").files[0]; if(file){ const reader = new FileReader(); reader.onload = function(e){ uploadedFiles.push({ name: file.name, data: e.target.result, type: file.type }); localStorage.setItem("gloriaUploadedFiles",JSON.stringify(uploadedFiles)); refreshFileList(); alert("file tersimpan!"); }; reader.readAsDataURL(file); } };
-      document.getElementById("downloadBackupBtn").onclick = () => { const backup = { appData, uploadedFiles }; const dataStr = JSON.stringify(backup); const blob = new Blob([dataStr], {type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="church_backup.json"; a.click(); URL.revokeObjectURL(url); };
-      refreshFileList();
+
+    window.showAddBeritaForm = function() {
+        const panel = document.getElementById("cmsPanelContent");
+        panel.innerHTML = `<h3>Tambah Berita</h3>
+            <div class="form-group"><label>Judul</label><input type="text" id="newTitle"></div>
+            <div class="form-group"><label>Rubrik</label><select id="newRubrikSelect">${appData.rubriks.map(r => `<option>${r}</option>`).join('')}</select></div>
+            <div class="form-group"><label>Konten</label><textarea id="newContent" rows="3"></textarea></div>
+            <button onclick="saveNewBerita()">Simpan</button> <button onclick="showCmsTab('berita')">Batal</button>`;
+    };
+
+    window.saveNewBerita = function() {
+        const title = document.getElementById("newTitle").value;
+        const rubrik = document.getElementById("newRubrikSelect").value;
+        const content = document.getElementById("newContent").value;
+        if (title && content) {
+            appData.beritaList.push({
+                id: Date.now().toString(),
+                title: title,
+                rubrik: rubrik,
+                content: content,
+                date: new Date().toISOString().slice(0, 10)
+            });
+            saveData();
+            showCmsTab('berita');
+            renderFrontend();
+        }
+    };
+
+    window.editBerita = function(index) {
+        const b = appData.beritaList[index];
+        const panel = document.getElementById("cmsPanelContent");
+        panel.innerHTML = `<h3>Edit Berita</h3>
+            <div class="form-group"><label>Judul</label><input type="text" id="editTitle" value="${escapeHtml(b.title)}"></div>
+            <div class="form-group"><label>Rubrik</label><select id="editRubrik">${appData.rubriks.map(r => `<option ${r === b.rubrik ? 'selected' : ''}>${r}</option>`).join('')}</select></div>
+            <div class="form-group"><label>Konten</label><textarea id="editContent" rows="3">${escapeHtml(b.content)}</textarea></div>
+            <button onclick="updateBerita(${index})">Update</button> <button onclick="showCmsTab('berita')">Batal</button>`;
+    };
+
+    window.updateBerita = function(index) {
+        appData.beritaList[index].title = document.getElementById("editTitle").value;
+        appData.beritaList[index].rubrik = document.getElementById("editRubrik").value;
+        appData.beritaList[index].content = document.getElementById("editContent").value;
+        saveData();
+        showCmsTab('berita');
+        renderFrontend();
+    };
+
+    window.deleteBerita = function(index) {
+        if (confirm("Hapus berita ini?")) {
+            appData.beritaList.splice(index, 1);
+            saveData();
+            refreshBeritaListCms();
+            renderFrontend();
+        }
+    };
+
+    function refreshPagesList() {
+        const container = document.getElementById("pagesListCms");
+        if (container) {
+            container.innerHTML = appData.customPages.map((p, i) => `
+                <div style="border: 1px solid #ddd; margin: 0.5rem 0; padding: 0.5rem;">
+                    <strong>${escapeHtml(p.title)}</strong>
+                    <button onclick="editCustomPage(${i})">Edit</button>
+                    <button onclick="deleteCustomPage(${i})" class="btn-danger">Hapus</button>
+                </div>
+            `).join('');
+        }
     }
-    else if(currentTab === "rubrik") {
-      container.innerHTML = `<h3 class="text-xl font-bold">🏷️ Kelola Rubrik Kategori</h3><div id="rubriksList"></div><input id="newRubrikInput" placeholder="Nama rubrik baru" class="border p-2 w-full mt-2"><button id="addRubrikBtn" class="bg-amber-600 text-white px-3 py-1 rounded mt-2">Tambah Rubrik</button>`;
-      const rubDiv = document.getElementById("rubriksList");
-      rubDiv.innerHTML = appData.rubriks.map((r,i)=>`<div class="flex justify-between border-b py-2"><span>${r}</span><button class="delRubrikBtn text-red-600" data-idx="${i}">Hapus</button></div>`).join('');
-      document.querySelectorAll(".delRubrikBtn").forEach(btn=>btn.onclick=()=>{ appData.rubriks.splice(btn.dataset.idx,1); saveData(); renderCmsTab(); });
-      document.getElementById("addRubrikBtn").onclick = () => { const newRub = document.getElementById("newRubrikInput").value.trim(); if(newRub && !appData.rubriks.includes(newRub)){ appData.rubriks.push(newRub); saveData(); renderCmsTab(); } };
-    }
-  }
-  
-  // Event bindings CMS Modal
-  const modal = document.getElementById("cmsModal");
-  document.getElementById("openCmsBtn").onclick = () => { modal.classList.remove("hidden"); renderCmsTab(); };
-  document.getElementById("closeCmsBtn").onclick = () => { modal.classList.add("hidden"); };
-  document.querySelectorAll(".cms-tab-btn").forEach(btn => btn.onclick = () => { currentTab = btn.dataset.tab; renderCmsTab(); });
-  document.getElementById("exportBackupBtn").onclick = () => { const dataStr = JSON.stringify(appData); const blob = new Blob([dataStr], {type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="church_cms_data.json"; a.click(); URL.revokeObjectURL(url); };
-  document.getElementById("mobileMenuBtn").onclick = () => { document.getElementById("mobileNavMenu").classList.toggle("hidden"); };
-  
-  loadData();
-  renderFrontend();
+
+    window.addCustomPage = function() {
+        const title = prompt("Judul Halaman Baru:");
+        if (title) {
+            const id = "page_" + Date.now();
+            appData.customPages.push({ id: id, title: title, content: "Konten halaman baru" });
+            saveData();
+            refreshPagesList();
+            renderFrontend();
+        }
+    };
+
+    window.editCustomPage = function(index) {
+        const newTitle = prompt("Judul Baru", appData.customPages[index].title);
+        const newContent = prompt("Konten Baru", appData.customPages[index].content);
+        if (newTitle) appData.customPages[index].title = newTitle;
+        if (newContent) appData.customPages[index].content = newContent;
+        saveData();
+        refreshPagesList();
+        renderFrontend();
+    };
+
+    window.deleteCustomPage = function(index) {
+        if (confirm("Hapus halaman?")) {
+            appData.customPages.splice(index, 1);
+            saveData();
+            refreshPagesList();
+            renderFrontend();
+        }
+    };
+
+    window.saveInfo = function() {
+        appData.siteName = document.getElementById("siteName").value;
+        appData.tagline = document.getElementById("tagline").value;
+        appData.address = document.getElementById("address").value;
+        appData.phone = document.getElementById("phone").value;
+        saveData();
+        renderFrontend();
+        alert("Info tersimpan!");
+    };
+
+    // Event binding
+    document.getElementById("openCmsBtn").onclick = openCmsModal;
+    window.onclick = function(e) {
+        const modal = document.getElementById("cmsModal");
+        if (e.target === modal) closeCmsModal();
+    };
+
+    loadData();
+    renderFrontend();
 </script>
 </body>
 </html>
-```
