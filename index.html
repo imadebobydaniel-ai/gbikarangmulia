@@ -13,89 +13,135 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #fef9f0;
+            background: #f5f0e8;
             color: #1e2a2e;
         }
 
-        /* Navbar - logo di kiri pojok */
+        /* Header dengan 3 kolom: teks kiri | logo tengah? | logo kanan */
+        .header-top {
+            background: #1a3c2c;
+            color: #d4a853;
+            padding: 0.5rem 5%;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Navbar Utama */
         .navbar {
             background: white;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 0.8rem 5%;
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-bottom: 3px solid #d4a853;
         }
 
+        /* Area Kiri - Teks Sinode */
+        .sinode-text {
+            text-align: left;
+        }
+
+        .sinode-text h3 {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: #8b7355;
+            font-weight: 500;
+        }
+
+        .sinode-text h1 {
+            font-size: 1.5rem;
+            color: #1a3c2c;
+            line-height: 1.2;
+        }
+
+        .sinode-text h1 span {
+            font-size: 1rem;
+            display: block;
+            color: #d4a853;
+        }
+
+        /* Logo GBI di Kanan */
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            flex-shrink: 0;
+            gap: 0.8rem;
         }
 
         .logo-img {
-            width: 55px;
-            height: 55px;
+            width: 65px;
+            height: 65px;
             object-fit: contain;
-            border-radius: 12px;
+            border-radius: 50%;
+            background: #f0e8d8;
+            padding: 5px;
         }
 
-        .logo-text h1 {
-            font-size: 1.4rem;
-            color: #1a5d2a;
-            letter-spacing: -0.5px;
-            margin: 0;
+        .logo-text {
+            text-align: right;
+        }
+
+        .logo-text h2 {
+            font-size: 1.2rem;
+            color: #1a3c2c;
         }
 
         .logo-text p {
             font-size: 0.7rem;
-            color: #b78c3f;
-            margin: 0;
+            color: #d4a853;
+            letter-spacing: 1px;
         }
 
-        /* Nav Menu - di tengah */
+        /* Menu Navigasi */
+        .nav-menu-container {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 0.5rem 5%;
+        }
+
         .nav-menu {
             display: flex;
-            gap: 1.5rem;
-            align-items: center;
+            justify-content: center;
+            gap: 2rem;
             flex-wrap: wrap;
         }
 
         .nav-item {
             background: none;
             border: none;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            color: #2c3e2f;
+            color: #1a3c2c;
             cursor: pointer;
             padding: 0.5rem 0;
             transition: 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .nav-item:hover {
-            color: #b78c3f;
+            color: #d4a853;
+            border-bottom: 2px solid #d4a853;
         }
 
-        /* CMS Button - di kanan */
         .cms-btn {
-            background: #1a5d2a;
+            background: #1a3c2c;
             color: white;
             border: none;
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
             font-weight: bold;
             cursor: pointer;
+            font-size: 0.8rem;
             transition: 0.2s;
-            flex-shrink: 0;
+            margin-left: 1rem;
         }
 
         .cms-btn:hover {
-            background: #b78c3f;
+            background: #d4a853;
+            color: #1a3c2c;
         }
 
         /* Main Content */
@@ -108,10 +154,10 @@
         /* Slideshow */
         .slider-container {
             position: relative;
-            border-radius: 1.5rem;
+            border-radius: 1rem;
             overflow: hidden;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
         .slide-track {
@@ -121,7 +167,7 @@
 
         .slide {
             min-width: 100%;
-            height: 450px;
+            height: 420px;
             background-size: cover;
             background-position: center;
             display: flex;
@@ -190,11 +236,10 @@
             background: rgba(255, 255, 255, 0.6);
             border-radius: 50%;
             cursor: pointer;
-            transition: 0.2s;
         }
 
         .dot.active {
-            background: #b78c3f;
+            background: #d4a853;
             width: 24px;
             border-radius: 10px;
         }
@@ -203,18 +248,22 @@
         .welcome-section {
             text-align: center;
             margin: 2rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         .welcome-section h2 {
             font-size: 2rem;
-            color: #1a5d2a;
+            color: #1a3c2c;
             margin-bottom: 1rem;
         }
 
         /* Rubrik Grid */
         .rubrik-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
             margin: 2rem 0;
         }
@@ -223,25 +272,26 @@
             background: white;
             padding: 1.5rem;
             border-radius: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             text-align: center;
             transition: 0.3s;
             cursor: pointer;
+            border: 1px solid #e8e0d0;
         }
 
         .rubrik-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #d4a853;
         }
 
         .rubrik-card i {
             font-size: 2.5rem;
-            color: #b78c3f;
+            color: #d4a853;
             margin-bottom: 1rem;
         }
 
         .rubrik-card h3 {
-            color: #1a5d2a;
+            color: #1a3c2c;
             margin-bottom: 0.5rem;
         }
 
@@ -256,21 +306,17 @@
             background: white;
             padding: 1.2rem;
             border-radius: 0.8rem;
-            border-left: 4px solid #b78c3f;
+            border-left: 4px solid #d4a853;
             transition: 0.2s;
-        }
-
-        .berita-item:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .berita-item strong {
             font-size: 1.1rem;
-            color: #1a5d2a;
+            color: #1a3c2c;
         }
 
         .berita-item .rubrik-tag {
-            color: #b78c3f;
+            color: #d4a853;
             font-size: 0.8rem;
             margin-left: 0.5rem;
         }
@@ -308,7 +354,7 @@
             align-items: center;
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid #b78c3f;
+            border-bottom: 2px solid #d4a853;
         }
 
         .cms-tabs {
@@ -327,7 +373,7 @@
         }
 
         .cms-tab:hover {
-            background: #b78c3f;
+            background: #d4a853;
             color: white;
         }
 
@@ -351,7 +397,7 @@
         }
 
         button {
-            background: #1a5d2a;
+            background: #1a3c2c;
             color: white;
             border: none;
             padding: 0.6rem 1.2rem;
@@ -369,7 +415,7 @@
         }
 
         .footer {
-            background: #1a2e1f;
+            background: #1a3c2c;
             color: #ddd;
             text-align: center;
             padding: 1.5rem;
@@ -378,15 +424,18 @@
 
         @media (max-width: 768px) {
             .navbar {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
             }
-            .nav-menu {
-                order: 3;
-                width: 100%;
+            .sinode-text {
+                text-align: center;
+            }
+            .logo-area {
                 justify-content: center;
-                margin-top: 0.5rem;
+            }
+            .logo-text {
+                text-align: center;
             }
             .slide {
                 height: 300px;
@@ -394,31 +443,46 @@
             .slide-content h2 {
                 font-size: 1.3rem;
             }
-            .logo-text h1 {
-                font-size: 1.1rem;
-            }
-            .logo-img {
-                width: 40px;
-                height: 40px;
+            .nav-menu {
+                gap: 1rem;
             }
         }
     </style>
 </head>
 <body>
 
+<!-- Header Atas -->
+<div class="header-top">
+    <span>✝️ Soli Deo Gloria</span>
+    <span>📅 Minggu, 09:00 & 17:00 WIB</span>
+</div>
+
+<!-- Navbar Utama: Teks Sinode di Kiri, Logo GBI di Kanan -->
 <nav class="navbar">
-    <div class="logo-area">
-        <!-- Perbaikan: nama file logo_gbi.png (bukan logo_gbipng) -->
-        <img src="logo_gbi.png" alt="Logo GBI Karang Mulia" class="logo-img" 
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-        <div class="logo-text">
-            <h1>GBI Karang Mulia</h1>
-            <p>Gereja Bethel Indonesia</p>
-        </div>
+    <div class="sinode-text">
+        <h3>SINODE</h3>
+        <h1>GEREJA<br>PRESBYTERIAN<br>INDONESIA</h1>
+        <h3>PRESBYTERI RANTEN</h3>
     </div>
-    <div class="nav-menu" id="navMenu"></div>
-    <button class="cms-btn" id="openCmsBtn">📋 Admin CMS</button>
+    
+    <div class="logo-area">
+        <div class="logo-text">
+            <h2>GBI Karang Mulia</h2>
+            <p>GEREJA BETHEL INDONESIA</p>
+        </div>
+        <img src="logo_gbi.png" alt="Logo GBI" class="logo-img" 
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+        <div style="display:none;">⛪</div>
+    </div>
 </nav>
+
+<!-- Menu Navigasi -->
+<div class="nav-menu-container">
+    <div class="nav-menu" id="navMenu"></div>
+    <div style="text-align: center; margin-top: 0.5rem;">
+        <button class="cms-btn" id="openCmsBtn">📋 Admin CMS</button>
+    </div>
+</div>
 
 <main class="container" id="mainContent"></main>
 
@@ -454,8 +518,8 @@
         phone: "(021) 8061-2345",
         email: "info@gbikarangmulia.org",
         slides: [
-            { title: "Ibadah Kebangunan Rohani", desc: "Mari beribadah dengan sukacita setiap Minggu pukul 09.00", bgColor: "#1a5d2a" },
-            { title: "Youth Revival 2025", desc: "Persiapan generasi terang bagi Kristus", bgColor: "#b78c3f" },
+            { title: "Ibadah Kebangunan Rohani", desc: "Mari beribadah dengan sukacita setiap Minggu pukul 09.00", bgColor: "#1a3c2c" },
+            { title: "Youth Revival 2025", desc: "Persiapan generasi terang bagi Kristus", bgColor: "#d4a853" },
             { title: "Pelayanan Sosial", desc: "Kasih bagi sesama - Jumat 15.00 WIB", bgColor: "#2c6e3a" },
             { title: "Doa Puasa 40 Hari", desc: "Menggumuli kota dan bangsa", bgColor: "#8b5e2c" },
             { title: "Kebaktian Natal", desc: "Sukacita Natal bagi semua - 24 Desember 2025", bgColor: "#c0392b" }
@@ -492,14 +556,13 @@
 
     // ===================== RENDER FRONTEND =====================
     function renderFrontend() {
-        // Render Menu
         const navMenu = document.getElementById("navMenu");
         const menuItems = [
-            { label: "🏠 Beranda", page: "home" },
-            { label: "📖 Tentang", page: "about" },
-            { label: "🎯 Visi & Misi", page: "visi" },
-            { label: "📰 Berita", page: "news" },
-            ...appData.customPages.filter(p => p.id !== "about" && p.id !== "visi").map(p => ({ label: p.title, page: p.id }))
+            { label: "BERANDA", page: "home" },
+            { label: "TENTANG", page: "about" },
+            { label: "VISI & MISI", page: "visi" },
+            { label: "BERITA", page: "news" },
+            ...appData.customPages.filter(p => p.id !== "about" && p.id !== "visi").map(p => ({ label: p.title.toUpperCase(), page: p.id }))
         ];
         navMenu.innerHTML = "";
         menuItems.forEach(item => {
@@ -532,7 +595,7 @@
                 </div>
                 <div class="rubrik-grid" id="rubrikGrid"></div>
                 <div style="margin-top: 2rem;">
-                    <h3 style="color: #1a5d2a;">📰 Berita Terkini</h3>
+                    <h3 style="color: #1a3c2c;">📰 Berita Terkini</h3>
                     <div class="berita-list" id="beritaPreview"></div>
                 </div>
             `;
@@ -544,7 +607,7 @@
             const aboutPage = appData.customPages.find(p => p.id === "about");
             main.innerHTML = `
                 <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                    <h2 style="color: #1a5d2a;">${aboutPage.title}</h2>
+                    <h2 style="color: #1a3c2c;">${aboutPage.title}</h2>
                     <p style="margin: 1rem 0; line-height: 1.6;">${aboutPage.content}</p>
                     <hr style="margin: 1rem 0;">
                     <p><strong>📍 Alamat:</strong> ${appData.address}</p>
@@ -557,14 +620,14 @@
             const visiPage = appData.customPages.find(p => p.id === "visi");
             main.innerHTML = `
                 <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                    <h2 style="color: #1a5d2a;">${visiPage.title}</h2>
+                    <h2 style="color: #1a3c2c;">${visiPage.title}</h2>
                     <p style="margin: 1rem 0; line-height: 1.6;">${visiPage.content}</p>
                 </div>
             `;
         }
         else if (currentPage === "news") {
             main.innerHTML = `
-                <h2 style="color: #1a5d2a; margin-bottom: 1rem;">📰 Semua Berita</h2>
+                <h2 style="color: #1a3c2c; margin-bottom: 1rem;">📰 Semua Berita</h2>
                 <div id="filterRubrik" style="display: flex; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap;"></div>
                 <div class="berita-list" id="allBerita"></div>
             `;
@@ -575,7 +638,7 @@
             if (custom) {
                 main.innerHTML = `
                     <div style="background: white; padding: 2rem; border-radius: 1rem;">
-                        <h2 style="color: #1a5d2a;">${custom.title}</h2>
+                        <h2 style="color: #1a3c2c;">${custom.title}</h2>
                         <p style="margin-top: 1rem;">${custom.content}</p>
                     </div>
                 `;
@@ -594,7 +657,7 @@
         appData.slides.forEach((slide, i) => {
             const div = document.createElement("div");
             div.className = "slide";
-            div.style.backgroundColor = slide.bgColor || "#1a5d2a";
+            div.style.backgroundColor = slide.bgColor || "#1a3c2c";
             div.innerHTML = `<div class="slide-content"><h2>${escapeHtml(slide.title)}</h2><p>${escapeHtml(slide.desc)}</p></div>`;
             track.appendChild(div);
         });
@@ -644,7 +707,7 @@
                     <i>📖</i>
                     <h3>${escapeHtml(r)}</h3>
                     <p>Temukan berita terbaru kategori ini</p>
-                    <button style="margin-top: 0.5rem; background: #b78c3f;">Lihat →</button>
+                    <button style="margin-top: 0.5rem; background: #d4a853; color:#1a3c2c;">Lihat →</button>
                 </div>
             `).join('');
         }
@@ -676,7 +739,7 @@
         const filterDiv = document.getElementById("filterRubrik");
         const beritaDiv = document.getElementById("allBerita");
         const rubriksAll = ["Semua", ...appData.rubriks];
-        filterDiv.innerHTML = rubriksAll.map(r => `<button onclick="filterBeritaByRubrik('${r}')" style="background:#e0c8a0; color:#2c3e2f;">${r}</button>`).join('');
+        filterDiv.innerHTML = rubriksAll.map(r => `<button onclick="filterBeritaByRubrik('${r}')" style="background:#e8dcc8; color:#1a3c2c;">${r}</button>`).join('');
         filterBeritaByRubrik("Semua");
     }
 
@@ -726,7 +789,7 @@
                         <label>Deskripsi</label>
                         <input type="text" id="slide_desc_${i}" value="${escapeHtml(s.desc)}">
                         <label>Warna Background</label>
-                        <input type="color" id="slide_color_${i}" value="${s.bgColor || '#1a5d2a'}">
+                        <input type="color" id="slide_color_${i}" value="${s.bgColor || '#1a3c2c'}">
                     </div>
                 `).join('')}
                 <button onclick="saveSlides()">💾 Simpan Semua Slide</button>
