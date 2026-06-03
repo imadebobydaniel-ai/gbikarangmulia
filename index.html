@@ -2,596 +2,782 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>GBI Karang Mulia | Gereja Bethel Indonesia</title>
 
-<title>GBI Karang Mulia</title>
-
+<!-- CSS Libraries -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
 <style>
-
-:root{
-    --primary:#0b4ea2;
-    --secondary:#ff8c00;
-    --light:#f8f9fa;
-    --dark:#1b1b1b;
+:root {
+    --primary: #0b4ea2;
+    --secondary: #ff8c00;
+    --light: #f8f9fa;
+    --dark: #1b1b1b;
+    --gold: #d4a853;
 }
 
-body{
-    font-family:'Segoe UI',sans-serif;
-    overflow-x:hidden;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
 }
 
 /* Navbar */
-
-.navbar{
-    background:rgba(11,78,162,.95);
-    backdrop-filter:blur(10px);
+.navbar {
+    background: rgba(11, 78, 162, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
 }
 
-.navbar-brand img{
-    width:55px;
-    height:55px;
-    object-fit:contain;
+.navbar-brand img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 50%;
+    background: white;
+    padding: 5px;
 }
 
-.nav-link{
-    color:white !important;
-    font-weight:500;
+.navbar-brand strong {
+    color: white;
+    font-size: 1.1rem;
 }
 
-.nav-link:hover{
-    color:#ffd54f !important;
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+    transition: 0.3s;
 }
 
-/* Hero */
-
-.hero{
-    min-height:100vh;
-    background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
-    url('https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=1600');
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    align-items:center;
-    color:white;
+.nav-link:hover {
+    color: #ffd54f !important;
+    transform: translateY(-2px);
 }
 
-.hero-title{
-    font-size:4rem;
-    font-weight:800;
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+                url('https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=1600');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    color: white;
+    text-align: center;
 }
 
-.hero-subtitle{
-    font-size:1.3rem;
+.hero img {
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
 }
 
-.btn-gbi{
-    background:var(--secondary);
-    color:white;
-    border:none;
-    padding:12px 25px;
-    border-radius:50px;
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.btn-gbi {
+    background: var(--secondary);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-gbi:hover {
+    background: #e07a00;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 /* Section */
-
-.section-title{
-    color:var(--primary);
-    font-weight:800;
-    margin-bottom:20px;
+.section-title {
+    color: var(--primary);
+    font-weight: 800;
+    margin-bottom: 30px;
+    border-left: 5px solid var(--secondary);
+    padding-left: 15px;
 }
 
-.section{
-    padding:90px 0;
+.section {
+    padding: 80px 0;
 }
 
 /* Cards */
-
-.menu-card{
-    border:none;
-    border-radius:20px;
-    transition:.3s;
-    overflow:hidden;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
+.menu-card {
+    border: none;
+    border-radius: 20px;
+    transition: 0.3s;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
 }
 
-.menu-card:hover{
-    transform:translateY(-8px);
+.menu-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
-.menu-icon{
-    font-size:50px;
-    color:var(--primary);
+.menu-icon {
+    font-size: 50px;
+    color: var(--primary);
+    transition: 0.3s;
 }
 
-/* Jadwal */
+.menu-card:hover .menu-icon {
+    color: var(--secondary);
+    transform: scale(1.1);
+}
 
-.schedule-card{
-    border-left:5px solid var(--secondary);
+/* Schedule Cards */
+.schedule-card {
+    border-left: 5px solid var(--secondary);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.schedule-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.schedule-card h5 {
+    color: var(--primary);
+    font-weight: 700;
 }
 
 /* Form */
-
-.form-control{
-    border-radius:12px;
+.form-control {
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    transition: 0.3s;
 }
 
-.btn-submit{
-    background:var(--primary);
-    color:white;
-    border:none;
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(11, 78, 162, 0.1);
+}
+
+.btn-submit {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-submit:hover {
+    background: #0a3d7a;
+    transform: translateY(-2px);
+}
+
+/* Service Cards */
+.service-card {
+    border: none;
+    border-radius: 15px;
+    transition: 0.3s;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.service-card i {
+    color: var(--primary);
+    margin-bottom: 1rem;
 }
 
 /* Footer */
-
-footer{
-    background:#0b2545;
-    color:white;
-    padding:40px 0;
+footer {
+    background: #0b2545;
+    color: white;
+    padding: 50px 0 30px;
 }
 
-.watermark{
-    opacity:.7;
-    font-size:14px;
+.social-icons a {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0 10px;
+    transition: 0.3s;
+    display: inline-block;
 }
 
-@media(max-width:768px){
-
-.hero-title{
-    font-size:2.3rem;
+.social-icons a:hover {
+    color: var(--secondary);
+    transform: translateY(-3px);
 }
 
-.hero-subtitle{
-    font-size:1rem;
+.watermark {
+    opacity: 0.7;
+    font-size: 14px;
 }
 
-.section{
-    padding:60px 0;
+/* Table */
+.table {
+    border-radius: 15px;
+    overflow: hidden;
 }
 
+.table thead {
+    background: var(--primary);
+    color: white;
 }
 
+/* Scroll to top */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--primary);
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    z-index: 999;
+    border: none;
+}
+
+.scroll-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-top:hover {
+    background: var(--secondary);
+    transform: translateY(-3px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .section {
+        padding: 50px 0;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .navbar-brand strong {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeInUp 0.6s ease forwards;
+}
 </style>
 </head>
-
 <body>
 
 <!-- NAVBAR -->
-
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
 <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="logo_gbi.png" alt="Logo GBI" onerror="this.src='https://placehold.co/50x50?text=GBI'">
+        <div class="ms-2">
+            <strong>GBI Karang Mulia</strong><br>
+            <small style="font-size: 0.7rem;">Gereja Bethel Indonesia</small>
+        </div>
+    </a>
 
-<a class="navbar-brand d-flex align-items-center" href="#">
-<img src="logo_gbi.png" alt="Logo GBI">
-<div class="ms-2">
-<strong>GBI Karang Mulia</strong>
-</div>
-</a>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
-<span class="navbar-toggler-icon"></span>
-</button>
-
-<div class="collapse navbar-collapse" id="menu">
-
-<ul class="navbar-nav ms-auto">
-
-<li class="nav-item">
-<a class="nav-link" href="#sejarah">
-<i class="fa-solid fa-landmark"></i> Sejarah
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="#profil">
-<i class="fa-solid fa-church"></i> Profil
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="#organisasi">
-<i class="fa-solid fa-sitemap"></i> Organisasi
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="#pelayanan">
-<i class="fa-solid fa-hands-praying"></i> Pelayanan
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="#jadwal">
-<i class="fa-solid fa-calendar-days"></i> Jadwal
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="#jemaat">
-<i class="fa-solid fa-users"></i> Jemaat
-</a>
-</li>
-
-</ul>
-
-</div>
+    <div class="collapse navbar-collapse" id="menu">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="#sejarah"><i class="fa-solid fa-landmark"></i> Sejarah</a></li>
+            <li class="nav-item"><a class="nav-link" href="#profil"><i class="fa-solid fa-church"></i> Profil</a></li>
+            <li class="nav-item"><a class="nav-link" href="#organisasi"><i class="fa-solid fa-sitemap"></i> Organisasi</a></li>
+            <li class="nav-item"><a class="nav-link" href="#pelayanan"><i class="fa-solid fa-hands-praying"></i> Pelayanan</a></li>
+            <li class="nav-item"><a class="nav-link" href="#jadwal"><i class="fa-solid fa-calendar-days"></i> Jadwal</a></li>
+            <li class="nav-item"><a class="nav-link" href="#jemaat"><i class="fa-solid fa-users"></i> Jemaat</a></li>
+        </ul>
+    </div>
 </div>
 </nav>
 
-<!-- HERO -->
-
+<!-- HERO SECTION -->
 <section class="hero">
-
-<div class="container text-center">
-
-<img src="logo_gbi.png" width="180" class="mb-4">
-
-<h1 class="hero-title">
-GEREJA BETHEL INDONESIA
-</h1>
-
-<h2 class="mb-4">
-GBI KARANG MULIA
-</h2>
-
-<p class="hero-subtitle mb-4">
-Menjadi Gereja yang Berdampak, Bertumbuh dan Menjangkau Jiwa bagi Kemuliaan Tuhan.
-</p>
-
-<a href="#profil" class="btn btn-gbi">
-<i class="fa-solid fa-arrow-down"></i>
- Jelajahi Website
-</a>
-
+<div class="container">
+    <img src="logo_gbi.png" width="150" class="mb-4" onerror="this.src='https://placehold.co/150x150?text=GBI'">
+    <h1 class="hero-title">GEREJA BETHEL INDONESIA</h1>
+    <h2 class="mb-3" style="color: var(--gold);">GBI KARANG MULIA</h2>
+    <p class="hero-subtitle mb-4">
+        "Menjadi Gereja yang Berdampak, Bertumbuh dan Menjangkau Jiwa bagi Kemuliaan Tuhan."
+    </p>
+    <a href="#profil" class="btn btn-gbi">
+        <i class="fa-solid fa-arrow-down"></i> Jelajahi Website
+    </a>
 </div>
-
 </section>
 
 <!-- MENU CEPAT -->
-
 <section class="section bg-light">
-
 <div class="container">
-
-<div class="row g-4">
-
-<div class="col-6 col-md-4">
-<div class="card menu-card text-center p-4">
-<i class="fa-solid fa-landmark menu-icon"></i>
-<h5 class="mt-3">Sejarah</h5>
+    <div class="row g-4">
+        <div class="col-6 col-md-4">
+            <div class="card menu-card text-center p-4" onclick="scrollToSection('sejarah')">
+                <i class="fa-solid fa-landmark menu-icon"></i>
+                <h5 class="mt-3">Sejarah</h5>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="card menu-card text-center p-4" onclick="scrollToSection('profil')">
+                <i class="fa-solid fa-church menu-icon"></i>
+                <h5 class="mt-3">Profil</h5>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="card menu-card text-center p-4" onclick="scrollToSection('organisasi')">
+                <i class="fa-solid fa-sitemap menu-icon"></i>
+                <h5 class="mt-3">Organisasi</h5>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="card menu-card text-center p-4" onclick="scrollToSection('pelayanan')">
+                <i class="fa-solid fa-hands-praying menu-icon"></i>
+                <h5 class="mt-3">Pelayanan</h5>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="card menu-card text-center p-4" onclick="scrollToSection('jadwal')">
+                <i class="fa-solid fa-calendar-days menu-icon"></i>
+                <h5 class="mt-3">Jadwal</h5>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="card menu-card text-center p-4" onclick="scrollToSection('jemaat')">
+                <i class="fa-solid fa-users menu-icon"></i>
+                <h5 class="mt-3">Jemaat</h5>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-
-<div class="col-6 col-md-4">
-<div class="card menu-card text-center p-4">
-<i class="fa-solid fa-church menu-icon"></i>
-<h5 class="mt-3">Profil</h5>
-</div>
-</div>
-
-<div class="col-6 col-md-4">
-<div class="card menu-card text-center p-4">
-<i class="fa-solid fa-sitemap menu-icon"></i>
-<h5 class="mt-3">Organisasi</h5>
-</div>
-</div>
-
-<div class="col-6 col-md-4">
-<div class="card menu-card text-center p-4">
-<i class="fa-solid fa-hands-praying menu-icon"></i>
-<h5 class="mt-3">Pelayanan</h5>
-</div>
-</div>
-
-<div class="col-6 col-md-4">
-<div class="card menu-card text-center p-4">
-<i class="fa-solid fa-calendar-days menu-icon"></i>
-<h5 class="mt-3">Jadwal</h5>
-</div>
-</div>
-
-<div class="col-6 col-md-4">
-<div class="card menu-card text-center p-4">
-<i class="fa-solid fa-users menu-icon"></i>
-<h5 class="mt-3">Jemaat</h5>
-</div>
-</div>
-
-</div>
-
-</div>
-
 </section>
 
 <!-- SEJARAH -->
-
 <section id="sejarah" class="section">
-
 <div class="container">
-
-<h2 class="section-title">
-<i class="fa-solid fa-landmark"></i>
- Sejarah Gereja
-</h2>
-
-<p>
-Tuliskan sejarah berdirinya GBI Karang Mulia di sini.
-Mulai dari awal pelayanan, visi pendirian gereja,
-perkembangan jemaat hingga saat ini.
-</p>
-
+    <h2 class="section-title"><i class="fa-solid fa-landmark"></i> Sejarah Gereja</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <p class="lead">GBI Karang Mulia berdiri sejak tahun 1995 sebagai wadah persekutuan bagi warga Kristen di wilayah Karang Mulia, Nabire.</p>
+            <p>Awal mula pelayanan dimulai dari sebuah rumah sederhana yang dijadikan tempat doa bersama. Seiring berjalannya waktu, Tuhan memberkati dengan pertumbuhan jemaat yang pesat. Pada tahun 2000, gereja resmi memperoleh tanah dan membangun gedung pertama.</p>
+            <p>Hingga saat ini, GBI Karang Mulia terus bertumbuh dan melayani masyarakat sekitar dengan kasih Kristus, serta menjadi berkat bagi banyak orang.</p>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 bg-light">
+                <i class="fa-solid fa-quote-left fa-2x text-primary mb-2"></i>
+                <p class="mb-0"><em>"Hati kami bersukacita karena Dia, sebab kepada nama-Nya yang kudus kami percaya." - Mazmur 33:21</em></p>
+            </div>
+        </div>
+    </div>
 </div>
-
 </section>
 
 <!-- PROFIL -->
-
 <section id="profil" class="section bg-light">
-
 <div class="container">
-
-<h2 class="section-title">
-<i class="fa-solid fa-church"></i>
- Profil Gereja
-</h2>
-
-<div class="row">
-
-<div class="col-md-6">
-<h5>Visi</h5>
-<p>
-Menjadi gereja yang bertumbuh, berdampak dan memenangkan jiwa.
-</p>
+    <h2 class="section-title"><i class="fa-solid fa-church"></i> Profil Gereja</h2>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 p-4">
+                <i class="fa-solid fa-eye fa-2x text-primary mb-3"></i>
+                <h4>Visi</h4>
+                <p>Menjadi gereja yang bertumbuh dalam iman, berdampak bagi masyarakat, dan memenangkan jiwa bagi kemuliaan Tuhan Yesus Kristus.</p>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 p-4">
+                <i class="fa-solid fa-bullseye fa-2x text-primary mb-3"></i>
+                <h4>Misi</h4>
+                <ul>
+                    <li>Memuridkan setiap jemaat untuk bertumbuh dalam Firman Tuhan</li>
+                    <li>Mengembangkan pelayanan yang relevan dengan kebutuhan zaman</li>
+                    <li>Melayani masyarakat melalui program sosial dan kerohanian</li>
+                    <li>Menjangkau jiwa-jiwa baru dengan Injil Keselamatan</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div class="col-md-6">
-<h5>Misi</h5>
-<ul>
-<li>Membawa jemaat kepada Kristus.</li>
-<li>Memuridkan jemaat.</li>
-<li>Mengembangkan pelayanan.</li>
-<li>Melayani masyarakat.</li>
-</ul>
-</div>
-
-</div>
-
-</div>
-
 </section>
 
 <!-- ORGANISASI -->
-
 <section id="organisasi" class="section">
-
 <div class="container">
-
-<h2 class="section-title">
-<i class="fa-solid fa-sitemap"></i>
- Struktur Organisasi
-</h2>
-
-<div class="table-responsive">
-
-<table class="table table-bordered">
-
-<tr>
-<th>Jabatan</th>
-<th>Nama</th>
-</tr>
-
-<tr>
-<td>Gembala Sidang</td>
-<td>-</td>
-</tr>
-
-<tr>
-<td>Wakil Gembala</td>
-<td>-</td>
-</tr>
-
-<tr>
-<td>Sekretaris</td>
-<td>-</td>
-</tr>
-
-<tr>
-<td>Bendahara</td>
-<td>-</td>
-</tr>
-
-</table>
-
+    <h2 class="section-title"><i class="fa-solid fa-sitemap"></i> Struktur Organisasi</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Gembala Sidang</td><td>Pdt. Dr. Markus Wenas, M.Th</td><td>Ketua Majelis Gereja</td></tr>
+                <tr><td>Wakil Gembala</td><td>Pdt. Samuel Kakiay, S.Th</td><td>Koordinasi Pelayanan</td></tr>
+                <tr><td>Sekretaris</td><td>Yulianti Pattikawa, S.Pd</td><td>Administrasi & Kesekretariatan</td></tr>
+                <tr><td>Bendahara</td><td>Eliaser Rumbiak, S.E</td><td>Pengelolaan Keuangan</td></tr>
+                <tr><td>Koordinator Pelayanan</td><td>Yohanes Mambraku</td><td>Koordinator Komisi Pelayanan</td></tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-
-</div>
-
 </section>
 
 <!-- PELAYANAN -->
-
 <section id="pelayanan" class="section bg-light">
-
 <div class="container">
-
-<h2 class="section-title">
-<i class="fa-solid fa-hands-praying"></i>
- Pelayanan Kami
-</h2>
-
-<div class="row g-4">
-
-<div class="col-md-3">
-<div class="card p-4 text-center">
-<i class="fa-solid fa-child-reaching fa-3x text-primary"></i>
-<h5 class="mt-3">Sekolah Minggu</h5>
+    <h2 class="section-title"><i class="fa-solid fa-hands-praying"></i> Pelayanan Kami</h2>
+    <div class="row g-4">
+        <div class="col-md-3 col-6">
+            <div class="card service-card p-4 text-center h-100">
+                <i class="fa-solid fa-child-reaching fa-3x"></i>
+                <h5 class="mt-3">Sekolah Minggu</h5>
+                <small>Minggu, 08.00 WIT</small>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="card service-card p-4 text-center h-100">
+                <i class="fa-solid fa-music fa-3x"></i>
+                <h5 class="mt-3">Worship Ministry</h5>
+                <small>Latihan: Sabtu, 16.00</small>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="card service-card p-4 text-center h-100">
+                <i class="fa-solid fa-people-group fa-3x"></i>
+                <h5 class="mt-3">Komsel</h5>
+                <small>Jumat, 19.00 WIT</small>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="card service-card p-4 text-center h-100">
+                <i class="fa-solid fa-heart fa-3x"></i>
+                <h5 class="mt-3">Diakonia</h5>
+                <small>Pelayanan Sosial</small>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-
-<div class="col-md-3">
-<div class="card p-4 text-center">
-<i class="fa-solid fa-music fa-3x text-primary"></i>
-<h5 class="mt-3">Worship</h5>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card p-4 text-center">
-<i class="fa-solid fa-people-group fa-3x text-primary"></i>
-<h5 class="mt-3">Komsel</h5>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card p-4 text-center">
-<i class="fa-solid fa-heart fa-3x text-primary"></i>
-<h5 class="mt-3">Diakonia</h5>
-</div>
-</div>
-
-</div>
-
-</div>
-
 </section>
 
 <!-- JADWAL -->
-
 <section id="jadwal" class="section">
-
 <div class="container">
-
-<h2 class="section-title">
-<i class="fa-solid fa-calendar-days"></i>
- Jadwal Ibadah
-</h2>
-
-<div class="card schedule-card p-4 mb-3">
-<h5>Ibadah Raya</h5>
-<p>Minggu | 09.00 WIT</p>
+    <h2 class="section-title"><i class="fa-solid fa-calendar-days"></i> Jadwal Ibadah</h2>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card schedule-card p-4">
+                <i class="fa-solid fa-church fa-2x text-primary mb-2"></i>
+                <h5>Ibadah Raya</h5>
+                <p class="mb-1"><i class="fa-regular fa-calendar"></i> Minggu</p>
+                <p class="mb-0"><i class="fa-regular fa-clock"></i> 09.00 - 11.00 WIT</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card schedule-card p-4">
+                <i class="fa-solid fa-hands-praying fa-2x text-primary mb-2"></i>
+                <h5>Doa Pagi</h5>
+                <p class="mb-1"><i class="fa-regular fa-calendar"></i> Selasa - Kamis</p>
+                <p class="mb-0"><i class="fa-regular fa-clock"></i> 06.00 - 07.00 WIT</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card schedule-card p-4">
+                <i class="fa-solid fa-people-group fa-2x text-primary mb-2"></i>
+                <h5>Komsel</h5>
+                <p class="mb-1"><i class="fa-regular fa-calendar"></i> Jumat</p>
+                <p class="mb-0"><i class="fa-regular fa-clock"></i> 19.00 - 21.00 WIT</p>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div class="card schedule-card p-4 mb-3">
-<h5>Doa Pagi</h5>
-<p>Selasa | 06.00 WIT</p>
-</div>
-
-<div class="card schedule-card p-4">
-<h5>Komsel</h5>
-<p>Jumat | 19.00 WIT</p>
-</div>
-
-</div>
-
 </section>
 
 <!-- INPUT JEMAAT -->
-
 <section id="jemaat" class="section bg-light">
-
 <div class="container">
-
-<h2 class="section-title">
-<i class="fa-solid fa-users"></i>
- Input Data Jemaat
-</h2>
-
-<div class="card p-4 shadow">
-
-<form id="memberForm">
-
-<div class="row">
-
-<div class="col-md-6 mb-3">
-<label>Nama Lengkap</label>
-<input type="text" class="form-control" required>
+    <h2 class="section-title"><i class="fa-solid fa-users"></i> Input Data Jemaat</h2>
+    <div class="card p-4 shadow-sm">
+        <form id="memberForm">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
+                    <input type="text" id="namaLengkap" class="form-control" placeholder="Masukkan nama lengkap" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">No HP / WhatsApp</label>
+                    <input type="tel" id="noHp" class="form-control" placeholder="0812xxxxxx">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Alamat</label>
+                    <input type="text" id="alamat" class="form-control" placeholder="Alamat lengkap">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Status Baptis</label>
+                    <select id="baptis" class="form-control">
+                        <option>Belum Baptis</option>
+                        <option>Sudah Baptis Anak</option>
+                        <option>Sudah Baptis Dewasa</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Status Pernikahan</label>
+                    <select id="pernikahan" class="form-control">
+                        <option>Belum Menikah</option>
+                        <option>Menikah</option>
+                        <option>Janda/Duda</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Komisi</label>
+                    <select id="komisi" class="form-control">
+                        <option>Umum</option>
+                        <option>Pemuda</option>
+                        <option>Remaja</option>
+                        <option>Sekolah Minggu</option>
+                        <option>Lansia</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-submit">
+                <i class="fa-solid fa-floppy-disk"></i> Simpan Data Jemaat
+            </button>
+        </form>
+    </div>
+    <div id="dataJemaatList" class="mt-4">
+        <h5>📋 Data Jemaat Tersimpan</h5>
+        <div id="jemaatListContainer"></div>
+    </div>
 </div>
-
-<div class="col-md-6 mb-3">
-<label>No HP</label>
-<input type="text" class="form-control">
-</div>
-
-<div class="col-md-6 mb-3">
-<label>Alamat</label>
-<input type="text" class="form-control">
-</div>
-
-<div class="col-md-6 mb-3">
-<label>Status Baptis</label>
-<select class="form-control">
-<option>Sudah</option>
-<option>Belum</option>
-</select>
-</div>
-
-</div>
-
-<button class="btn btn-submit">
-<i class="fa-solid fa-floppy-disk"></i>
- Simpan Data
-</button>
-
-</form>
-
-</div>
-
-</div>
-
 </section>
 
 <!-- FOOTER -->
-
 <footer>
-
 <div class="container text-center">
-
-<img src="logo_gbi.png" width="90" class="mb-3">
-
-<h5>GEREJA BETHEL INDONESIA</h5>
-<h6>GBI Karang Mulia</h6>
-
-<div class="watermark mt-3">
-@GBIKarangMulia 2026<br>
-Jl. Ujung Pandang, Karang Mulia,
-Distrik Nabire, Kabupaten Nabire,
-Papua Tengah 98815
+    <img src="logo_gbi.png" width="80" class="mb-3" onerror="this.src='https://placehold.co/80x80?text=GBI'">
+    <h5>GEREJA BETHEL INDONESIA</h5>
+    <h6 class="mb-3">GBI Karang Mulia</h6>
+    
+    <div class="social-icons mb-4">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    
+    <div class="watermark">
+        <i class="fa-solid fa-location-dot"></i> Jl. Ujung Pandang, Karang Mulia, Distrik Nabire, Kabupaten Nabire, Papua Tengah 98815<br>
+        <i class="fa-solid fa-phone"></i> (0984) 12345 | <i class="fa-solid fa-envelope"></i> info@gbikarangmulia.org<br>
+        <hr style="background: rgba(255,255,255,0.2); margin: 20px 0;">
+        © GBI Karang Mulia 2026 | All Rights Reserved
+    </div>
 </div>
-
-</div>
-
 </footer>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-top" id="scrollTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</button>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-
 // Smooth Scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
-anchor.addEventListener('click',function(e){
-e.preventDefault();
-document.querySelector(this.getAttribute('href'))
-.scrollIntoView({
-behavior:'smooth'
-});
-});
-});
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+}
 
-// Dummy Submit
-
-document.getElementById('memberForm')
-.addEventListener('submit',function(e){
-
-e.preventDefault();
-
-alert('Data jemaat berhasil disimpan');
-
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
 });
 
+// Menu card click
+document.querySelectorAll('.menu-card').forEach(card => {
+    card.addEventListener('click', function() {
+        const text = this.querySelector('h5')?.innerText || '';
+        const sectionMap = {
+            'Sejarah': 'sejarah',
+            'Profil': 'profil',
+            'Organisasi': 'organisasi',
+            'Pelayanan': 'pelayanan',
+            'Jadwal': 'jadwal',
+            'Jemaat': 'jemaat'
+        };
+        const targetId = sectionMap[text];
+        if (targetId) scrollToSection(targetId);
+    });
+});
+
+// Data Jemaat Management
+let jemaatData = JSON.parse(localStorage.getItem('gbiJemaatData')) || [];
+
+function displayJemaatList() {
+    const container = document.getElementById('jemaatListContainer');
+    if (!container) return;
+    
+    if (jemaatData.length === 0) {
+        container.innerHTML = '<div class="alert alert-info">Belum ada data jemaat yang tersimpan.</div>';
+        return;
+    }
+    
+    container.innerHTML = `
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+                <thead class="table-primary">
+                    <tr><th>Nama</th><th>No HP</th><th>Alamat</th><th>Baptis</th><th>Komisi</th><th>Aksi</th></tr>
+                </thead>
+                <tbody>
+                    ${jemaatData.map((j, idx) => `
+                        <tr>
+                            <td>${escapeHtml(j.nama)}</td>
+                            <td>${escapeHtml(j.noHp)}</td>
+                            <td>${escapeHtml(j.alamat)}</td>
+                            <td>${escapeHtml(j.baptis)}</td>
+                            <td>${escapeHtml(j.komisi)}</td>
+                            <td><button class="btn btn-sm btn-danger" onclick="deleteJemaat(${idx})"><i class="fa-solid fa-trash"></i></button></td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
+window.deleteJemaat = function(index) {
+    if (confirm('Hapus data jemaat ini?')) {
+        jemaatData.splice(index, 1);
+        localStorage.setItem('gbiJemaatData', JSON.stringify(jemaatData));
+        displayJemaatList();
+        alert('Data berhasil dihapus');
+    }
+};
+
+// Form Submit
+document.getElementById('memberForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const newJemaat = {
+        id: Date.now(),
+        nama: document.getElementById('namaLengkap').value,
+        noHp: document.getElementById('noHp').value,
+        alamat: document.getElementById('alamat').value,
+        baptis: document.getElementById('baptis').value,
+        pernikahan: document.getElementById('pernikahan').value,
+        komisi: document.getElementById('komisi').value,
+        tanggal: new Date().toLocaleDateString('id-ID')
+    };
+    
+    if (!newJemaat.nama) {
+        alert('Nama lengkap harus diisi!');
+        return;
+    }
+    
+    jemaatData.unshift(newJemaat);
+    localStorage.setItem('gbiJemaatData', JSON.stringify(jemaatData));
+    
+    // Reset form
+    document.getElementById('memberForm').reset();
+    
+    displayJemaatList();
+    
+    alert('✅ Data jemaat berhasil disimpan!');
+});
+
+// Scroll to top button
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+        scrollTopBtn.classList.add('show');
+    } else {
+        scrollTopBtn.classList.remove('show');
+    }
+});
+scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Initial display
+displayJemaatList();
+
+// Add fade-in animation on scroll
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in');
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.section, .hero').forEach(el => {
+    observer.observe(el);
+});
 </script>
-
 </body>
 </html>
