@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMS - GBI Karang Mulia</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<style>
+    body { background: #0b4ea2; font-family: 'Segoe UI', sans-serif; }
+    .login-box, .dashboard-box { max-width: 500px; margin: 100px auto; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .dashboard-box { max-width: 1000px; }
+    .btn-cms { background: #ff8c00; color: white; border: none; }
+    .btn-cms:hover { background: #e07a00; }
+    .slide-item { background: #f8f9fa; border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+    .slide-preview { width: 80px; height: 60px; object-fit: cover; border-radius: 8px; }
+    .nav-tabs .nav-link { color: #0b4ea2; font-weight: 600; }
+    .nav-tabs .nav-link.active { background-color: #ff8c00; color: white; border-color: #ff8c00; }
+</style>
+</head>
+<body>
+
+<div id="loginSection" class="login-box">
+    <h3 class="text-center mb-4"><i class="fa-solid fa-lock"></i> CMS Login</h3>
+    <form id="loginForm">
+        <div class="mb-3"><label>Username</label><input type="text" id="username" class="form-control" placeholder="admin" required></div>
+        <div class="mb-3"><label>Password</label><input type="password" id="password" class="form-control" placeholder="••••••" required></div>
+        <button type="submit" class="btn btn-cms w-100"><i class="fa-solid fa-sign-in-alt"></i> Login</button>
+    </form>
+    <div class="text-center mt-3 small text-muted">Default: admin / admin123</div>
+</div>
+
+<div id="dashboardSection" style="display:none;">
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-white"><i class="fa-solid fa-sliders-h"></i> CMS GBI Karang Mulia</h2>
+            <button id="logoutBtn" class="btn btn-light"><i class="fa-solid fa-sign-out-alt"></i> Logout</button>
+        </div>
+        
+        <div class="dashboard-box">
+            <ul class="nav nav-tabs mb-4" id="cmsTab" role="tablist">
+                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#slideTab"><i class="fa-solid fa-images"></i> Kelola Slide Foto</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#jemaatTab"><i class="fa-solid fa-users"></i> Kelola Jemaat</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#jadwalTab"><i class="fa-solid fa-calendar"></i> Kelola Jadwal</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#organisasiTab"><i class="fa-solid fa-sitemap"></i> Kelola Organisasi</a></li>
+            </ul>
+            
+            <div class="tab-content">
+                <!-- SLIDE FOTO -->
+                <div class="tab-pane fade show active" id="slideTab">
+                    <h4><i class="fa-solid fa-images"></i> Slide Foto (Tampil di Tab Sejarah)</h4>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-5"><input type="text" id="slideImageUrl" class="form-control" placeholder="URL Gambar"></div>
+                        <div class="col-md-3"><input type="text" id="slideTitle" class="form-control" placeholder="Judul"></div>
+                        <div class="col-md-3"><input type="text" id="slideDesc" class="form-control" placeholder="Deskripsi"></div>
+                        <div class="col-md-1"><button id="addSlideBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i></button></div>
+                    </div>
+                    <div id="slideListContainer"></div>
+                    <div class="alert alert-info mt-3"><i class="fa-solid fa-info-circle"></i> Slide akan langsung muncul di halaman utama pada menu Sejarah.</div>
+                </div>
+                
+                <!-- KELOLA JEMAAT -->
+                <div class="tab-pane fade" id="jemaatTab">
+                    <h4><i class="fa-solid fa-users"></i> Data Jemaat</h4>
+                    <div id="jemaatManageContainer" class="table-responsive"></div>
+                </div>
+                
+                <!-- KELOLA JADWAL -->
+                <div class="tab-pane fade" id="jadwalTab">
+                    <h4><i class="fa-solid fa-calendar"></i> Jadwal Ibadah</h4>
+                    <div id="jadwalListContainer"></div>
+                    <div class="mt-3"><button id="resetJadwalBtn" class="btn btn-warning">Reset ke Default</button></div>
+                </div>
+                
+                <!-- KELOLA ORGANISASI -->
+                <div class="tab-pane fade" id="organisasiTab">
+                    <h4><i class="fa-solid fa-sitemap"></i> Struktur Organisasi</h4>
+                    <div id="organisasiListContainer"></div>
+                    <div class="mt-3"><button id="resetOrganisasiBtn" class="btn btn-warning">Reset ke Default</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const DEFAULT_USERNAME = "admin";
+const DEFAULT_PASSWORD = "admin123";
+
+// Data
+let slidesData = JSON.parse(localStorage.getItem('gbiSlides')) || [
+    { image: "https://images.pexels.com/photos/3353933/pexels-photo-3353933.jpeg?auto=compress&cs=tinysrgb&w=1200", title: "Kebaktian Bersama", desc: "Ibadah penuh sukacita" },
+    { image: "https://images.pexels.com/photos/4015711/pexels-photo-4015711.jpeg?auto=compress&cs=tinysrgb&w=1200", title: "Persekutuan Pemuda", desc: "Generasi muda bertumbuh" }
+];
+
+let jemaatData = JSON.parse(localStorage.getItem('gbiJemaatData')) || [];
+
+let jadwalData = JSON.parse(localStorage.getItem('gbiJadwal')) || [
+    { name: "Ibadah Raya", time: "Minggu | 09.00 - 11.00 WIT" },
+    { name: "Doa Pagi", time: "Selasa - Kamis | 06.00 - 07.00 WIT" },
+    { name: "Komsel", time: "Jumat | 19.00 - 21.00 WIT" },
+    { name: "Sekolah Minggu", time: "Minggu | 08.00 - 09.00 WIT" }
+];
+
+let organisasiData = JSON.parse(localStorage.getItem('gbiOrganisasi')) || [
+    { jabatan: "Gembala Sidang", nama: "Pdt. Dr. Markus Wenas, M.Th", keterangan: "Ketua Majelis Gereja" },
+    { jabatan: "Wakil Gembala", nama: "Pdt. Samuel Kakiay, S.Th", keterangan: "Koordinasi Pelayanan" },
+    { jabatan: "Sekretaris", nama: "Yulianti Pattikawa, S.Pd", keterangan: "Administrasi" },
+    { jabatan: "Bendahara", nama: "Eliaser Rumbiak, S.E", keterangan: "Keuangan" },
+    { jabatan: "Koordinator Pelayanan", nama: "Yohanes Mambraku", keterangan: "Koordinasi Komisi" }
+];
+
+function saveAll() {
+    localStorage.setItem('gbiSlides', JSON.stringify(slidesData));
+    localStorage.setItem('gbiJemaatData', JSON.stringify(jemaatData));
+    localStorage.setItem('gbiJadwal', JSON.stringify(jadwalData));
+    localStorage.setItem('gbiOrganisasi', JSON.stringify(organisasiData));
+    // Trigger storage event untuk halaman utama
+    window.dispatchEvent(new StorageEvent('storage', { key: 'gbiSlides', newValue: JSON.stringify(slidesData) }));
+    window.dispatchEvent(new StorageEvent('storage', { key: 'gbiJemaatData', newValue: JSON.stringify(jemaatData) }));
+}
+
+function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m==='&'?'&amp;':(m==='<'?'&lt;':'&gt;')); }
+
+// Render slide list
+function renderSlideList() {
+    const container = document.getElementById('slideListContainer');
+    if (!container) return;
+    if (slidesData.length === 0) { container.innerHTML = '<div class="text-muted">Belum ada slide</div>'; return; }
+    container.innerHTML = slidesData.map((s, idx) => `
+        <div class="slide-item">
+            <img src="${s.image}" class="slide-preview" onerror="this.src='https://via.placeholder.com/80x60'">
+            <div class="flex-grow-1"><strong>${escapeHtml(s.title)}</strong><br><small>${escapeHtml(s.desc)}</small></div>
+            <div><button class="btn btn-sm btn-warning me-1" onclick="editSlide(${idx})"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deleteSlide(${idx})"><i class="fa fa-trash"></i></button></div>
+        </div>
+    `).join('');
+}
+
+window.editSlide = function(idx) {
+    let s = slidesData[idx];
+    let newImg = prompt("URL Gambar:", s.image);
+    if (newImg !== null) s.image = newImg;
+    let newTitle = prompt("Judul:", s.title);
+    if (newTitle !== null) s.title = newTitle;
+    let newDesc = prompt("Deskripsi:", s.desc);
+    if (newDesc !== null) s.desc = newDesc;
+    saveAll();
+    renderSlideList();
+};
+window.deleteSlide = function(idx) {
+    if (confirm("Hapus slide?")) { slidesData.splice(idx,1); saveAll(); renderSlideList(); }
+};
+
+document.getElementById('addSlideBtn')?.addEventListener('click', () => {
+    let url = document.getElementById('slideImageUrl').value.trim();
+    let title = document.getElementById('slideTitle').value.trim() || "Slide Baru";
+    let desc = document.getElementById('slideDesc').value.trim() || "Kegiatan Gereja";
+    if (!url) { alert("Masukkan URL gambar"); return; }
+    slidesData.push({ image: url, title: title, desc: desc });
+    saveAll();
+    renderSlideList();
+    document.getElementById('slideImageUrl').value = '';
+    document.getElementById('slideTitle').value = '';
+    document.getElementById('slideDesc').value = '';
+    alert("Slide ditambahkan");
+});
+
+// Render jemaat
+function renderJemaatManage() {
+    const container = document.getElementById('jemaatManageContainer');
+    if (!container) return;
+    if (jemaatData.length === 0) { container.innerHTML = '<div class="text-muted">Belum ada data jemaat</div>'; return; }
+    container.innerHTML = `
+        <table class="table table-bordered">
+            <thead class="table-primary"><tr><th>Nama</th><th>No HP</th><th>Alamat</th><th>Baptis</th><th>Komisi</th><th>Aksi</th></tr></thead>
+            <tbody>${jemaatData.map((j, idx) => `
+                <tr>
+                    <td>${escapeHtml(j.nama)}</td><td>${escapeHtml(j.noHp) || '-'}</td><td>${escapeHtml(j.alamat) || '-'}</td>
+                    <td>${escapeHtml(j.baptis)}</td><td>${escapeHtml(j.komisi)}</td>
+                    <td><button class="btn btn-sm btn-danger" onclick="deleteJemaatCMS(${idx})"><i class="fa fa-trash"></i></button></td>
+                </tr>
+            `).join('')}</tbody>
+        </table>
+    `;
+}
+window.deleteJemaatCMS = function(idx) { if(confirm("Hapus data jemaat?")){ jemaatData.splice(idx,1); saveAll(); renderJemaatManage(); } };
+
+// Render jadwal
+function renderJadwal() {
+    const container = document.getElementById('jadwalListContainer');
+    if (!container) return;
+    container.innerHTML = jadwalData.map((j, idx) => `
+        <div class="slide-item"><div class="flex-grow-1"><strong>${escapeHtml(j.name)}</strong><br><small>${escapeHtml(j.time)}</small></div>
+        <div><button class="btn btn-sm btn-warning me-1" onclick="editJadwal(${idx})"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deleteJadwal(${idx})"><i class="fa fa-trash"></i></button></div></div>
+    `).join('');
+}
+window.editJadwal = function(idx) {
+    let newName = prompt("Nama Ibadah:", jadwalData[idx].name);
+    if (newName !== null) jadwalData[idx].name = newName;
+    let newTime = prompt("Waktu:", jadwalData[idx].time);
+    if (newTime !== null) jadwalData[idx].time = newTime;
+    saveAll(); renderJadwal();
+};
+window.deleteJadwal = function(idx) { jadwalData.splice(idx,1); saveAll(); renderJadwal(); };
+document.getElementById('resetJadwalBtn')?.addEventListener('click', () => {
+    jadwalData = [
+        { name: "Ibadah Raya", time: "Minggu | 09.00 - 11.00 WIT" },
+        { name: "Doa Pagi", time: "Selasa - Kamis | 06.00 - 07.00 WIT" },
+        { name: "Komsel", time: "Jumat | 19.00 - 21.00 WIT" },
+        { name: "Sekolah Minggu", time: "Minggu | 08.00 - 09.00 WIT" }
+    ];
+    saveAll(); renderJadwal(); alert("Reset jadwal berhasil");
+});
+
+// Render organisasi
+function renderOrganisasi() {
+    const container = document.getElementById('organisasiListContainer');
+    if (!container) return;
+    container.innerHTML = organisasiData.map((o, idx) => `
+        <div class="slide-item"><div class="flex-grow-1"><strong>${escapeHtml(o.jabatan)}</strong><br><small>${escapeHtml(o.nama)} - ${escapeHtml(o.keterangan)}</small></div>
+        <div><button class="btn btn-sm btn-warning me-1" onclick="editOrganisasi(${idx})"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deleteOrganisasi(${idx})"><i class="fa fa-trash"></i></button></div></div>
+    `).join('');
+}
+window.editOrganisasi = function(idx) {
+    let newJabatan = prompt("Jabatan:", organisasiData[idx].jabatan);
+    if (newJabatan !== null) organisasiData[idx].jabatan = newJabatan;
+    let newNama = prompt("Nama:", organisasiData[idx].nama);
+    if (newNama !== null) organisasiData[idx].nama = newNama;
+    let newKet = prompt("Keterangan:", organisasiData[idx].keterangan);
+    if (newKet !== null) organisasiData[idx].keterangan = newKet;
+    saveAll(); renderOrganisasi();
+};
+window.deleteOrganisasi = function(idx) { organisasiData.splice(idx,1); saveAll(); renderOrganisasi(); };
+document.getElementById('resetOrganisasiBtn')?.addEventListener('click', () => {
+    organisasiData = [
+        { jabatan: "Gembala Sidang", nama: "Pdt. Dr. Markus Wenas, M.Th", keterangan: "Ketua Majelis Gereja" },
+        { jabatan: "Wakil Gembala", nama: "Pdt. Samuel Kakiay, S.Th", keterangan: "Koordinasi Pelayanan" },
+        { jabatan: "Sekretaris", nama: "Yulianti Pattikawa, S.Pd", keterangan: "Administrasi" },
+        { jabatan: "Bendahara", nama: "Eliaser Rumbiak, S.E", keterangan: "Keuangan" },
+        { jabatan: "Koordinator Pelayanan", nama: "Yohanes Mambraku", keterangan: "Koordinasi Komisi" }
+    ];
+    saveAll(); renderOrganisasi(); alert("Reset organisasi berhasil");
+});
+
+// LOGIN
+document.getElementById('loginForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let user = document.getElementById('username').value;
+    let pass = document.getElementById('password').value;
+    if (user === DEFAULT_USERNAME && pass === DEFAULT_PASSWORD) {
+        sessionStorage.setItem('cms_logged_in', 'true');
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('dashboardSection').style.display = 'block';
+        renderSlideList(); renderJemaatManage(); renderJadwal(); renderOrganisasi();
+    } else {
+        alert("Username atau password salah!");
+    }
+});
+
+document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    sessionStorage.removeItem('cms_logged_in');
+    document.getElementById('loginSection').style.display = 'block';
+    document.getElementById('dashboardSection').style.display = 'none';
+});
+
+if (sessionStorage.getItem('cms_logged_in') === 'true') {
+    document.getElementById('loginSection').style.display = 'none';
+    document.getElementById('dashboardSection').style.display = 'block';
+    renderSlideList(); renderJemaatManage(); renderJadwal(); renderOrganisasi();
+}
+</script>
+</body>
+</html>
