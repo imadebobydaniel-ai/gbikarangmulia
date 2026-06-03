@@ -158,30 +158,69 @@ body {
 }
 
 /* Form */
-.form-control {
+.form-control, .form-select {
     border-radius: 12px;
     border: 1px solid #ddd;
     transition: 0.3s;
+    padding: 10px 15px;
 }
 
-.form-control:focus {
+.form-control:focus, .form-select:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(11, 78, 162, 0.1);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 8px;
 }
 
 .btn-submit {
     background: var(--primary);
     color: white;
     border: none;
-    padding: 12px 25px;
+    padding: 12px 30px;
     border-radius: 50px;
     font-weight: 600;
     transition: 0.3s;
+    width: 100%;
 }
 
 .btn-submit:hover {
     background: #0a3d7a;
     transform: translateY(-2px);
+}
+
+.btn-edit {
+    background: var(--secondary);
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    transition: 0.3s;
+    margin-right: 5px;
+}
+
+.btn-edit:hover {
+    background: #e07a00;
+    transform: translateY(-1px);
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    transition: 0.3s;
+}
+
+.btn-delete:hover {
+    background: #bb2d3b;
+    transform: translateY(-1px);
 }
 
 /* Service Cards */
@@ -229,14 +268,19 @@ footer {
 }
 
 /* Table */
-.table {
+.jemaat-table {
     border-radius: 15px;
     overflow: hidden;
 }
 
-.table thead {
+.jemaat-table thead {
     background: var(--primary);
     color: white;
+}
+
+.jemaat-table th, .jemaat-table td {
+    padding: 12px;
+    vertical-align: middle;
 }
 
 /* Scroll to top */
@@ -270,6 +314,40 @@ footer {
     transform: translateY(-3px);
 }
 
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    background: #f8f9fa;
+    border-radius: 15px;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    color: #adb5bd;
+    margin-bottom: 15px;
+}
+
+.empty-state p {
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+/* Stats card */
+.stats-card {
+    background: linear-gradient(135deg, var(--primary), #0a3d7a);
+    color: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+}
+
+.stats-card h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .hero-title {
@@ -290,6 +368,15 @@ footer {
     
     .navbar-brand strong {
         font-size: 0.9rem;
+    }
+    
+    .jemaat-table {
+        font-size: 0.8rem;
+    }
+    
+    .btn-edit, .btn-delete {
+        padding: 3px 8px;
+        font-size: 0.7rem;
     }
 }
 
@@ -538,60 +625,92 @@ footer {
 </div>
 </section>
 
-<!-- INPUT JEMAAT -->
+<!-- INPUT JEMAAT - TAMPILAN DIPERBAIKI -->
 <section id="jemaat" class="section bg-light">
 <div class="container">
     <h2 class="section-title"><i class="fa-solid fa-users"></i> Input Data Jemaat</h2>
-    <div class="card p-4 shadow-sm">
-        <form id="memberForm">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
-                    <input type="text" id="namaLengkap" class="form-control" placeholder="Masukkan nama lengkap" required>
+    
+    <div class="row">
+        <!-- Kolom Form -->
+        <div class="col-lg-5 mb-4">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-0 pt-4 px-4">
+                    <h5 class="mb-0"><i class="fa-solid fa-pen-to-square text-primary me-2"></i> Formulir Pendaftaran Jemaat</h5>
+                    <small class="text-muted">Isi data dengan lengkap dan benar</small>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">No HP / WhatsApp</label>
-                    <input type="tel" id="noHp" class="form-control" placeholder="0812xxxxxx">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Alamat</label>
-                    <input type="text" id="alamat" class="form-control" placeholder="Alamat lengkap">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Status Baptis</label>
-                    <select id="baptis" class="form-control">
-                        <option>Belum Baptis</option>
-                        <option>Sudah Baptis Anak</option>
-                        <option>Sudah Baptis Dewasa</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Status Pernikahan</label>
-                    <select id="pernikahan" class="form-control">
-                        <option>Belum Menikah</option>
-                        <option>Menikah</option>
-                        <option>Janda/Duda</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Komisi</label>
-                    <select id="komisi" class="form-control">
-                        <option>Umum</option>
-                        <option>Pemuda</option>
-                        <option>Remaja</option>
-                        <option>Sekolah Minggu</option>
-                        <option>Lansia</option>
-                    </select>
+                <div class="card-body p-4">
+                    <form id="memberForm">
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fa-solid fa-user text-primary me-1"></i> Nama Lengkap <span class="text-danger">*</span></label>
+                            <input type="text" id="namaLengkap" class="form-control" placeholder="Masukkan nama lengkap" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fa-brands fa-whatsapp text-primary me-1"></i> No HP / WhatsApp</label>
+                            <input type="tel" id="noHp" class="form-control" placeholder="0812xxxxxx">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fa-solid fa-location-dot text-primary me-1"></i> Alamat</label>
+                            <input type="text" id="alamat" class="form-control" placeholder="Alamat lengkap">
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label"><i class="fa-solid fa-dove text-primary me-1"></i> Status Baptis</label>
+                                <select id="baptis" class="form-select">
+                                    <option value="Belum Baptis">Belum Baptis</option>
+                                    <option value="Sudah Baptis Anak">Sudah Baptis Anak</option>
+                                    <option value="Sudah Baptis Dewasa">Sudah Baptis Dewasa</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label"><i class="fa-solid fa-ring text-primary me-1"></i> Status Pernikahan</label>
+                                <select id="pernikahan" class="form-select">
+                                    <option value="Belum Menikah">Belum Menikah</option>
+                                    <option value="Menikah">Menikah</option>
+                                    <option value="Janda/Duda">Janda/Duda</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label"><i class="fa-solid fa-church text-primary me-1"></i> Komisi</label>
+                            <select id="komisi" class="form-select">
+                                <option value="Umum">Umum</option>
+                                <option value="Pemuda">Pemuda</option>
+                                <option value="Remaja">Remaja</option>
+                                <option value="Sekolah Minggu">Sekolah Minggu</option>
+                                <option value="Lansia">Lansia</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-submit">
+                            <i class="fa-solid fa-floppy-disk me-2"></i> Simpan Data Jemaat
+                        </button>
+                    </form>
                 </div>
             </div>
-            <button type="submit" class="btn btn-submit">
-                <i class="fa-solid fa-floppy-disk"></i> Simpan Data Jemaat
-            </button>
-        </form>
-    </div>
-    <div id="dataJemaatList" class="mt-4">
-        <h5>📋 Data Jemaat Tersimpan</h5>
-        <div id="jemaatListContainer"></div>
+        </div>
+        
+        <!-- Kolom Daftar Jemaat -->
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between align-items-center flex-wrap">
+                    <h5 class="mb-0"><i class="fa-solid fa-database text-primary me-2"></i> Data Jemaat Tersimpan</h5>
+                    <span class="badge bg-primary rounded-pill" id="totalJemaatCount">0</span>
+                </div>
+                <div class="card-body p-4">
+                    <div id="jemaatListContainer">
+                        <div class="empty-state">
+                            <i class="fa-solid fa-users-slash"></i>
+                            <p>Belum ada data jemaat yang tersimpan.</p>
+                            <small class="text-muted">Silakan isi formulir di samping untuk menambahkan data jemaat.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </section>
@@ -666,40 +785,8 @@ document.querySelectorAll('.menu-card').forEach(card => {
 // Data Jemaat Management
 let jemaatData = JSON.parse(localStorage.getItem('gbiJemaatData')) || [];
 
-function displayJemaatList() {
-    const container = document.getElementById('jemaatListContainer');
-    if (!container) return;
-    
-    if (jemaatData.length === 0) {
-        container.innerHTML = '<div class="alert alert-info">Belum ada data jemaat yang tersimpan.</div>';
-        return;
-    }
-    
-    container.innerHTML = `
-        <div class="table-responsive">
-            <table class="table table-sm table-bordered">
-                <thead class="table-primary">
-                    <tr><th>Nama</th><th>No HP</th><th>Alamat</th><th>Baptis</th><th>Komisi</th><th>Aksi</th></tr>
-                </thead>
-                <tbody>
-                    ${jemaatData.map((j, idx) => `
-                        <tr>
-                            <td>${escapeHtml(j.nama)}</td>
-                            <td>${escapeHtml(j.noHp)}</td>
-                            <td>${escapeHtml(j.alamat)}</td>
-                            <td>${escapeHtml(j.baptis)}</td>
-                            <td>${escapeHtml(j.komisi)}</td>
-                            <td><button class="btn btn-sm btn-danger" onclick="deleteJemaat(${idx})"><i class="fa-solid fa-trash"></i></button></td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        </div>
-    `;
-}
-
 function escapeHtml(str) {
-    if (!str) return '';
+    if (!str) return '-';
     return str.replace(/[&<>]/g, function(m) {
         if (m === '&') return '&amp;';
         if (m === '<') return '&lt;';
@@ -708,22 +795,128 @@ function escapeHtml(str) {
     });
 }
 
-window.deleteJemaat = function(index) {
-    if (confirm('Hapus data jemaat ini?')) {
-        jemaatData.splice(index, 1);
+function updateTotalCount() {
+    const countSpan = document.getElementById('totalJemaatCount');
+    if (countSpan) {
+        countSpan.innerText = jemaatData.length;
+    }
+}
+
+function displayJemaatList() {
+    const container = document.getElementById('jemaatListContainer');
+    if (!container) return;
+    
+    if (jemaatData.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fa-solid fa-users-slash"></i>
+                <p>Belum ada data jemaat yang tersimpan.</p>
+                <small class="text-muted">Silakan isi formulir di samping untuk menambahkan data jemaat.</small>
+            </div>
+        `;
+        updateTotalCount();
+        return;
+    }
+    
+    // Urutkan dari yang terbaru
+    const sortedData = [...jemaatData].reverse();
+    
+    container.innerHTML = `
+        <div class="table-responsive">
+            <table class="table table-hover jemaat-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Kontak</th>
+                        <th>Alamat</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${sortedData.map((j, idx) => `
+                        <tr data-id="${j.id}">
+                            <td>${idx + 1}</td>
+                            <td>
+                                <strong>${escapeHtml(j.nama)}</strong><br>
+                                <small class="text-muted">${j.tanggal || ''}</small>
+                            </td>
+                            <td>${escapeHtml(j.noHp) || '-'}</td>
+                            <td>${escapeHtml(j.alamat) || '-'}</td>
+                            <td>
+                                <span class="badge bg-info">${escapeHtml(j.baptis)}</span><br>
+                                <small>${escapeHtml(j.komisi)}</small>
+                            </td>
+                            <td>
+                                <button class="btn-edit" onclick="editJemaat('${j.id}')" title="Edit Data">
+                                    <i class="fa-solid fa-pen"></i> Edit
+                                </button>
+                                <button class="btn-delete" onclick="deleteJemaat('${j.id}')" title="Hapus Data">
+                                    <i class="fa-solid fa-trash"></i> Hapus
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+    updateTotalCount();
+}
+
+// Edit Jemaat
+window.editJemaat = function(id) {
+    const jemaat = jemaatData.find(j => j.id === id);
+    if (!jemaat) return;
+    
+    document.getElementById('namaLengkap').value = jemaat.nama;
+    document.getElementById('noHp').value = jemaat.noHp || '';
+    document.getElementById('alamat').value = jemaat.alamat || '';
+    document.getElementById('baptis').value = jemaat.baptis;
+    document.getElementById('pernikahan').value = jemaat.pernikahan;
+    document.getElementById('komisi').value = jemaat.komisi;
+    
+    window.editingId = id;
+    
+    const submitBtn = document.querySelector('#memberForm button[type="submit"]');
+    submitBtn.innerHTML = '<i class="fa-solid fa-pen-to-square me-2"></i> Update Data Jemaat';
+    submitBtn.style.background = '#ff8c00';
+    
+    document.getElementById('jemaat').scrollIntoView({ behavior: 'smooth' });
+};
+
+// Delete Jemaat
+window.deleteJemaat = function(id) {
+    if (confirm('Apakah Anda yakin ingin menghapus data jemaat ini?')) {
+        jemaatData = jemaatData.filter(j => j.id !== id);
         localStorage.setItem('gbiJemaatData', JSON.stringify(jemaatData));
         displayJemaatList();
-        alert('Data berhasil dihapus');
+        alert('✅ Data jemaat berhasil dihapus!');
     }
 };
+
+function resetForm() {
+    document.getElementById('memberForm').reset();
+    window.editingId = null;
+    const submitBtn = document.querySelector('#memberForm button[type="submit"]');
+    submitBtn.innerHTML = '<i class="fa-solid fa-floppy-disk me-2"></i> Simpan Data Jemaat';
+    submitBtn.style.background = '#0b4ea2';
+}
 
 // Form Submit
 document.getElementById('memberForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
+    const nama = document.getElementById('namaLengkap').value.trim();
+    if (!nama) {
+        alert('Nama lengkap harus diisi!');
+        return;
+    }
+    
     const newJemaat = {
-        id: Date.now(),
-        nama: document.getElementById('namaLengkap').value,
+        id: window.editingId || Date.now().toString(),
+        nama: nama,
         noHp: document.getElementById('noHp').value,
         alamat: document.getElementById('alamat').value,
         baptis: document.getElementById('baptis').value,
@@ -732,20 +925,23 @@ document.getElementById('memberForm').addEventListener('submit', function(e) {
         tanggal: new Date().toLocaleDateString('id-ID')
     };
     
-    if (!newJemaat.nama) {
-        alert('Nama lengkap harus diisi!');
-        return;
+    if (window.editingId) {
+        // Update mode
+        const index = jemaatData.findIndex(j => j.id === window.editingId);
+        if (index !== -1) {
+            jemaatData[index] = newJemaat;
+            localStorage.setItem('gbiJemaatData', JSON.stringify(jemaatData));
+            alert('✅ Data jemaat berhasil diupdate!');
+        }
+    } else {
+        // Add mode
+        jemaatData.unshift(newJemaat);
+        localStorage.setItem('gbiJemaatData', JSON.stringify(jemaatData));
+        alert('✅ Data jemaat berhasil disimpan!');
     }
     
-    jemaatData.unshift(newJemaat);
-    localStorage.setItem('gbiJemaatData', JSON.stringify(jemaatData));
-    
-    // Reset form
-    document.getElementById('memberForm').reset();
-    
+    resetForm();
     displayJemaatList();
-    
-    alert('✅ Data jemaat berhasil disimpan!');
 });
 
 // Scroll to top button
@@ -764,7 +960,7 @@ scrollTopBtn.addEventListener('click', () => {
 // Initial display
 displayJemaatList();
 
-// Add fade-in animation on scroll
+// Fade-in animation
 const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
