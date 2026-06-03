@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pendaftaran Anggota Jemaat | GBI Karang Mulia</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<style>
+    body { background: linear-gradient(135deg, #0b4ea2, #072c5a); font-family: 'Segoe UI', sans-serif; }
+    .back-btn { position: fixed; top: 20px; left: 20px; background: white; border: none; border-radius: 50px; padding: 10px 20px; font-weight: 600; color: #0b4ea2; cursor: pointer; z-index: 1000; transition: 0.3s; }
+    .back-btn:hover { background: #ff8c00; color: white; transform: translateX(-5px); }
+    .container-custom { max-width: 800px; margin: 100px auto 50px; padding: 0 20px; }
+    .form-card { background: white; border-radius: 24px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .page-title { text-align: center; color: white; margin-bottom: 30px; }
+    .btn-submit { background: linear-gradient(135deg, #ff8c00, #e07a00); border: none; padding: 12px; border-radius: 50px; font-weight: 600; width: 100%; color: white; }
+    .btn-submit:hover { transform: translateY(-2px); }
+    footer { text-align: center; color: white; padding: 30px; opacity: 0.8; }
+    .step-indicator { display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; }
+    .step { text-align: center; color: #6c757d; }
+    .step.active { color: #ff8c00; font-weight: bold; }
+    .step.completed { color: #28a745; }
+</style>
+</head>
+<body>
+
+<button class="back-btn" onclick="window.location.href='../index.html'"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
+
+<div class="container-custom">
+    <div class="page-title">
+        <h1><i class="fa-solid fa-user-plus"></i> Pendaftaran Anggota Jemaat</h1>
+        <p>Bergabung menjadi keluarga besar GBI Karang Mulia</p>
+    </div>
+    <div class="form-card">
+        <div class="step-indicator">
+            <div class="step active">1. Data Diri</div>
+            <div class="step">2. Data Rohani</div>
+            <div class="step">3. Konfirmasi</div>
+        </div>
+        <form id="daftarForm">
+            <div id="step1">
+                <div class="mb-3"><label class="form-label">Nama Lengkap *</label><input type="text" id="namaLengkap" class="form-control" required></div>
+                <div class="row"><div class="col-md-6 mb-3"><label class="form-label">Tempat Lahir</label><input type="text" id="tempatLahir" class="form-control"></div><div class="col-md-6 mb-3"><label class="form-label">Tanggal Lahir</label><input type="date" id="tanggalLahir" class="form-control"></div></div>
+                <div class="mb-3"><label class="form-label">Jenis Kelamin</label><select id="jenisKelamin" class="form-select"><option>Laki-laki</option><option>Perempuan</option></select></div>
+                <div class="mb-3"><label class="form-label">No. HP / WhatsApp *</label><input type="tel" id="noHp" class="form-control" required></div>
+                <div class="mb-3"><label class="form-label">Alamat Lengkap</label><textarea id="alamat" class="form-control" rows="2"></textarea></div>
+                <div class="mb-3"><label class="form-label">Pekerjaan</label><input type="text" id="pekerjaan" class="form-control"></div>
+                <button type="button" class="btn-submit" onclick="nextStep(2)">Selanjutnya <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <div id="step2" style="display:none;">
+                <div class="mb-3"><label class="form-label">Status Baptis</label><select id="baptis" class="form-select"><option>Belum Baptis</option><option>Sudah Baptis Anak</option><option>Sudah Baptis Dewasa</option></select></div>
+                <div class="mb-3"><label class="form-label">Status Pernikahan</label><select id="pernikahan" class="form-select"><option>Belum Menikah</option><option>Menikah</option><option>Janda/Duda</option></select></div>
+                <div class="mb-3"><label class="form-label">Komisi / Kelompok Sel</label><select id="komisi" class="form-select"><option>Umum</option><option>Pemuda</option><option>Remaja</option><option>Sekolah Minggu</option><option>Lansia</option><option>Belum menentukan</option></select></div>
+                <div class="mb-3"><label class="form-label">Keahlian / Bakat (opsional)</label><input type="text" id="keahlian" class="form-control" placeholder="Musik, Mengajar, Multimedia, dll"></div>
+                <div class="mb-3"><label class="form-label">Alasan Bergabung</label><textarea id="alasan" class="form-control" rows="2" placeholder="Ceritakan mengapa Anda ingin bergabung..."></textarea></div>
+                <div class="d-flex gap-2"><button type="button" class="btn btn-secondary" onclick="prevStep(1)"><i class="fa-solid fa-arrow-left"></i> Sebelumnya</button><button type="button" class="btn-submit" onclick="nextStep(3)">Selanjutnya <i class="fa-solid fa-arrow-right"></i></button></div>
+            </div>
+            <div id="step3" style="display:none;">
+                <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> Harap periksa kembali data Anda sebelum mengirimkan pendaftaran.</div>
+                <div id="reviewData" class="mb-3"></div>
+                <div class="form-check mb-3"><input type="checkbox" id="agree" class="form-check-input" required><label class="form-check-label">Saya menyatakan bahwa data yang saya isikan adalah benar dan bersedia menjadi anggota jemaat GBI Karang Mulia</label></div>
+                <div class="d-flex gap-2"><button type="button" class="btn btn-secondary" onclick="prevStep(2)"><i class="fa-solid fa-arrow-left"></i> Sebelumnya</button><button type="submit" class="btn-submit"><i class="fa-solid fa-check"></i> Kirim Pendaftaran</button></div>
+            </div>
+        </form>
+        <div id="successMsg" class="alert alert-success mt-3 d-none"></div>
+    </div>
+</div>
+<footer>GBI Karang Mulia - Selamat Datang Keluarga Baru</footer>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    
+    let currentStep = 1;
+    function updateStepIndicator() {
+        document.querySelectorAll('.step').forEach((step, idx) => { step.classList.remove('active', 'completed'); if(idx+1 === currentStep) step.classList.add('active'); else if(idx+1 < currentStep) step.classList.add('completed'); });
+    }
+    function nextStep(step) { currentStep = step; document.getElementById('step1').style.display = step===1?'block':'none'; document.getElementById('step2').style.display = step===2?'block':'none'; document.getElementById('step3').style.display = step===3?'block':'none'; if(step===3) showReview(); updateStepIndicator(); }
+    function prevStep(step) { currentStep = step; document.getElementById('step1').style.display = step===1?'block':'none'; document.getElementById('step2').style.display = step===2?'block':'none'; document.getElementById('step3').style.display = step===3?'block':'none'; updateStepIndicator(); }
+    function showReview() { const data = { nama: document.getElementById('namaLengkap').value, tempatLahir: document.getElementById('tempatLahir').value, tanggalLahir: document.getElementById('tanggalLahir').value, jenisKelamin: document.getElementById('jenisKelamin').value, noHp: document.getElementById('noHp').value, alamat: document.getElementById('alamat').value, pekerjaan: document.getElementById('pekerjaan').value, baptis: document.getElementById('baptis').value, pernikahan: document.getElementById('pernikahan').value, komisi: document.getElementById('komisi').value, keahlian: document.getElementById('keahlian').value, alasan: document.getElementById('alasan').value }; document.getElementById('reviewData').innerHTML = `<table class="table table-sm"><tr><th>Nama</th><td>${data.nama}</td></tr><tr><th>Tempat/Tgl Lahir</th><td>${data.tempatLahir}, ${data.tanggalLahir}</td></tr><tr><th>No HP</th><td>${data.noHp}</td></tr><tr><th>Alamat</th><td>${data.alamat}</td></tr><tr><th>Status Baptis</th><td>${data.baptis}</td></tr><tr><th>Komisi</th><td>${data.komisi}</td></tr></table>`; }
+    document.getElementById('daftarForm').addEventListener('submit', async (e) => { e.preventDefault(); if(!document.getElementById('agree').checked){ alert("Harap centang persetujuan data"); return; } const data = { namaLengkap: document.getElementById('namaLengkap').value, tempatLahir: document.getElementById('tempatLahir').value, tanggalLahir: document.getElementById('tanggalLahir').value, jenisKelamin: document.getElementById('jenisKelamin').value, noHp: document.getElementById('noHp').value, alamat: document.getElementById('alamat').value, pekerjaan: document.getElementById('pekerjaan').value, statusBaptis: document.getElementById('baptis').value, statusPernikahan: document.getElementById('pernikahan').value, komisi: document.getElementById('komisi').value, keahlian: document.getElementById('keahlian').value, alasanBergabung: document.getElementById('alasan').value, status: "Menunggu Verifikasi", tanggalDaftar: new Date().toLocaleDateString('id-ID'), createdAt: firebase.firestore.FieldValue.serverTimestamp() }; await db.collection('pendaftaran_jemaat').add(data); document.getElementById('daftarForm').reset(); const msg = document.getElementById('successMsg'); msg.innerHTML = '<i class="fa-solid fa-check-circle"></i> Pendaftaran berhasil! Admin akan menghubungi Anda untuk verifikasi.'; msg.classList.remove('d-none'); setTimeout(() => window.location.href='../index.html', 3000); });
+    updateStepIndicator();
+</script>
+</body>
+</html>
