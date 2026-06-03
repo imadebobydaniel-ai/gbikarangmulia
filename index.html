@@ -33,10 +33,9 @@ body {
     flex-direction: column;
 }
 
-/* Navbar */
+/* Navbar - tanpa blur berlebihan */
 .navbar {
-    background: rgba(11, 78, 162, 0.92);
-    backdrop-filter: blur(8px);
+    background: rgba(11, 78, 162, 0.95);
     box-shadow: 0 2px 20px rgba(0,0,0,0.15);
     padding: 0.8rem 0;
 }
@@ -48,6 +47,8 @@ body {
     border-radius: 50%;
     background: rgba(255,255,255,0.9);
     padding: 5px;
+    /* Mencegah distorsi gambar */
+    image-rendering: crisp-edges;
 }
 
 .navbar-brand strong {
@@ -107,12 +108,15 @@ body {
     background: rgba(255,255,255,0.9);
     padding: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    /* Mencegah distorsi gambar */
+    image-rendering: crisp-edges;
 }
 
 .hero-title {
     font-size: 2.5rem;
     font-weight: 800;
-    letter-spacing: 2px;
+    /* HAPUS letter-spacing yang menyebabkan stretch */
+    letter-spacing: normal;
     color: #0a3a6e;
     text-shadow: 0 1px 2px rgba(255,255,255,0.5);
 }
@@ -130,8 +134,7 @@ body {
     margin: 0 auto;
     color: #1e2a3a;
     font-weight: 500;
-    background: rgba(255,255,255,0.5);
-    backdrop-filter: blur(4px);
+    background: rgba(255,255,255,0.6);
     padding: 8px 16px;
     border-radius: 30px;
     display: inline-block;
@@ -147,12 +150,14 @@ body {
 .tab-content {
     display: none;
     animation: fadeIn 0.4s ease;
-    background: rgba(255, 255, 255, 0.88);
-    backdrop-filter: blur(10px);
+    /* KURANGI efek blur - ini penyebab utama stretchmark */
+    background: rgba(255, 255, 255, 0.92);
+    /* HAPUS backdrop-filter blur yang berlebihan */
+    /* backdrop-filter: blur(10px); */ 
     border-radius: 24px;
     padding: 30px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-    border: 1px solid rgba(255,255,255,0.3);
+    border: 1px solid rgba(255,255,255,0.5);
 }
 
 .tab-content.active {
@@ -171,6 +176,7 @@ body {
     border-left: 4px solid var(--secondary);
     padding-left: 15px;
     font-size: 1.5rem;
+    letter-spacing: normal;
 }
 
 /* Slide Foto di dalam Tab Sejarah */
@@ -188,6 +194,7 @@ body {
     height: 400px;
     object-fit: cover;
     width: 100%;
+    image-rendering: auto;
 }
 
 .slide-carousel .carousel-caption {
@@ -196,7 +203,7 @@ body {
 
 /* Teks sejarah tetap ada */
 .content-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     border-radius: 16px;
     padding: 20px;
     margin-bottom: 20px;
@@ -205,7 +212,7 @@ body {
 
 /* Menu lainnya */
 .schedule-item {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     border-radius: 12px;
     padding: 15px 20px;
     margin-bottom: 12px;
@@ -219,7 +226,7 @@ body {
 }
 
 .service-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -244,16 +251,19 @@ body {
 
 .org-table th, .org-table td {
     padding: 12px;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.95);
 }
 
-/* Footer */
+/* Footer - tanpa blur berlebihan */
 footer {
-    background: rgba(11, 37, 69, 0.92);
-    backdrop-filter: blur(8px);
+    background: rgba(11, 37, 69, 0.95);
     color: white;
     padding: 30px 0 20px;
     margin-top: auto;
+}
+
+footer img {
+    image-rendering: crisp-edges;
 }
 
 .social-icons a {
@@ -269,11 +279,29 @@ footer {
     transform: translateY(-3px);
 }
 
+.watermark {
+    opacity: 0.85;
+    font-size: 12px;
+}
+
+/* Empty state styling */
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    color: #6c757d;
+}
+
 @media (max-width: 768px) {
-    .hero-title { font-size: 1.5rem; }
+    .hero-title { 
+        font-size: 1.5rem;
+        letter-spacing: normal;
+    }
     .hero img { width: 80px; }
     .slide-carousel .carousel-inner img { height: 250px; }
     .cms-button { top: 75px; padding: 6px 14px; font-size: 0.75rem; }
+    .section-title { font-size: 1.2rem; }
 }
 </style>
 </head>
@@ -489,7 +517,7 @@ function displayJemaatList() {
     const container = document.getElementById('jemaatListContainer');
     if (!container) return;
     if (jemaatData.length === 0) {
-        container.innerHTML = '<div class="empty-state text-center p-4 bg-white rounded">Belum ada data jemaat</div>';
+        container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-users-slash"></i><p>Belum ada data jemaat</p><small>Isi data jemaat melalui CMS</small></div>';
         return;
     }
     container.innerHTML = `
@@ -506,6 +534,7 @@ function displayJemaatList() {
                 </tr>
             `).join('')}</tbody>
         </table>
+        <div class="small text-muted mt-2">Total: ${jemaatData.length} jemaat</div>
     `;
 }
 
