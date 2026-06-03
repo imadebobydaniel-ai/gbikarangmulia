@@ -1,13 +1,13 @@
-Here is a complete, ready-to-run HTML document that creates a demo church website with an admin login and a 5-slide carousel.
+Here is an HTML document that creates a modern, trendy church website with a dynamic admin CMS and a 5-slide carousel.
 ```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Gereja Bethel - Website Resmi</title>
-  <!-- Google Fonts & Font Awesome -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <title>Gereja Kanaan | Iman & Dinamika Modern</title>
+  <!-- Google Fonts + Font Awesome + Tailwind CDN (ringan) -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
@@ -17,643 +17,440 @@ Here is a complete, ready-to-run HTML document that creates a demo church websit
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: #fef9f0;
-      color: #1e2a2e;
-      scroll-behavior: smooth;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #faf9f7;
+      color: #1e1e2a;
+      overflow-x: hidden;
     }
 
-    /* Header & Nav */
-    .main-header {
-      background: white;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 0.8rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .logo h1 {
-      font-size: 1.8rem;
-      color: #b78c3f;
-      letter-spacing: -0.5px;
-    }
-    .logo p {
-      font-size: 0.75rem;
-      color: #5e6b6f;
-    }
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-    .nav-links a {
-      text-decoration: none;
-      font-weight: 600;
-      color: #2c3e2f;
-      transition: 0.2s;
-    }
-    .nav-links a:hover {
-      color: #b78c3f;
-    }
-    .admin-login-btn {
-      background: #b78c3f;
-      color: white !important;
-      padding: 0.5rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.9rem;
-    }
-    .admin-login-btn:hover {
-      background: #9b6e2c;
-      transform: scale(0.97);
+    /* trendi gradient & glassmorphism */
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 215, 150, 0.3);
     }
 
-    /* SLIDER / CAROUSEL - 5 slides */
-    .slider-container {
-      max-width: 1300px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      position: relative;
+    .btn-primary {
+      background: linear-gradient(135deg, #c17b3a, #a55d2a);
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 18px rgba(193, 123, 58, 0.25);
     }
-    .carousel {
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 26px rgba(165, 93, 42, 0.35);
+      background: linear-gradient(135deg, #d48c48, #b76a32);
+    }
+
+    /* carousel modern */
+    .carousel-container {
       position: relative;
+      border-radius: 2rem;
       overflow: hidden;
-      border-radius: 32px;
-      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
-      background: #f2e8da;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25);
     }
-    .slides-wrapper {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
+
     .slide {
-      min-width: 100%;
-      position: relative;
-      height: 500px;
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
+
     .slide-content {
-      background: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%);
-      width: 100%;
-      padding: 2rem 3rem;
-      color: white;
-      text-align: left;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 80%);
+      backdrop-filter: blur(2px);
     }
-    .slide-content h2 {
-      font-size: 2.6rem;
-      font-weight: 700;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
-    .slide-content p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin-top: 0.5rem;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    }
+
     .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,0.8);
-      border: none;
-      width: 44px;
-      height: 44px;
-      border-radius: 60px;
-      font-size: 1.8rem;
-      cursor: pointer;
-      color: #b78c3f;
+      background: rgba(255, 248, 235, 0.9);
+      backdrop-filter: blur(4px);
       transition: 0.2s;
-      z-index: 20;
-      font-weight: bold;
     }
+
     .carousel-btn:hover {
       background: white;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-    }
-    .btn-prev {
-      left: 20px;
-    }
-    .btn-next {
-      right: 20px;
-    }
-    .dots {
-      text-align: center;
-      margin-top: 1rem;
-      position: absolute;
-      bottom: 18px;
-      left: 0;
-      right: 0;
-      z-index: 15;
-    }
-    .dot {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      background-color: rgba(255,255,255,0.6);
-      border-radius: 50%;
-      margin: 0 6px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .dot.active {
-      background-color: #b78c3f;
-      transform: scale(1.2);
+      transform: scale(1.05);
     }
 
-    /* Content section */
-    .section {
-      padding: 3rem 5%;
-      text-align: center;
+    /* trendi card hover */
+    .trend-card {
+      transition: all 0.4s ease;
+      border: 1px solid rgba(193, 123, 58, 0.15);
     }
-    .section h2 {
-      font-size: 2rem;
-      color: #2c3e2f;
-      margin-bottom: 1rem;
+
+    .trend-card:hover {
+      transform: translateY(-12px);
+      border-color: rgba(193, 123, 58, 0.4);
+      box-shadow: 0 25px 35px -12px rgba(0, 0, 0, 0.12);
     }
-    .cards {
+
+    /* menu dinamis (hamburger & mobile) */
+    .nav-menu {
       display: flex;
-      flex-wrap: wrap;
       gap: 2rem;
-      justify-content: center;
-      margin-top: 2rem;
-    }
-    .card {
-      background: white;
-      padding: 2rem 1.5rem;
-      border-radius: 28px;
-      width: 260px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.03);
-      transition: all 0.2s;
-      border: 1px solid #f0e5d6;
-    }
-    .card i {
-      font-size: 2.5rem;
-      color: #b78c3f;
-      margin-bottom: 1rem;
-    }
-    footer {
-      background: #1e2a2e;
-      color: #ddd;
-      text-align: center;
-      padding: 2rem;
-      margin-top: 2rem;
+      align-items: center;
     }
 
-    /* MODAL ADMIN PANEL (CMS) */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background: #fff9f0;
-      max-width: 550px;
-      width: 90%;
-      border-radius: 40px;
-      padding: 2rem;
-      box-shadow: 0 20px 35px rgba(0,0,0,0.3);
-      animation: fadeUp 0.3s;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    .modal-content h3 {
-      font-size: 1.8rem;
-      margin-bottom: 0.2rem;
-      color: #b78c3f;
-    }
-    .modal-content input, .modal-content textarea {
-      width: 100%;
-      padding: 12px;
-      margin: 12px 0;
-      border: 1px solid #e2d9ce;
-      border-radius: 30px;
-      font-family: inherit;
-    }
-    .login-fields, .cms-fields {
-      margin-top: 1rem;
-    }
-    .cms-fields {
-      display: none;
-    }
-    button {
-      background: #b78c3f;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 40px;
-      font-weight: bold;
-      cursor: pointer;
+    .nav-link {
+      position: relative;
+      font-weight: 600;
       transition: 0.2s;
     }
-    button:hover {
-      background: #9b6e2c;
+
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2.5px;
+      bottom: -6px;
+      left: 0;
+      background: linear-gradient(90deg, #c17b3a, #e9a368);
+      transition: width 0.3s ease;
     }
-    .preview-slide {
-      margin: 1rem 0;
-      background: #f7efe3;
-      padding: 0.8rem;
-      border-radius: 24px;
+
+    .nav-link:hover:after {
+      width: 100%;
     }
-    .slide-item-admin {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.6rem;
-    }
-    .error-msg {
-      color: #c0392b;
-      font-size: 0.8rem;
-      margin-top: 5px;
-    }
-    .close-modal {
-      float: right;
-      font-size: 1.8rem;
+
+    .mobile-menu-btn {
+      display: none;
+      font-size: 1.7rem;
       cursor: pointer;
+      background: none;
+      border: none;
     }
-    .admin-badge {
-      background: #e9e3d8;
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 80%;
+        height: calc(100vh - 70px);
+        background: rgba(255, 250, 240, 0.98);
+        backdrop-filter: blur(16px);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 2rem;
+        transition: 0.35s ease;
+        z-index: 999;
+        border-radius: 0 2rem 2rem 0;
+        box-shadow: 8px 0 25px rgba(0, 0, 0, 0.1);
+      }
+      .nav-menu.active {
+        left: 0;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .nav-link {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* admin badge modern */
+    .admin-badge-trend {
+      background: rgba(193, 123, 58, 0.15);
       border-radius: 40px;
-      padding: 0 12px;
-      font-size: 0.7rem;
-      font-weight: bold;
+      padding: 6px 14px;
+      font-weight: 500;
+      font-size: 0.8rem;
     }
-    @media (max-width: 700px) {
-      .slide { height: 350px; }
-      .slide-content h2 { font-size: 1.8rem; }
-      .nav-links { gap: 1rem; }
+
+    /* dot custom */
+    .dot-custom {
+      width: 10px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.5);
+      transition: all 0.2s;
+    }
+    .dot-custom.active-dot {
+      background: #c17b3a;
+      width: 26px;
+      border-radius: 12px;
+    }
+
+    /* modal glass */
+    .modal-glass {
+      background: rgba(30, 30, 42, 0.75);
+      backdrop-filter: blur(8px);
+    }
+    .modal-card {
+      background: #fffcf5;
+      border-radius: 2rem;
+      border: 1px solid rgba(193, 123, 58, 0.3);
+    }
+
+    footer {
+      background: #1a1e24;
     }
   </style>
 </head>
 <body>
 
-<header class="main-header">
-  <div class="logo">
-    <h1>⛪ Gereja Bethel</h1>
-    <p>Kasih · Iman · Pengharapan</p>
+<!-- Header dengan menu dinamis & glassmorphism -->
+<header class="glass-nav fixed top-0 w-full z-50 py-3 px-6 md:px-12 flex justify-between items-center shadow-sm" style="position: sticky; top: 0; z-index: 100;">
+  <div class="flex items-center gap-2">
+    <i class="fas fa-church text-3xl" style="color: #c17b3a;"></i>
+    <div>
+      <h1 class="text-xl md:text-2xl font-extrabold tracking-tight" style="background: linear-gradient(135deg, #b4692e, #e6a159); -webkit-background-clip: text; background-clip: text; color: transparent;">Gereja Kanaan</h1>
+      <p class="text-[11px] md:text-xs text-stone-500 -mt-1">Modern Worship · Dynamic Faith</p>
+    </div>
   </div>
-  <div class="nav-links">
-    <a href="#">Beranda</a>
-    <a href="#">Tentang</a>
-    <a href="#">Jadwal</a>
-    <a href="#">Kontak</a>
-    <a href="#" id="openAdminBtn" class="admin-login-btn"><i class="fas fa-user-shield"></i> Admin CMS</a>
+  
+  <div class="nav-menu" id="navMenu">
+    <a href="#" class="nav-link text-stone-800 hover:text-amber-700" data-nav="home">🏠 Beranda</a>
+    <a href="#" class="nav-link text-stone-800 hover:text-amber-700" data-nav="about">✨ Tentang</a>
+    <a href="#" class="nav-link text-stone-800 hover:text-amber-700" data-nav="schedule">📅 Jadwal Ibadah</a>
+    <a href="#" class="nav-link text-stone-800 hover:text-amber-700" data-nav="ministry">🤝 Ministry</a>
+    <a href="#" class="nav-link text-stone-800 hover:text-amber-700" data-nav="contact">📞 Kontak</a>
+    <button id="openAdminBtn" class="bg-amber-600 text-white px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 shadow-md hover:bg-amber-700 transition"><i class="fas fa-lock"></i> Admin CMS</button>
   </div>
+  <button class="mobile-menu-btn" id="mobileMenuToggle"><i class="fas fa-bars text-2xl text-stone-700"></i></button>
 </header>
 
-<!-- 5 SLIDE CAROUSEL -->
-<div class="slider-container">
-  <div class="carousel">
-    <div class="slides-wrapper" id="slidesWrapper">
-      <!-- slides akan di generate oleh JS dari data awal 5 slide, tetapi kita siapkan container kosong lalu JS mengisi default -->
+<main class="pt-24 md:pt-28 px-4 md:px-8 max-w-7xl mx-auto">
+  <!-- SLIDER 5 SLIDE (Trendi) -->
+  <div class="carousel-container w-full rounded-3xl mb-16 relative">
+    <div class="relative overflow-hidden rounded-3xl" id="carouselInner">
+      <div class="flex transition-transform duration-700 ease-out" id="slidesTrack">
+        <!-- Slides injected via JS (dynamic from data) -->
+      </div>
+      <button class="carousel-btn absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full text-amber-700 font-bold shadow-lg z-20" id="prevSlideBtn"><i class="fas fa-chevron-left"></i></button>
+      <button class="carousel-btn absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full text-amber-700 font-bold shadow-lg z-20" id="nextSlideBtn"><i class="fas fa-chevron-right"></i></button>
+      <div class="absolute bottom-5 left-0 right-0 flex justify-center gap-2 z-20" id="carouselDots"></div>
     </div>
-    <button class="carousel-btn btn-prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
-    <button class="carousel-btn btn-next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
-    <div class="dots" id="dotsContainer"></div>
   </div>
-</div>
 
-<!-- Bagian informasi gereja -->
-<section class="section">
-  <h2>Selamat Datang di Keluarga Allah</h2>
-  <p>Gereja Bethel adalah rumah doa bagi semua, tempat imani bertumbuh dan kasih dinyatakan.</p>
-  <div class="cards">
-    <div class="card"><i class="fas fa-bible"></i><h3>Ibadah Raya</h3><p>Minggu, 09.00 & 17.00 WIB</p></div>
-    <div class="card"><i class="fas fa-hands-helping"></i><h3>Pelayanan Sosial</h3><p>Setiap Jumat, 15.00 WIB</p></div>
-    <div class="card"><i class="fas fa-users"></i><h3>Komunitas Pemuda</h3><p>Sabtu, 18.00 WIB</p></div>
+  <!-- Section Dinamis (menu dinamis -> konten berubah) -->
+  <div id="dynamicContent" class="my-12 transition-all duration-500">
+    <!-- default: home content -->
+    <div class="text-center mb-8">
+      <span class="bg-amber-100 text-amber-800 px-4 py-1 rounded-full text-sm font-semibold">Komunitas Iman Masa Kini</span>
+      <h2 class="text-3xl md:text-5xl font-bold mt-5 bg-gradient-to-r from-stone-800 to-amber-800 bg-clip-text text-transparent">Selamat Datang di Rumah<span class="text-amber-600"> Kasih</span></h2>
+      <p class="text-stone-600 max-w-2xl mx-auto mt-4">Bergabung dengan ibadah yang dinamis, relevan, dan penuh sukacita. Gereja untuk semua generasi.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-7 mt-8">
+      <div class="trend-card bg-white p-6 rounded-2xl shadow-md"><i class="fas fa-calendar-week text-3xl text-amber-600 mb-3"></i><h3 class="font-bold text-xl">Ibadah Live</h3><p class="text-stone-500">Minggu 08.00 & 10.30 WIB • YouTube & Onsite</p></div>
+      <div class="trend-card bg-white p-6 rounded-2xl shadow-md"><i class="fas fa-user-friends text-3xl text-amber-600 mb-3"></i><h3 class="font-bold text-xl">Small Group</h3><p class="text-stone-500">Tumbuh bersama dalam kelompok kecil setiap Selasa.</p></div>
+      <div class="trend-card bg-white p-6 rounded-2xl shadow-md"><i class="fas fa-hands-praying text-3xl text-amber-600 mb-3"></i><h3 class="font-bold text-xl">Doa Malam</h3><p class="text-stone-500">Rabu & Jumat, 19.00 - Kesempatan revival.</p></div>
+    </div>
   </div>
-</section>
+</main>
 
-<footer>
-  <p>© 2025 Gereja Bethel Media — Jalan Iman No. 10, Kota Damai</p>
-  <p style="margin-top: 8px;"><i class="fas fa-envelope"></i> admin@bethelchurch.org | <i class="fas fa-phone-alt"></i> (021) 1234-5678</p>
+<footer class="bg-stone-900 text-stone-300 mt-20 py-8 text-center">
+  <p>© 2025 Gereja Kanaan | Dynamic Church with Modern Spirit</p>
+  <p class="text-sm mt-2"><i class="fas fa-heart text-amber-500"></i> Jalan Transformasi No.21, Jakarta | 021-8061xxxx</p>
 </footer>
 
-<!-- MODAL ADMIN + CMS (manage 5 slides) -->
-<div id="adminModal" class="modal">
-  <div class="modal-content">
-    <span class="close-modal" id="closeModalBtn">&times;</span>
-    <h3><i class="fas fa-church"></i> Panel Admin CMS</h3>
-    <p>Kelola 5 Slide Banner Gereja</p>
-    <div id="loginArea" class="login-fields">
-      <input type="text" id="adminUser" placeholder="Username" value="admin">
-      <input type="password" id="adminPass" placeholder="Password" value="gereja123">
-      <button id="doLoginBtn">Login sebagai Admin</button>
-      <div id="loginError" class="error-msg"></div>
-      <small style="display:block; margin-top:8px;">Default: admin / gereja123</small>
+<!-- MODAL ADMIN (CMS) -->
+<div id="adminModal" class="fixed inset-0 z-[200] hidden justify-center items-center modal-glass">
+  <div class="modal-card w-[90%] max-w-xl p-6 relative shadow-2xl">
+    <button id="closeModalBtn" class="absolute top-4 right-5 text-2xl text-stone-500 hover:text-amber-700">&times;</button>
+    <h3 class="text-2xl font-bold flex items-center gap-2 text-amber-800"><i class="fas fa-database"></i> CMS Gereja Kanaan</h3>
+    <p class="text-stone-500 text-sm mb-4">Kelola 5 Slide Hero & pesan dinamis</p>
+    <div id="adminLoginPanel">
+      <input type="text" id="adminUsername" placeholder="Username" class="w-full border border-amber-200 rounded-xl p-3 mb-3 bg-amber-50/50">
+      <input type="password" id="adminPassword" placeholder="Password" class="w-full border border-amber-200 rounded-xl p-3 mb-3 bg-amber-50/50">
+      <button id="loginAdminBtn" class="btn-primary w-full py-2 rounded-xl font-bold">Login sebagai Admin</button>
+      <div id="loginMsg" class="text-red-500 text-xs mt-2"></div>
+      <small class="block mt-2 text-center text-stone-400">🔐 demo: admin / kanaan123</small>
     </div>
-    <div id="cmsArea" class="cms-fields">
-      <p><strong><i class="fas fa-edit"></i> Edit Slide (1-5)</strong></p>
-      <div id="slidesListAdmin"></div>
-      <button id="saveSlidesBtn">💾 Simpan Perubahan Slide</button>
-      <button id="logoutAdminBtn" style="background:#6c757d; margin-top:10px;">Keluar Admin</button>
+    <div id="adminCmsPanel" style="display:none;">
+      <div class="max-h-96 overflow-y-auto space-y-4 pr-2" id="slidesEditList"></div>
+      <button id="saveSlidesCms" class="btn-primary w-full py-2 rounded-xl font-bold mt-4">💾 Simpan Perubahan Slide</button>
+      <button id="logoutAdminCms" class="w-full mt-3 bg-stone-300 text-stone-800 py-2 rounded-xl font-semibold hover:bg-stone-400 transition">Logout</button>
     </div>
   </div>
 </div>
 
 <script>
-  // ----------------------------- DATA SLIDE DEFAULT (5 slide) ---------------------------
-  const defaultSlides = [
-    {
-      title: "Ibadah Kebangunan Rohani",
-      desc: "Bergabunglah dalam ibadah yang penuh kuasa setiap hari Minggu pukul 09.00.",
-      imgUrl: "https://images.pexels.com/photos/2347070/pexels-photo-2347070.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      title: "Pelayanan Anak & Remaja",
-      desc: "Tempat anak-anak bertumbuh dalam kasih Kristus. Setiap Sabtu pukul 08.00.",
-      imgUrl: "https://images.pexels.com/photos/2603517/pexels-photo-2603517.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      title: "Kebaktian Doa Malam",
-      desc: "Mari berdoa bersama setiap Rabu malam, pukul 19.00 WIB.",
-      imgUrl: "https://images.pexels.com/photos/2732531/pexels-photo-2732531.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      title: "Komunitas Pemuda",
-      desc: "Acara kreatif dan persekutuan pemuda setiap Jumat malam.",
-      imgUrl: "https://images.pexels.com/photos/2058159/pexels-photo-2058159.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      title: "Misi & Penjangkauan",
-      desc: "Memberkati masyarakat melalui bakti sosial dan pelayanan kasih.",
-      imgUrl: "https://images.pexels.com/photos/2295625/pexels-photo-2295625.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    }
+  // -------- SLIDE DATA AWAL (5 Slide tema trendi) ----------
+  const defaultSlidesData = [
+    { title: "Ibadah Kebangunan Rohani", desc: "Saatnya mengalami hadirat Tuhan secara nyata. Minggu 09.00 & 17.00", img: "https://images.pexels.com/photos/931937/pexels-photo-931937.jpeg?auto=compress&cs=tinysrgb&w=1600" },
+    { title: "Youth Revival 2026", desc: "Kebaktian pemuda dengan musik modern & worship leader terbaik.", img: "https://images.pexels.com/photos/2603517/pexels-photo-2603517.jpeg?auto=compress&cs=tinysrgb&w=1600" },
+    { title: "Pelayanan Anak Creative", desc: "Sekolah minggu yang interaktif & menyenangkan Setiap Sabtu.", img: "https://images.pexels.com/photos/2347070/pexels-photo-2347070.jpeg?auto=compress&cs=tinysrgb&w=1600" },
+    { title: "Komunitas Milenial", desc: "Ngobrol Santai, tumbuh dalam iman dan relasi. Setiap Jumat malam.", img: "https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=1600" },
+    { title: "Misi & Sosial Action", desc: "Membawa berkat kepada sesama, aksi sosial setiap bulan.", img: "https://images.pexels.com/photos/2732531/pexels-photo-2732531.jpeg?auto=compress&cs=tinysrgb&w=1600" }
   ];
 
-  // State slides saat ini (akan diubah oleh admin)
-  let currentSlides = JSON.parse(localStorage.getItem("churchSlides")) || [...defaultSlides];
-  let activeIndex = 0;
-  let isAdminLogged = false;
+  // ambil dari localStorage atau default
+  let slidesData = JSON.parse(localStorage.getItem('churchTrendSlides')) || defaultSlidesData;
+  let currentSlideIndex = 0;
+  let autoSlideInterval;
+  let isAdminLoggedIn = false;
 
   // DOM Elements
-  const slidesWrapper = document.getElementById("slidesWrapper");
-  const dotsContainer = document.getElementById("dotsContainer");
-  const prevBtn = document.getElementById("prevBtn");
-  const nextBtn = document.getElementById("nextBtn");
-  const openAdminBtn = document.getElementById("openAdminBtn");
-  const adminModal = document.getElementById("adminModal");
-  const closeModalBtn = document.getElementById("closeModalBtn");
-  const loginArea = document.getElementById("loginArea");
-  const cmsArea = document.getElementById("cmsArea");
-  const doLoginBtn = document.getElementById("doLoginBtn");
-  const loginErrorSpan = document.getElementById("loginError");
-  const saveSlidesBtn = document.getElementById("saveSlidesBtn");
-  const logoutAdminBtn = document.getElementById("logoutAdminBtn");
-  const slidesListAdmin = document.getElementById("slidesListAdmin");
+  const slidesTrack = document.getElementById('slidesTrack');
+  const dotsContainer = document.getElementById('carouselDots');
+  const prevBtn = document.getElementById('prevSlideBtn');
+  const nextBtn = document.getElementById('nextSlideBtn');
+  const openAdminModalBtn = document.getElementById('openAdminBtn');
+  const adminModal = document.getElementById('adminModal');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const loginPanel = document.getElementById('adminLoginPanel');
+  const cmsPanel = document.getElementById('adminCmsPanel');
+  const loginAdminBtn = document.getElementById('loginAdminBtn');
+  const logoutAdminCms = document.getElementById('logoutAdminCms');
+  const saveSlidesCms = document.getElementById('saveSlidesCms');
+  const slidesEditList = document.getElementById('slidesEditList');
+  const loginMsgSpan = document.getElementById('loginMsg');
+  const dynamicContentDiv = document.getElementById('dynamicContent');
+  
+  // Mobile menu toggle
+  const mobileToggle = document.getElementById('mobileMenuToggle');
+  const navMenu = document.getElementById('navMenu');
+  mobileToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+  // Tutup menu saat klik link
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      navMenu.classList.remove('active');
+      const navId = link.getAttribute('data-nav');
+      if(navId) handleDynamicMenu(navId);
+    });
+  });
 
-  // ----- RENDER CAROUSEL SLIDES (HTML + background) -----
+  // Menu Dinamis Trendi (konten berubah berdasarkan menu)
+  function handleDynamicMenu(menuId) {
+    let contentHtml = '';
+    if(menuId === 'home') {
+      contentHtml = `<div class="text-center mb-8"><span class="bg-amber-100 text-amber-800 px-4 py-1 rounded-full text-sm font-semibold">Komunitas Iman Masa Kini</span><h2 class="text-3xl md:text-5xl font-bold mt-5 bg-gradient-to-r from-stone-800 to-amber-800 bg-clip-text text-transparent">Selamat Datang di Rumah<span class="text-amber-600"> Kasih</span></h2><p class="text-stone-600 max-w-2xl mx-auto mt-4">Bergabung dengan ibadah yang dinamis, relevan, dan penuh sukacita. Gereja untuk semua generasi.</p></div><div class="grid md:grid-cols-3 gap-7 mt-8"><div class="trend-card bg-white p-6 rounded-2xl shadow-md"><i class="fas fa-calendar-week text-3xl text-amber-600 mb-3"></i><h3 class="font-bold text-xl">Ibadah Live</h3><p class="text-stone-500">Minggu 08.00 & 10.30 WIB • YouTube & Onsite</p></div><div class="trend-card bg-white p-6 rounded-2xl shadow-md"><i class="fas fa-user-friends text-3xl text-amber-600 mb-3"></i><h3 class="font-bold text-xl">Small Group</h3><p class="text-stone-500">Tumbuh bersama dalam kelompok kecil setiap Selasa.</p></div><div class="trend-card bg-white p-6 rounded-2xl shadow-md"><i class="fas fa-hands-praying text-3xl text-amber-600 mb-3"></i><h3 class="font-bold text-xl">Doa Malam</h3><p class="text-stone-500">Rabu & Jumat, 19.00 - Kesempatan revival.</p></div></div>`;
+    } else if(menuId === 'about') {
+      contentHtml = `<div class="max-w-3xl mx-auto text-center"><h2 class="text-3xl font-bold text-amber-800">✨ Tentang Kami</h2><p class="mt-4 text-stone-700 leading-relaxed">Gereja Kanaan hadir sebagai rumah rohani yang inklusif, kreatif, dan bertumbuh dalam kasih Kristus. Kami percaya bahwa ibadah bisa dinamis dan relevan dengan budaya masa kini tanpa kehilangan fondasi iman.</p><div class="mt-8 grid sm:grid-cols-2 gap-4"><div class="bg-white p-4 rounded-2xl"><i class="fas fa-globe text-2xl text-amber-600"></i><p class="font-semibold">Misi: Menjangkau jiwa baru</p></div><div class="bg-white p-4 rounded-2xl"><i class="fas fa-music text-2xl text-amber-600"></i><p class="font-semibold">Worship modern & kreatif</p></div></div></div>`;
+    } else if(menuId === 'schedule') {
+      contentHtml = `<div class="max-w-2xl mx-auto"><h2 class="text-3xl font-bold text-center text-amber-800">📅 Jadwal Ibadah</h2><div class="mt-8 space-y-4"><div class="flex justify-between bg-white p-4 rounded-xl shadow"><span><i class="fas fa-church text-amber-600"></i> Ibadah Raya 1</span><span>Minggu 08.00</span></div><div class="flex justify-between bg-white p-4 rounded-xl shadow"><span><i class="fas fa-church text-amber-600"></i> Ibadah Raya 2</span><span>Minggu 10.30</span></div><div class="flex justify-between bg-white p-4 rounded-xl shadow"><span><i class="fas fa-users text-amber-600"></i> Pemuda Connect</span><span>Jumat 19.00</span></div><div class="flex justify-between bg-white p-4 rounded-xl shadow"><span><i class="fas fa-praying-hands"></i> Doa Puasa</span><span>Rabu 18.00</span></div></div></div>`;
+    } else if(menuId === 'ministry') {
+      contentHtml = `<div><h2 class="text-3xl font-bold text-center text-amber-800">🤝 Ministry & Pelayanan</h2><div class="grid sm:grid-cols-2 gap-6 mt-8"><div class="bg-white/70 p-5 rounded-2xl"><i class="fas fa-child fa-2x text-amber-600"></i><h3 class="font-bold">Pelayanan Anak</h3><p>Kreatif, aman & penuh kasih.</p></div><div class="bg-white/70 p-5 rounded-2xl"><i class="fas fa-music fa-2x text-amber-600"></i><h3 class="font-bold">Worship Team</h3><p>Musik kontemporer & pujian.</p></div><div class="bg-white/70 p-5 rounded-2xl"><i class="fas fa-hand-holding-heart fa-2x text-amber-600"></i><h3 class="font-bold">Diakonia</h3><p>Melayani kebutuhan jemaat.</p></div><div class="bg-white/70 p-5 rounded-2xl"><i class="fas fa-microphone-alt fa-2x text-amber-600"></i><h3 class="font-bold">Media & Tech</h3><p>Livestream & kreatif digital.</p></div></div></div>`;
+    } else if(menuId === 'contact') {
+      contentHtml = `<div class="max-w-xl mx-auto text-center"><h2 class="text-3xl font-bold text-amber-800">📞 Hubungi Kami</h2><div class="bg-white p-8 rounded-3xl shadow-lg mt-6"><i class="fas fa-map-marker-alt text-amber-600 text-2xl"></i><p>Jl. Transformasi No.21, Jakarta Selatan</p><i class="fas fa-phone-alt mt-4 text-amber-600"></i><p>+62 21 8061 2345</p><i class="fas fa-envelope mt-4 text-amber-600"></i><p>hello@kanaanchurch.id</p><div class="flex justify-center gap-5 mt-6 text-2xl"><i class="fab fa-instagram text-amber-700"></i><i class="fab fa-youtube text-red-600"></i><i class="fab fa-tiktok text-stone-800"></i></div></div></div>`;
+    }
+    dynamicContentDiv.innerHTML = contentHtml;
+    window.scrollTo({ top: 400, behavior: 'smooth' });
+  }
+
+  // Render Carousel (5 slides)
   function renderCarousel() {
-    if (!slidesWrapper) return;
-    // buat slide elements
-    slidesWrapper.innerHTML = "";
-    currentSlides.forEach((slide, idx) => {
-      const slideDiv = document.createElement("div");
-      slideDiv.className = "slide";
-      // background image dari data imgUrl (fallback jika kosong)
-      slideDiv.style.backgroundImage = `linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url('${slide.imgUrl}')`;
-      slideDiv.style.backgroundSize = "cover";
-      slideDiv.style.backgroundPosition = "center 30%";
-      slideDiv.innerHTML = `
-        <div class="slide-content">
-          <h2>${escapeHtml(slide.title)}</h2>
-          <p>${escapeHtml(slide.desc)}</p>
-        </div>
-      `;
-      slidesWrapper.appendChild(slideDiv);
+    slidesTrack.innerHTML = '';
+    slidesData.forEach((slide, idx) => {
+      const slideDiv = document.createElement('div');
+      slideDiv.className = 'min-w-full relative h-[400px] md:h-[550px] bg-cover bg-center transition-all';
+      slideDiv.style.backgroundImage = `linear-gradient(98deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 70%), url('${slide.img}')`;
+      slideDiv.style.backgroundSize = 'cover';
+      slideDiv.style.backgroundPosition = 'center 35%';
+      slideDiv.innerHTML = `<div class="absolute bottom-0 left-0 right-0 p-8 md:p-12 slide-content text-white"><h2 class="text-3xl md:text-5xl font-bold drop-shadow">${escapeHtml(slide.title)}</h2><p class="text-lg md:text-xl max-w-lg mt-2 drop-shadow">${escapeHtml(slide.desc)}</p></div>`;
+      slidesTrack.appendChild(slideDiv);
     });
     updateCarouselPosition();
     renderDots();
   }
-
-  function escapeHtml(str) {
-    if(!str) return "";
-    return str.replace(/[&<>]/g, function(m) {
-      if(m === '&') return '&amp;';
-      if(m === '<') return '&lt;';
-      if(m === '>') return '&gt;';
-      return m;
-    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-      return c;
-    });
-  }
-
+  
+  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+  
   function updateCarouselPosition() {
-    if (slidesWrapper) {
-      slidesWrapper.style.transform = `translateX(-${activeIndex * 100}%)`;
-    }
+    slidesTrack.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
     updateActiveDot();
   }
-
+  
   function renderDots() {
-    if (!dotsContainer) return;
-    dotsContainer.innerHTML = "";
-    currentSlides.forEach((_, idx) => {
-      const dot = document.createElement("span");
-      dot.classList.add("dot");
-      if (idx === activeIndex) dot.classList.add("active");
-      dot.addEventListener("click", () => {
-        activeIndex = idx;
-        updateCarouselPosition();
-      });
+    dotsContainer.innerHTML = '';
+    slidesData.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = `w-2.5 h-2.5 rounded-full transition-all ${i === currentSlideIndex ? 'bg-amber-500 w-8' : 'bg-white/60'} mx-1`;
+      dot.addEventListener('click', () => { currentSlideIndex = i; updateCarouselPosition(); resetAutoSlide(); });
       dotsContainer.appendChild(dot);
     });
   }
-
+  
   function updateActiveDot() {
-    const dots = document.querySelectorAll(".dot");
-    dots.forEach((dot, i) => {
-      if (i === activeIndex) dot.classList.add("active");
-      else dot.classList.remove("active");
-    });
+    const dots = dotsContainer.children;
+    for(let i=0; i<dots.length; i++) {
+      if(i === currentSlideIndex) { dots[i].classList.add('bg-amber-500', 'w-8'); dots[i].classList.remove('bg-white/60', 'w-2.5'); }
+      else { dots[i].classList.remove('bg-amber-500', 'w-8'); dots[i].classList.add('bg-white/60', 'w-2.5'); }
+    }
   }
-
-  function nextSlide() {
-    activeIndex = (activeIndex + 1) % currentSlides.length;
-    updateCarouselPosition();
-  }
-  function prevSlide() {
-    activeIndex = (activeIndex - 1 + currentSlides.length) % currentSlides.length;
-    updateCarouselPosition();
-  }
-
-  // ----- ADMIN CMS: tampilkan form edit 5 slide -----
-  function renderAdminSlideForms() {
-    if (!slidesListAdmin) return;
-    slidesListAdmin.innerHTML = "";
-    currentSlides.forEach((slide, idx) => {
-      const slideCard = document.createElement("div");
-      slideCard.className = "preview-slide";
-      slideCard.innerHTML = `
-        <div class="slide-item-admin">
-          <strong>Slide ${idx+1}</strong>
-          <small style="color:#a07439;">[edit di bawah]</small>
-        </div>
-        <label>Judul:</label>
-        <input type="text" id="slide_title_${idx}" value="${escapeHtml(slide.title)}" placeholder="Judul slide">
-        <label>Deskripsi:</label>
-        <textarea id="slide_desc_${idx}" rows="2" placeholder="Deskripsi">${escapeHtml(slide.desc)}</textarea>
-        <label>URL Gambar (background):</label>
-        <input type="text" id="slide_img_${idx}" value="${escapeHtml(slide.imgUrl)}" placeholder="https://...">
-        <hr style="margin:8px 0;">
+  
+  function nextSlide() { currentSlideIndex = (currentSlideIndex + 1) % slidesData.length; updateCarouselPosition(); resetAutoSlide(); }
+  function prevSlide() { currentSlideIndex = (currentSlideIndex - 1 + slidesData.length) % slidesData.length; updateCarouselPosition(); resetAutoSlide(); }
+  
+  function startAutoSlide() { if(autoSlideInterval) clearInterval(autoSlideInterval); autoSlideInterval = setInterval(nextSlide, 6500); }
+  function resetAutoSlide() { startAutoSlide(); }
+  
+  // Admin CMS Load Slide Edit Forms
+  function loadEditForms() {
+    slidesEditList.innerHTML = '';
+    slidesData.forEach((slide, idx) => {
+      const formDiv = document.createElement('div');
+      formDiv.className = 'bg-amber-50 p-3 rounded-xl';
+      formDiv.innerHTML = `
+        <label class="font-bold text-amber-800 text-sm">Slide ${idx+1} - Judul</label>
+        <input id="edit_title_${idx}" class="w-full border rounded-lg p-2 mb-2" value="${escapeHtml(slide.title)}">
+        <label class="font-bold text-amber-800 text-sm">Deskripsi</label>
+        <textarea id="edit_desc_${idx}" class="w-full border rounded-lg p-2 mb-2" rows="2">${escapeHtml(slide.desc)}</textarea>
+        <label class="font-bold text-amber-800 text-sm">URL Gambar (background)</label>
+        <input id="edit_img_${idx}" class="w-full border rounded-lg p-2" value="${escapeHtml(slide.img)}">
       `;
-      slidesListAdmin.appendChild(slideCard);
+      slidesEditList.appendChild(formDiv);
     });
   }
-
-  // Simpan perubahan dari form CMS
-  function saveSlidesFromCMS() {
-    const updatedSlides = [];
-    for (let i = 0; i < currentSlides.length; i++) {
-      const titleInput = document.getElementById(`slide_title_${i}`);
-      const descInput = document.getElementById(`slide_desc_${i}`);
-      const imgInput = document.getElementById(`slide_img_${i}`);
-      if (titleInput && descInput && imgInput) {
-        let newTitle = titleInput.value.trim();
-        let newDesc = descInput.value.trim();
-        let newImg = imgInput.value.trim();
-        if (newTitle === "") newTitle = `Slide ${i+1}`;
-        if (newDesc === "") newDesc = "Pengumuman penting gereja";
-        if (newImg === "") newImg = "https://images.pexels.com/photos/259915/pexels-photo-259915.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
-        updatedSlides.push({
-          title: newTitle,
-          desc: newDesc,
-          imgUrl: newImg
-        });
-      } else {
-        updatedSlides.push(currentSlides[i]);
-      }
+  
+  function saveSlidesFromAdmin() {
+    const newSlides = [];
+    for(let i=0; i<slidesData.length; i++) {
+      const newTitle = document.getElementById(`edit_title_${i}`)?.value.trim() || `Slide ${i+1}`;
+      const newDesc = document.getElementById(`edit_desc_${i}`)?.value.trim() || "Berita Gereja";
+      const newImg = document.getElementById(`edit_img_${i}`)?.value.trim() || "https://images.pexels.com/photos/931937/pexels-photo-931937.jpeg";
+      newSlides.push({ title: newTitle, desc: newDesc, img: newImg });
     }
-    // simpan & update global
-    currentSlides = updatedSlides;
-    localStorage.setItem("churchSlides", JSON.stringify(currentSlides));
+    slidesData = newSlides;
+    localStorage.setItem('churchTrendSlides', JSON.stringify(slidesData));
     renderCarousel();
-    renderAdminSlideForms(); // refresh form
-    alert("✅ 5 slide berhasil diperbarui! Halaman utama telah berubah.");
+    loadEditForms();
+    alert("✨ 5 Slide Hero berhasil diperbarui!");
   }
-
-  // ------ ADMIN LOGIC ----------
-  function checkAdminStatus() {
-    if (isAdminLogged) {
-      loginArea.style.display = "none";
-      cmsArea.style.display = "block";
-      renderAdminSlideForms();
+  
+  // Admin Login
+  function loginAdmin() {
+    const user = document.getElementById('adminUsername').value;
+    const pass = document.getElementById('adminPassword').value;
+    if(user === 'admin' && pass === 'kanaan123') {
+      isAdminLoggedIn = true;
+      loginPanel.style.display = 'none';
+      cmsPanel.style.display = 'block';
+      loadEditForms();
+      loginMsgSpan.innerHTML = '';
     } else {
-      loginArea.style.display = "block";
-      cmsArea.style.display = "none";
+      loginMsgSpan.innerHTML = 'Username / Password salah! (admin / kanaan123)';
     }
   }
-
-  function doLogin() {
-    const user = document.getElementById("adminUser").value;
-    const pass = document.getElementById("adminPass").value;
-    if (user === "admin" && pass === "gereja123") {
-      isAdminLogged = true;
-      loginErrorSpan.innerText = "";
-      checkAdminStatus();
-    } else {
-      loginErrorSpan.innerText = "Username atau password salah! (admin / gereja123)";
-    }
+  
+  function logoutAdmin() {
+    isAdminLoggedIn = false;
+    loginPanel.style.display = 'block';
+    cmsPanel.style.display = 'none';
+    document.getElementById('adminUsername').value = '';
+    document.getElementById('adminPassword').value = '';
   }
-
-  function doLogout() {
-    isAdminLogged = false;
-    checkAdminStatus();
-    // bersihkan form login
-    document.getElementById("adminUser").value = "admin";
-    document.getElementById("adminPass").value = "gereja123";
-    loginErrorSpan.innerText = "";
-  }
-
-  // ---------- MODAL HANDLING ----------
-  function openModal() {
-    adminModal.style.display = "flex";
-    checkAdminStatus();
-  }
-  function closeModal() {
-    adminModal.style.display = "none";
-  }
-
-  // --- auto slide timer (opsional, supaya lebih dinamis) ---
-  let autoInterval;
-  function startAutoSlide() {
-    if(autoInterval) clearInterval(autoInterval);
-    autoInterval = setInterval(() => {
-      nextSlide();
-    }, 7000);
-  }
-  function resetAutoTimer() {
-    startAutoSlide();
-  }
-
-  // Event listeners
-  prevBtn.addEventListener("click", () => { prevSlide(); resetAutoTimer(); });
-  nextBtn.addEventListener("click", () => { nextSlide(); resetAutoTimer(); });
-  openAdminBtn.addEventListener("click", openModal);
-  closeModalBtn.addEventListener("click", closeModal);
-  window.addEventListener("click", (e) => {
-    if (e.target === adminModal) closeModal();
-  });
-  doLoginBtn.addEventListener("click", doLogin);
-  logoutAdminBtn.addEventListener("click", doLogout);
-  saveSlidesBtn.addEventListener("click", saveSlidesFromCMS);
-
-  // inisialisasi awal
-  function init() {
-    // validasi minimal 5 slide, jika kurang atau lebih dipastikan 5 (karena kita selalu 5)
-    if (!currentSlides || currentSlides.length !== 5) {
-      currentSlides = [...defaultSlides];
-      localStorage.setItem("churchSlides", JSON.stringify(currentSlides));
-    }
-    renderCarousel();
-    startAutoSlide();
-    // jika dot manual juga reset timer
-    const dotsObserver = () => { resetAutoTimer(); };
-    document.querySelectorAll(".dot").forEach(d => d && d.addEventListener("click", dotsObserver));
-  }
-  init();
-
-  // tambahkan event listener untuk dynamic dots setelah render ulang (delegation)
-  document.getElementById("dotsContainer")?.addEventListener("click", (e) => {
-    if(e.target && e.target.classList && e.target.classList.contains("dot")) {
-      resetAutoTimer();
-    }
-  });
-  // juga saat manual click pada carousel button
-  function addResetToButtons() {
-    if(prevBtn) prevBtn.addEventListener("click", resetAutoTimer);
-    if(nextBtn) nextBtn.addEventListener("click", resetAutoTimer);
-  }
-  addResetToButtons();
-
-  // tambahan untuk mengamankan agar ketika slide berubah karena tombol, auto reset
-  // ok
-
-  // Jika di mobile touch juga bisa maintain
-  let touchStartX = 0;
-  let touchEndX = 0;
-  const carouselEl = document.querySelector(".carousel");
-  if(carouselEl) {
-    carouselEl.addEventListener("touchstart", (e) => { touchStartX = e.changedTouches[0].screenX; });
-    carouselEl.addEventListener("touchend", (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      if (touchEndX < touchStartX - 40) { nextSlide(); resetAutoTimer(); }
-      if (touchEndX > touchStartX + 40) { prevSlide(); resetAutoTimer(); }
-    });
-  }
+  
+  // Modal handlers
+  function openModal() { adminModal.style.display = 'flex'; if(isAdminLoggedIn) { loginPanel.style.display = 'none'; cmsPanel.style.display = 'block'; loadEditForms(); } else { loginPanel.style.display = 'block'; cmsPanel.style.display = 'none'; } }
+  function closeModal() { adminModal.style.display = 'none'; }
+  
+  // Event binding
+  prevBtn.addEventListener('click', prevSlide);
+  nextBtn.addEventListener('click', nextSlide);
+  openAdminModalBtn.addEventListener('click', openModal);
+  closeModalBtn.addEventListener('click', closeModal);
+  window.addEventListener('click', (e) => { if(e.target === adminModal) closeModal(); });
+  loginAdminBtn.addEventListener('click', loginAdmin);
+  logoutAdminCms.addEventListener('click', logoutAdmin);
+  saveSlidesCms.addEventListener('click', saveSlidesFromAdmin);
+  
+  // Inisialisasi awal
+  renderCarousel();
+  startAutoSlide();
+  // default tampilan home
+  handleDynamicMenu('home');
 </script>
 </body>
 </html>
