@@ -209,7 +209,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // ============ KONFIGURASI FIREBASE (DIPERBAIKI) ============
+    // ============ KONFIGURASI FIREBASE ============
     const firebaseConfig = {
         apiKey: "AIzaSyBnTg18qJ233oh-1Mgj4ewwRMUwMh8iVTo",
         authDomain: "gbi-karang-mulia-web.firebaseapp.com",
@@ -220,7 +220,8 @@
     };
     
     // ============ KONFIGURASI CLOUDINARY (DIPERBAIKI) ============
-    const CLOUD_NAME = "dxzlslbgi";
+    // Cloud Name dari screenshot API Keys: dxzllsbgj
+    const CLOUD_NAME = "dxzllsbgj";
     const UPLOAD_PRESET = "gbi_karang_mulia";
     
     firebase.initializeApp(firebaseConfig);
@@ -436,6 +437,9 @@
     document.getElementById('resetKontakBtn')?.addEventListener('click', resetKontak);
     
     function initCloudinary() {
+        console.log("Cloudinary Init - Cloud Name:", CLOUD_NAME);
+        console.log("Upload Preset:", UPLOAD_PRESET);
+        
         const widget = cloudinary.createUploadWidget({ 
             cloudName: CLOUD_NAME, 
             uploadPreset: UPLOAD_PRESET, 
@@ -443,13 +447,21 @@
             multiple: false, 
             cropping: true, 
             croppingAspectRatio: 16/9,
-            showPoweredBy: false
+            showPoweredBy: false,
+            styles: { palette: { window: "#FFFFFF", sourceBg: "#f8f9fa", link: "#ff8c00" } }
         }, (error, result) => { 
-            if(error) { console.error("Cloudinary Error:", error); alert("Error upload: " + JSON.stringify(error)); return; }
+            if(error) { 
+                console.error("Cloudinary Error:", error); 
+                alert("Error upload: " + JSON.stringify(error)); 
+                return; 
+            }
             if(result && result.event === "success") { 
+                console.log("Upload success:", result.info.secure_url);
                 document.getElementById('slideImageUrl').value = result.info.secure_url; 
                 document.getElementById('uploadSuccessMsg').style.display = 'block';
-                alert("✓ Gambar berhasil diupload!");
+                alert("✓ Gambar berhasil diupload ke Cloudinary!");
+            } else if (result && result.event === "close") {
+                console.log("Widget ditutup");
             }
         });
         document.getElementById("uploadWidget").onclick = () => widget.open();
