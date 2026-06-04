@@ -43,13 +43,15 @@ body {
     padding: 0.8rem 0;
 }
 
+/* PERBAIKAN LOGO NAVBAR - TIDAK DIPAKSA BULAT */
 .navbar-brand img {
     width: 45px;
     height: 45px;
-    object-fit: contain;
-    border-radius: 50%;
+    object-fit: contain;  /* Menjaga rasio asli gambar */
     background: rgba(255,255,255,0.9);
     padding: 5px;
+    border-radius: 8px;  /* Tidak dipaksa bulat, cukup sudut tumpul */
+    image-rendering: crisp-edges;
 }
 
 .navbar-brand strong {
@@ -136,13 +138,17 @@ body {
     padding: 100px 0 20px;
 }
 
+/* PERBAIKAN LOGO HERO - TIDAK DIPAKSA BULAT */
 .hero img {
     width: 120px;
+    height: auto;  /* Biarkan tinggi menyesuaikan rasio */
     margin-bottom: 1rem;
-    border-radius: 50%;
     background: rgba(255,255,255,0.9);
     padding: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    border-radius: 12px;  /* Sudut tumpul, tidak bulat sempurna */
+    object-fit: contain;
+    image-rendering: crisp-edges;
 }
 
 .hero-title {
@@ -278,6 +284,18 @@ footer {
 .footer-content {
     max-width: 800px;
     margin: 0 auto;
+}
+
+/* PERBAIKAN LOGO FOOTER */
+.footer-content img {
+    width: 60px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.9);
+    padding: 8px;
+    margin-bottom: 10px;
+    image-rendering: crisp-edges;
 }
 
 .social-icons {
@@ -427,7 +445,7 @@ footer {
 
     <div id="organisasi" class="tab-content">
         <h3 class="section-title">Struktur Organisasi</h3>
-        <div class="table-responsive"><table class="table table-bordered org-table"><thead><tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr></thead><tbody id="organisasiBody"></tbody></table></div>
+        <div class="table-responsive"><table class="table table-bordered org-table"><thead><tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr></thead><tbody id="organisasiBody"></tbody></tr></div>
     </div>
 
     <div id="pelayanan" class="tab-content">
@@ -443,7 +461,7 @@ footer {
 
 <footer>
     <div class="footer-content">
-        <img src="logo_gbi.png" width="60" alt="Logo" onerror="this.style.display='none'">
+        <img src="logo_gbi.png" alt="Logo" onerror="this.style.display='none'">
         <h6>GEREJA BETHEL INDONESIA</h6>
         <p class="small">GBI Karang Mulia</p>
         <div class="social-icons">
@@ -541,7 +559,7 @@ footer {
             const data = [];
             snapshot.forEach(doc => data.push(doc.data()));
             const container = document.getElementById('organisasiBody');
-            if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada data</td></tr>'; return; }
+            if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada数据</td></tr>'; return; }
             container.innerHTML = data.map(o => `<tr><td>${escapeHtml(o.jabatan)}</td><td>${escapeHtml(o.nama)}</td><td>${escapeHtml(o.keterangan || '')}</td></tr>`).join('');
         } catch (error) {
             console.error("Error loading organisasi:", error);
@@ -554,7 +572,7 @@ footer {
             const data = [];
             snapshot.forEach(doc => data.push(doc.data()));
             const container = document.getElementById('serviceGrid');
-            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data pelayanan</div>'; return; }
+            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada数据 pelayanan</div>'; return; }
             container.innerHTML = data.map(p => `<div class="service-card"><i class="${p.icon}"></i><h6>${escapeHtml(p.name)}</h6><small>${escapeHtml(p.schedule || '')}</small></div>`).join('');
         } catch (error) {
             console.error("Error loading pelayanan:", error);
