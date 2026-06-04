@@ -69,7 +69,31 @@
 
                 <div class="mb-3"><label class="form-label">No. HP / WhatsApp *</label><input type="tel" id="noHp" class="form-control" placeholder="Contoh: 08123456789" required></div>
                 <div class="mb-3"><label class="form-label">Alamat Lengkap</label><textarea id="alamat" class="form-control" rows="2"></textarea></div>
-                <div class="mb-3"><label class="form-label">Pekerjaan</label><input type="text" id="pekerjaan" class="form-control"></div>
+                
+                <!-- PEKERJAAN - DROPDOWN BARU -->
+                <div class="mb-3">
+                    <label class="form-label">Pekerjaan *</label>
+                    <select id="pekerjaan" class="form-select" required>
+                        <option value="">Pilih Pekerjaan</option>
+                        <option>TNI</option>
+                        <option>POLRI</option>
+                        <option>ASN</option>
+                        <option>P3K</option>
+                        <option>Swasta</option>
+                        <option>Wirausaha</option>
+                        <option>Freelancer</option>
+                        <option>Pelajar</option>
+                        <option>Mahasiswa</option>
+                        <option>Fulltimer Gereja</option>
+                        <option>Gembala Sidang</option>
+                        <option>Petani</option>
+                        <option>Pemerhati</option>
+                        <option>Pekerja Seni</option>
+                        <option>Influencer dan Content Creator</option>
+                        <option>Dll</option>
+                    </select>
+                </div>
+                
                 <button type="button" class="btn-submit" onclick="nextStep(2)">Selanjutnya <i class="fa-solid fa-arrow-right"></i></button>
             </div>
             
@@ -213,10 +237,10 @@
     }
     
     // Tampilkan toast notifikasi
-    function showToast(message, isSuccess = true) {
-        const toastEl = document.querySelector('#successToast .toast');
+    function showToast(message) {
         const toastBody = document.querySelector('#toastMessage');
         toastBody.innerHTML = message;
+        const toastEl = document.querySelector('#successToast .toast');
         const toast = new bootstrap.Toast(toastEl, { delay: 4000, autohide: true });
         toast.show();
     }
@@ -234,10 +258,12 @@
             const nama = document.getElementById('namaLengkap').value.trim();
             const email = document.getElementById('email').value.trim();
             const noHp = document.getElementById('noHp').value.trim();
+            const pekerjaan = document.getElementById('pekerjaan').value;
             if(!nama) { alert("Nama Lengkap harus diisi!"); return; }
             if(!email) { alert("Alamat Email harus diisi!"); return; }
             if(!email.match(/^\S+@\S+\.\S+$/)) { alert("Format email tidak valid!"); return; }
             if(!noHp) { alert("No. HP harus diisi!"); return; }
+            if(!pekerjaan) { alert("Pekerjaan harus dipilih!"); return; }
             if(!fotoBase64Data) { alert("Silakan upload foto profil terbaru!"); return; }
         }
         if(step === 3) {
@@ -279,7 +305,22 @@
         const alasan = document.getElementById('alasanBergabung').value;
         let fotoPreview = document.getElementById('previewContainer').innerHTML;
         let fotoHTML = fotoPreview ? fotoPreview : '<span class="text-muted">Belum ada foto</span>';
-        document.getElementById('reviewData').innerHTML = `<table class="table table-sm table-bordered"><tr><th style="width:35%">Nama Lengkap</th><td>${escapeHtml(nama)}</td></tr><tr><th>Email</th><td>${escapeHtml(email)}</td></tr><tr><th>Tempat/Tgl Lahir</th><td>${escapeHtml(tempatLahir)}${tempatLahir ? ', ' : ''}${escapeHtml(tanggalLahir)}</td></tr><tr><th>Jenis Kelamin</th><td>${escapeHtml(jenisKelamin)}</td></tr><tr><th>Golongan Darah</th><td>${escapeHtml(golonganDarah) || '-'}</td></tr><tr><th>No HP</th><td>${escapeHtml(noHp)}</td></tr><tr><th>Alamat</th><td>${escapeHtml(alamat) || '-'}</td></tr><tr><th>Pekerjaan</th><td>${escapeHtml(pekerjaan) || '-'}</td></tr><tr><th>Status Baptis</th><td>${escapeHtml(baptis)}</td></tr><tr><th>Status Pernikahan</th><td>${escapeHtml(pernikahan)}</td></tr><tr><th>Komisi</th><td>${escapeHtml(komisi)}</td></tr><tr><th>Keahlian</th><td>${escapeHtml(keahlian) || '-'}</td></tr><tr><th>Alasan Berjemaat</th><td>${escapeHtml(alasan)}</td></tr><tr><th>Foto Profil</th><td>${fotoHTML}</td></tr></table>`; 
+        document.getElementById('reviewData').innerHTML = `<table class="table table-sm table-bordered">
+            <tr><th style="width:35%">Nama Lengkap</th><td>${escapeHtml(nama)}</td></tr>
+            <tr><th>Email</th><td>${escapeHtml(email)}</td></tr>
+            <tr><th>Tempat/Tgl Lahir</th><td>${escapeHtml(tempatLahir)}${tempatLahir ? ', ' : ''}${escapeHtml(tanggalLahir)}</td></tr>
+            <tr><th>Jenis Kelamin</th><td>${escapeHtml(jenisKelamin)}</td></tr>
+            <tr><th>Golongan Darah</th><td>${escapeHtml(golonganDarah) || '-'}</td></tr>
+            <tr><th>No HP</th><td>${escapeHtml(noHp)}</td></tr>
+            <tr><th>Alamat</th><td>${escapeHtml(alamat) || '-'}</td></tr>
+            <tr><th>Pekerjaan</th><td>${escapeHtml(pekerjaan) || '-'}</td></tr>
+            <tr><th>Status Baptis</th><td>${escapeHtml(baptis)}</td></tr>
+            <tr><th>Status Pernikahan</th><td>${escapeHtml(pernikahan)}</td></tr>
+            <tr><th>Komisi</th><td>${escapeHtml(komisi)}</td></tr>
+            <tr><th>Keahlian</th><td>${escapeHtml(keahlian) || '-'}</td></tr>
+            <tr><th>Alasan Berjemaat</th><td>${escapeHtml(alasan)}</td></tr>
+            <tr><th>Foto Profil</th><td>${fotoHTML}</td></tr>
+        </table>`; 
     }
     
     document.getElementById('daftarForm').addEventListener('submit', async (e) => { 
@@ -292,7 +333,6 @@
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
         
         try {
-            // Generate nomor registrasi
             const reg = await generateNomorRegistrasi();
             generatedNomorRegistrasi = reg.nomorRegistrasi;
             generatedNomorUrut = reg.urutan;
@@ -301,7 +341,6 @@
             currentNama = document.getElementById('namaLengkap').value;
             currentNoHp = document.getElementById('noHp').value;
             
-            // Simpan ke Firestore
             const data = { 
                 nomorRegistrasi: generatedNomorRegistrasi,
                 nomorUrut: parseInt(generatedNomorUrut),
@@ -329,17 +368,14 @@
             
             await db.collection('pendaftaran_jemaat').add(data); 
             
-            // Reset form
             document.getElementById('daftarForm').reset(); 
             document.getElementById('previewContainer').innerHTML = "";
             fotoBase64Data = "";
             
-            // Tampilkan modal pilihan WhatsApp
             const modalElement = document.getElementById('waModal');
             const modal = new bootstrap.Modal(modalElement, { backdrop: 'static', keyboard: false });
             modal.show();
             
-            // Event tombol Kirim WA
             document.getElementById('btnKirimWA').onclick = () => {
                 sendWhatsApp(currentNoHp, generatedNomorRegistrasi, currentNama);
                 modal.hide();
@@ -347,7 +383,6 @@
                 setTimeout(() => { window.location.href = '../index.html'; }, 4000);
             };
             
-            // Event tombol Tidak
             document.getElementById('btnTidakWA').onclick = () => {
                 modal.hide();
                 showToast("✅ Pendaftaran berhasil! Nomor Jemaat: " + generatedNomorRegistrasi + "<br>ℹ️ Selamat! Data registrasi anda telah terkirim ke Administrator.");
