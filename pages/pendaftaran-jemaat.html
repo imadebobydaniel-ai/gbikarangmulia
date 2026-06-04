@@ -28,7 +28,8 @@
     .upload-area:hover { border-color: #ff8c00; background: #fff8f0; }
     #fileInfo { font-size: 0.8rem; color: #6c757d; margin-top: 5px; }
     .error-text { color: #dc3545; font-size: 0.8rem; margin-top: 5px; }
-    .form-section-title { font-weight: 600; color: #0b4ea2; margin-bottom: 15px; padding-bottom: 5px; border-bottom: 2px solid #ff8c00; display: inline-block; }
+    .nomor-registrasi-box { background: #f0f9ff; border-left: 4px solid #ff8c00; padding: 12px; border-radius: 8px; margin-top: 15px; text-align: center; }
+    .nomor-registrasi-box strong { color: #0b4ea2; }
 </style>
 </head>
 <body>
@@ -58,8 +59,6 @@
                 
                 <div class="row">
                     <div class="col-md-6 mb-3"><label class="form-label">Jenis Kelamin</label><select id="jenisKelamin" class="form-select"><option>Laki-laki</option><option>Perempuan</option></select></div>
-                    
-                    <!-- GOLONGAN DARAH - DROPDOWN BARU -->
                     <div class="col-md-6 mb-3"><label class="form-label">Golongan Darah</label><select id="golonganDarah" class="form-select"><option value="">Pilih Golongan Darah</option><option>A</option><option>B</option><option>O</option><option>AB</option><option>AB+</option></select></div>
                 </div>
                 
@@ -78,7 +77,7 @@
                     <div id="fotoError" class="error-text"></div>
                 </div>
 
-                <div class="mb-3"><label class="form-label">No. HP / WhatsApp *</label><input type="tel" id="noHp" class="form-control" required></div>
+                <div class="mb-3"><label class="form-label">No. HP / WhatsApp *</label><input type="tel" id="noHp" class="form-control" placeholder="Contoh: 08123456789" required></div>
                 <div class="mb-3"><label class="form-label">Alamat Lengkap</label><textarea id="alamat" class="form-control" rows="2"></textarea></div>
                 <div class="mb-3"><label class="form-label">Pekerjaan</label><input type="text" id="pekerjaan" class="form-control"></div>
                 
@@ -92,7 +91,6 @@
                 <div class="mb-3"><label class="form-label">Komisi / Kelompok Sel</label><select id="komisi" class="form-select"><option>Umum</option><option>Pemuda</option><option>Remaja</option><option>Sekolah Minggu</option><option>Lansia</option><option>Belum menentukan</option></select></div>
                 <div class="mb-3"><label class="form-label">Keahlian / Bakat (opsional)</label><input type="text" id="keahlian" class="form-control" placeholder="Musik, Mengajar, Multimedia, dll"></div>
                 
-                <!-- ALASAN BERJEMAAT - DROPDOWN BARU -->
                 <div class="mb-3"><label class="form-label">Alasan Berjemaat *</label><select id="alasanBergabung" class="form-select" required><option value="">Pilih Alasan Berjemaat</option><option>Tertanam dan Komitmen Sebagai Jemaat</option><option>Simpatisan</option><option>Jemaat Sementara Karena Tugas</option></select></div>
                 
                 <div class="d-flex gap-2">
@@ -134,6 +132,57 @@
     let currentStep = 1;
     let uploadedFile = null;
     let photoURL = "";
+    
+    // ============ FUNGSI KONVERSI BULAN KE ROMAWI ============
+    function getBulanRomawi(monthNumber) {
+        const romawi = {
+            1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI",
+            7: "VII", 8: "VIII", 9: "IX", 10: "X", 11: "XI", 12: "XII"
+        };
+        return romawi[monthNumber] || "I";
+    }
+    
+    // ============ FUNGSI GENERATE NOMOR REGISTRASI ============
+    async function generateNomorRegistrasi() {
+        const now = new Date();
+        const tahun = now.getFullYear();
+        const bulan = now.getMonth() + 1; // 1-12
+        const bulanRomawi = getBulanRomawi(bulan);
+        
+        // Query untuk menghitung jumlah pendaftar di bulan dan tahun yang sama
+        const startDate = new Date(tahun, bulan - 1, 1);
+        const endDate = new Date(tahun, bulan, 0);
+        
+        const snapshot = await db.collection('pendaftaran_jemaat')
+            .where('createdAt', '>=', startDate)
+            .where('createdAt', '<=', endDate)
+            .get();
+        
+        const urutan = (snapshot.size + 1).toString().padStart(3, '0');
+        
+        const nomorRegistrasi = `GBI/KRGMLA/JEMAAT/${urutan}/${bulanRomawi}/${tahun}`;
+        return { nomorRegistrasi, urutan, bulanRomawi, tahun };
+    }
+    
+    // ============ FUNGSI KIRIM NOTIFIKASI VIA WHATSAPP LINK ============
+    function sendWhatsAppNotification(noHp, nomorRegistrasi, nama) {
+        // Format nomor WhatsApp (hapus karakter non-digit, tambah kode negara 62 jika perlu)
+        let waNumber = noHp.replace(/\D/g, '');
+        if (waNumber.startsWith('0')) {
+            waNumber = '62' + waNumber.substring(1);
+        }
+        if (!waNumber.startsWith('62')) {
+            waNumber = '62' + waNumber;
+        }
+        
+        // Pesan yang akan dikirim
+        const pesan = `*Selamat!*%0A%0AData anda telah teregistrasi sebagai anggota jemaat GBI Karang Mulia.%0A%0A*Nomor Jemaat:* ${nomorRegistrasi}%0A*Nama:* ${nama}%0A%0ATerimakasih, Tuhan Yesus Memberkati.%0A%0A_GBI Karang Mulia_`;
+        
+        const waLink = `https://wa.me/${waNumber}?text=${pesan}`;
+        
+        // Buka link WhatsApp di tab baru (jemaat tinggal klik kirim)
+        window.open(waLink, '_blank');
+    }
     
     // Preview foto
     window.previewFoto = function(input) {
@@ -239,8 +288,8 @@
         
         document.getElementById('reviewData').innerHTML = `
             <table class="table table-sm table-bordered">
-                <tr><th style="width:35%">Nama Lengkap</th><td>${escapeHtml(nama)}</br></br></br></br></br></br></br></br></br></td></tr>
-                <tr><th>Email</th><td>${escapeHtml(email)}</br></br></td></tr>
+                <tr><th style="width:35%">Nama Lengkap</th><td>${escapeHtml(nama)}</br></td></tr>
+                <tr><th>Email</th><td>${escapeHtml(email)}</br></td></tr>
                 <tr><th>Tempat/Tgl Lahir</th><td>${escapeHtml(tempatLahir)}${tempatLahir ? ', ' : ''}${escapeHtml(tanggalLahir)}</br></td></tr>
                 <tr><th>Jenis Kelamin</th><td>${escapeHtml(jenisKelamin)}</br></td></tr>
                 <tr><th>Golongan Darah</th><td>${escapeHtml(golonganDarah) || '-'}</br></td></tr>
@@ -285,17 +334,21 @@
         errorDiv.classList.add('d-none');
         
         try {
-            // Upload foto ke Firebase Storage
+            // 1. Upload foto ke Firebase Storage
             const fileName = `profile_${Date.now()}_${uploadedFile.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
             const storageRef = storage.ref('foto_profil/' + fileName);
-            
-            console.log("Uploading file to Firebase Storage...");
-            const uploadTask = await storageRef.put(uploadedFile);
+            await storageRef.put(uploadedFile);
             photoURL = await storageRef.getDownloadURL();
-            console.log("Upload success:", photoURL);
             
-            // Simpan data ke Firestore
+            // 2. Generate nomor registrasi otomatis
+            const { nomorRegistrasi, urutan, bulanRomawi, tahun } = await generateNomorRegistrasi();
+            
+            // 3. Simpan data ke Firestore
             const data = { 
+                nomorRegistrasi: nomorRegistrasi,
+                nomorUrut: parseInt(urutan),
+                bulanRegistrasi: bulanRomawi,
+                tahunRegistrasi: tahun,
                 namaLengkap: document.getElementById('namaLengkap').value,
                 email: document.getElementById('email').value,
                 tempatLahir: document.getElementById('tempatLahir').value || '',
@@ -311,24 +364,35 @@
                 keahlian: document.getElementById('keahlian').value || '',
                 alasanBergabung: document.getElementById('alasanBergabung').value,
                 fotoProfilURL: photoURL,
-                status: "Menunggu Verifikasi", 
+                status: "Terverifikasi", 
                 tanggalDaftar: new Date().toLocaleDateString('id-ID'), 
                 createdAt: firebase.firestore.FieldValue.serverTimestamp() 
             }; 
             
             await db.collection('pendaftaran_jemaat').add(data); 
             
-            // Reset form
+            // 4. Reset form
             document.getElementById('daftarForm').reset(); 
             document.getElementById('previewContainer').innerHTML = "";
             uploadedFile = null;
             
-            successDiv.innerHTML = '<i class="fa-solid fa-check-circle"></i> Pendaftaran berhasil! Admin akan menghubungi Anda untuk verifikasi.'; 
+            // 5. Tampilkan pesan sukses dengan nomor registrasi
+            successDiv.innerHTML = `
+                <i class="fa-solid fa-check-circle"></i> Pendaftaran berhasil!<br>
+                <strong>Nomor Registrasi Jemaat:</strong> ${nomorRegistrasi}<br><br>
+                <i class="fa-solid fa-whatsapp"></i> Notifikasi WhatsApp akan dibuka di tab baru.<br>
+                Silakan klik kirim untuk mengirimkan pesan konfirmasi ke nomor Anda.
+            `; 
             successDiv.classList.remove('d-none'); 
+            
+            // 6. Kirim notifikasi WhatsApp (buka link WA di tab baru)
+            const noHp = document.getElementById('noHp').value;
+            const nama = document.getElementById('namaLengkap').value;
+            sendWhatsAppNotification(noHp, nomorRegistrasi, nama);
             
             setTimeout(() => {
                 window.location.href = '../index.html';
-            }, 3000); 
+            }, 5000); // 5 detik, memberi waktu untuk klik kirim WA
             
         } catch (error) {
             console.error("Error detail:", error);
