@@ -206,21 +206,37 @@ body {
     font-size: 1.5rem;
 }
 
+/* SLIDE CAROUSEL */
 .slide-carousel {
     border-radius: 20px;
     overflow: hidden;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 .slide-carousel .carousel-inner img {
-    height: 400px;
+    height: 420px;
     object-fit: cover;
     width: 100%;
 }
 
 .carousel-caption {
-    background: linear-gradient(0deg, rgba(0,0,0,0.6), transparent);
+    background: linear-gradient(0deg, rgba(0,0,0,0.7), transparent);
     border-radius: 0 0 20px 20px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+}
+
+.carousel-caption h5 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.carousel-caption p {
+    font-size: 0.9rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 .content-card {
@@ -228,6 +244,7 @@ body {
     border-radius: 16px;
     padding: 20px;
     margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .schedule-item {
@@ -274,29 +291,52 @@ body {
     color: white;
 }
 
-/* ============ FOOTER LENGKAP ============ */
+/* ============ FOOTER ============ */
 footer {
-    background: rgba(11, 37, 69, 0.95);
+    background: rgba(11, 37, 69, 0.96);
     color: white;
-    padding: 40px 20px 30px;
+    padding: 45px 20px 30px;
     margin-top: auto;
 }
 
-.footer-content {
-    max-width: 1000px;
+.footer-container {
+    max-width: 1100px;
     margin: 0 auto;
+}
+
+.footer-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 30px;
+    margin-bottom: 30px;
 }
 
-.footer-logo {
-    text-align: left;
+.footer-col {
+    flex: 1;
     min-width: 200px;
 }
 
-.footer-logo img {
+.footer-col h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--secondary);
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-col h4:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--secondary);
+}
+
+.footer-logo-img {
     width: 70px;
     height: auto;
     background: white;
@@ -305,40 +345,23 @@ footer {
     margin-bottom: 15px;
 }
 
-.footer-logo h6 {
-    font-weight: 700;
-    margin-bottom: 5px;
-    font-size: 1rem;
+.footer-col p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    opacity: 0.85;
+    margin-bottom: 8px;
 }
 
-.footer-logo p {
-    font-size: 0.8rem;
-    opacity: 0.8;
-}
-
-.footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-}
-
-.footer-links-column h5 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: var(--secondary);
-}
-
-.footer-links-column ul {
+.footer-col ul {
     list-style: none;
     padding: 0;
 }
 
-.footer-links-column ul li {
-    margin-bottom: 8px;
+.footer-col ul li {
+    margin-bottom: 10px;
 }
 
-.footer-links-column ul li a {
+.footer-col ul li a {
     color: white;
     text-decoration: none;
     font-size: 0.85rem;
@@ -346,56 +369,47 @@ footer {
     transition: 0.3s;
 }
 
-.footer-links-column ul li a:hover {
+.footer-col ul li a:hover {
     opacity: 1;
     color: var(--secondary);
     padding-left: 5px;
 }
 
-.footer-social {
-    text-align: left;
-    min-width: 180px;
-}
-
-.footer-social h5 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: var(--secondary);
-}
-
-.social-icons-footer {
+.social-icons-list {
     display: flex;
     gap: 15px;
-    margin-bottom: 20px;
+    margin-top: 15px;
 }
 
-.social-icons-footer a {
+.social-icons-list a {
     color: white;
     font-size: 1.3rem;
     transition: 0.3s;
+    background: rgba(255,255,255,0.1);
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
-.social-icons-footer a:hover {
-    color: var(--secondary);
+.social-icons-list a:hover {
+    background: var(--secondary);
+    color: white;
     transform: translateY(-3px);
-}
-
-.footer-contact p {
-    font-size: 0.8rem;
-    margin-bottom: 8px;
-    opacity: 0.8;
 }
 
 .footer-contact i {
     width: 25px;
     color: var(--secondary);
+    margin-right: 8px;
 }
 
 .footer-bottom {
     text-align: center;
-    padding-top: 30px;
-    margin-top: 30px;
+    padding-top: 25px;
+    margin-top: 25px;
     border-top: 1px solid rgba(255,255,255,0.1);
     font-size: 0.75rem;
     opacity: 0.7;
@@ -436,20 +450,22 @@ footer {
     .slide-carousel .carousel-inner img { height: 250px; }
     .cms-fixed-btn { padding: 6px 16px; font-size: 0.7rem; }
     .cms-fixed-btn span { display: none; }
-    .footer-content { flex-direction: column; text-align: center; }
-    .footer-logo, .footer-social { text-align: center; }
-    .social-icons-footer { justify-content: center; }
-    .footer-links { justify-content: center; text-align: center; }
+    .footer-grid { flex-direction: column; text-align: center; }
+    .footer-col h4:after { left: 50%; transform: translateX(-50%); }
+    .social-icons-list { justify-content: center; }
+    .footer-contact { text-align: center; }
 }
 </style>
 </head>
 <body>
 
+<!-- CMS BUTTON -->
 <button class="cms-fixed-btn" onclick="window.location.href='cms.html'">
     <i class="fa-solid fa-user-shield"></i>
     <span>CMS</span>
 </button>
 
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
 <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="#">
@@ -485,6 +501,7 @@ footer {
 </div>
 </nav>
 
+<!-- HERO SECTION -->
 <section class="hero">
 <div class="container text-center">
     <img src="logo_gbi.png" alt="Logo" onerror="this.style.display='none'">
@@ -494,15 +511,20 @@ footer {
 </div>
 </section>
 
+<!-- MAIN CONTENT -->
 <div class="tab-content-wrapper">
-    <!-- SEJARAH - Slide Foto dari CMS -->
+    <!-- SEJARAH TAB - SLIDE FOTO DI SINI -->
     <div id="sejarah" class="tab-content">
         <h3 class="section-title"><i class="fa-solid fa-landmark"></i> Sejarah Gereja</h3>
         
-        <!-- SLIDE FOTO OTOMATIS DARI CMS (MENU SLIDE) -->
+        <!-- SLIDE FOTO OTOMATIS DARI CMS -->
         <div id="historyCarousel" class="carousel slide slide-carousel carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
             <div class="carousel-indicators" id="slideIndicators"></div>
-            <div class="carousel-inner" id="slideInner"></div>
+            <div class="carousel-inner" id="slideInner">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/1200x420?text=Memuat+Slide..." class="d-block w-100" alt="Loading">
+                </div>
+            </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#historyCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
             </button>
@@ -511,7 +533,7 @@ footer {
             </button>
         </div>
         
-        <!-- TEKS SEJARAH TETAP ADA DI BAWAH SLIDE -->
+        <!-- TEKS SEJARAH -->
         <div class="row">
             <div class="col-md-8">
                 <p><strong>GBI Karang Mulia</strong> berdiri sejak tahun 1995 sebagai wadah persekutuan bagi warga Kristen di wilayah Karang Mulia, Nabire.</p>
@@ -521,49 +543,74 @@ footer {
             <div class="col-md-4">
                 <div class="content-card">
                     <i class="fa-solid fa-quote-left fa-2x text-primary mb-2"></i>
-                    <p><em>"Hati kami bersukacita karena Dia, sebab kepada nama-Nya yang kudus kami percaya." - Mazmur 33:21</em></p>
+                    <p class="mb-0"><em>"Hati kami bersukacita karena Dia, sebab kepada nama-Nya yang kudus kami percaya." - Mazmur 33:21</em></p>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- PROFIL TAB -->
     <div id="profil" class="tab-content">
         <h3 class="section-title">Profil Gereja</h3>
         <div class="row">
-            <div class="col-md-6 mb-3"><div class="content-card"><i class="fa-solid fa-eye fa-2x text-primary mb-2"></i><h4>Visi</h4><p>Menjadi gereja yang bertumbuh dalam iman, berdampak bagi masyarakat, dan memenangkan jiwa bagi kemuliaan Tuhan Yesus Kristus.</p></div></div>
-            <div class="col-md-6 mb-3"><div class="content-card"><i class="fa-solid fa-bullseye fa-2x text-primary mb-2"></i><h4>Misi</h4><ul><li>Memuridkan setiap jemaat untuk bertumbuh dalam Firman Tuhan</li><li>Mengembangkan pelayanan yang relevan dengan kebutuhan zaman</li><li>Melayani masyarakat melalui program sosial</li><li>Menjangkau jiwa-jiwa baru dengan Injil Keselamatan</li></ul></div></div>
+            <div class="col-md-6 mb-3">
+                <div class="content-card">
+                    <i class="fa-solid fa-eye fa-2x text-primary mb-2"></i>
+                    <h4>Visi</h4>
+                    <p>Menjadi gereja yang bertumbuh dalam iman, berdampak bagi masyarakat, dan memenangkan jiwa bagi kemuliaan Tuhan Yesus Kristus.</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="content-card">
+                    <i class="fa-solid fa-bullseye fa-2x text-primary mb-2"></i>
+                    <h4>Misi</h4>
+                    <ul class="mb-0">
+                        <li>Memuridkan setiap jemaat untuk bertumbuh dalam Firman Tuhan</li>
+                        <li>Mengembangkan pelayanan yang relevan dengan kebutuhan zaman</li>
+                        <li>Melayani masyarakat melalui program sosial</li>
+                        <li>Menjangkau jiwa-jiwa baru dengan Injil Keselamatan</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- ORGANISASI TAB -->
     <div id="organisasi" class="tab-content">
         <h3 class="section-title">Struktur Organisasi</h3>
-        <div class="table-responsive"><table class="table table-bordered org-table"><thead><tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr></thead><tbody id="organisasiBody"></tbody></tr></div>
+        <div class="table-responsive">
+            <table class="table table-bordered org-table">
+                <thead><tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr></thead>
+                <tbody id="organisasiBody"></tbody>
+            </table>
+        </div>
     </div>
 
+    <!-- PELAYANAN TAB -->
     <div id="pelayanan" class="tab-content">
         <h3 class="section-title">Pelayanan Kami</h3>
         <div class="service-grid" id="serviceGrid"></div>
     </div>
 
+    <!-- JADWAL TAB -->
     <div id="jadwal" class="tab-content">
         <h3 class="section-title">Jadwal Ibadah</h3>
         <div id="jadwalList"></div>
     </div>
 </div>
 
-<!-- ============ FOOTER LENGKAP ============ -->
+<!-- ============ FOOTER ============ -->
 <footer>
-    <div class="footer-content">
-        <div class="footer-logo">
-            <img src="logo_gbi.png" alt="Logo GBI" onerror="this.style.display='none'">
-            <h6>GEREJA BETHEL INDONESIA</h6>
-            <p>GBI Karang Mulia</p>
-            <p>"Menjadi Gereja yang Berdampak, Bertumbuh dan Menjangkau Jiwa"</p>
-        </div>
-        
-        <div class="footer-links">
-            <div class="footer-links-column">
-                <h5>Navigasi</h5>
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <img src="logo_gbi.png" alt="Logo GBI" class="footer-logo-img" onerror="this.style.display='none'">
+                <h4>GBI Karang Mulia</h4>
+                <p>"Menjadi Gereja yang Berdampak, Bertumbuh dan Menjangkau Jiwa bagi Kemuliaan Tuhan."</p>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Navigasi</h4>
                 <ul>
                     <li><a href="#" onclick="showTab('sejarah')">Sejarah</a></li>
                     <li><a href="#" onclick="showTab('profil')">Profil</a></li>
@@ -572,33 +619,34 @@ footer {
                     <li><a href="#" onclick="showTab('jadwal')">Jadwal</a></li>
                 </ul>
             </div>
-            <div class="footer-links-column">
-                <h5>Jemaat</h5>
+            
+            <div class="footer-col">
+                <h4>Jemaat</h4>
                 <ul>
                     <li><a href="pages/kontak-pemimpin.html">Kontak Pemimpin</a></li>
                     <li><a href="pages/layanan-jemaat.html">Layanan Jemaat</a></li>
                     <li><a href="pages/pendaftaran-jemaat.html">Pendaftaran Anggota</a></li>
                 </ul>
             </div>
-        </div>
-        
-        <div class="footer-social">
-            <h5>Ikuti Kami</h5>
-            <div class="social-icons-footer">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            
+            <div class="footer-col">
+                <h4>Hubungi Kami</h4>
+                <div class="footer-contact">
+                    <p><i class="fa-solid fa-location-dot"></i> Jl. Ujung Pandang, Karang Mulia, Nabire, Papua Tengah</p>
+                    <p><i class="fa-regular fa-envelope"></i> info@gbi-karangmulia.org</p>
+                    <p><i class="fa-solid fa-phone"></i> +62 812-3456-7890</p>
+                </div>
+                <div class="social-icons-list">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
-            <div class="footer-contact">
-                <p><i class="fa-solid fa-location-dot"></i> Jl. Ujung Pandang, Karang Mulia, Nabire, Papua Tengah</p>
-                <p><i class="fa-regular fa-envelope"></i> info@gbi-karangmulia.org</p>
-                <p><i class="fa-solid fa-phone"></i> +62 812-3456-7890</p>
-            </div>
         </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2026 GBI Karang Mulia - Gereja Bethel Indonesia. All Rights Reserved.</p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 GBI Karang Mulia - Gereja Bethel Indonesia. All Rights Reserved.</p>
+        </div>
     </div>
 </footer>
 
@@ -627,7 +675,7 @@ footer {
         return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;'));
     }
     
-    // ============ LOAD SLIDE DARI CMS (MENU SLIDE) ============
+    // ============ LOAD SLIDE DARI FIREBASE ============
     async function loadSlides() {
         try {
             const snapshot = await db.collection('slides').orderBy('order', 'asc').get();
@@ -637,21 +685,23 @@ footer {
             const inner = document.getElementById('slideInner');
             const indicators = document.getElementById('slideIndicators');
             
+            if (!inner) return;
+            
             if (slidesData.length === 0) {
                 inner.innerHTML = `<div class="carousel-item active">
-                    <img src="https://via.placeholder.com/1200x400?text=Belum+Ada+Slide" class="d-block w-100">
+                    <img src="https://via.placeholder.com/1200x420?text=Belum+Ada+Slide" class="d-block w-100" alt="Belum Ada Slide">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Belum Ada Slide</h5>
-                        <p>Silakan tambah slide melalui CMS pada menu Slide</p>
+                        <h5>📸 Belum Ada Slide</h5>
+                        <p>Silakan tambah slide melalui CMS pada menu Slide Foto</p>
                     </div>
                 </div>`;
-                indicators.innerHTML = '<button data-bs-target="#historyCarousel" data-bs-slide-to="0" class="active"></button>';
+                if (indicators) indicators.innerHTML = '<button data-bs-target="#historyCarousel" data-bs-slide-to="0" class="active"></button>';
                 return;
             }
             
             inner.innerHTML = slidesData.map((s, idx) => `
                 <div class="carousel-item ${idx === 0 ? 'active' : ''}">
-                    <img src="${s.imageUrl}" class="d-block w-100" alt="${s.title}" onerror="this.src='https://via.placeholder.com/1200x400?text=Gambar+Error'">
+                    <img src="${s.imageUrl}" class="d-block w-100" alt="${s.title}" onerror="this.src='https://via.placeholder.com/1200x420?text=Gambar+Error'">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>${escapeHtml(s.title)}</h5>
                         <p>${escapeHtml(s.description || '')}</p>
@@ -659,8 +709,11 @@ footer {
                 </div>
             `).join('');
             
-            indicators.innerHTML = slidesData.map((_, idx) => `<button type="button" data-bs-target="#historyCarousel" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>`).join('');
+            if (indicators) {
+                indicators.innerHTML = slidesData.map((_, idx) => `<button type="button" data-bs-target="#historyCarousel" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>`).join('');
+            }
             
+            // Refresh carousel
             let carouselEl = document.querySelector('#historyCarousel');
             if (carouselEl) {
                 let bsCarousel = bootstrap.Carousel.getInstance(carouselEl);
@@ -669,7 +722,10 @@ footer {
             }
         } catch (error) {
             console.error("Error loading slides:", error);
-            document.getElementById('slideInner').innerHTML = `<div class="carousel-item active"><img src="https://via.placeholder.com/1200x400?text=Error+Load+Data" class="d-block w-100"></div>`;
+            const inner = document.getElementById('slideInner');
+            if (inner) {
+                inner.innerHTML = `<div class="carousel-item active"><img src="https://via.placeholder.com/1200x420?text=Error+Load+Data" class="d-block w-100"></div>`;
+            }
         }
     }
     
@@ -679,6 +735,7 @@ footer {
             const data = [];
             snapshot.forEach(doc => data.push(doc.data()));
             const container = document.getElementById('jadwalList');
+            if (!container) return;
             if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada jadwal</div>'; return; }
             container.innerHTML = data.map(j => `<div class="schedule-item"><h5><i class="fa-solid fa-church me-2"></i> ${escapeHtml(j.name)}</h5><p>${escapeHtml(j.time)}</p></div>`).join('');
         } catch (error) {
@@ -692,8 +749,9 @@ footer {
             const data = [];
             snapshot.forEach(doc => data.push(doc.data()));
             const container = document.getElementById('organisasiBody');
+            if (!container) return;
             if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada data</td></tr>'; return; }
-            container.innerHTML = data.map(o => `<td><td>${escapeHtml(o.jabatan)}</td><td>${escapeHtml(o.nama)}</td><td>${escapeHtml(o.keterangan || '')}</td></tr>`).join('');
+            container.innerHTML = data.map(o => `<tr><td>${escapeHtml(o.jabatan)}</td><td>${escapeHtml(o.nama)}</td><td>${escapeHtml(o.keterangan || '')}</td></tr>`).join('');
         } catch (error) {
             console.error("Error loading organisasi:", error);
         }
@@ -705,6 +763,7 @@ footer {
             const data = [];
             snapshot.forEach(doc => data.push(doc.data()));
             const container = document.getElementById('serviceGrid');
+            if (!container) return;
             if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data pelayanan</div>'; return; }
             container.innerHTML = data.map(p => `<div class="service-card"><i class="${p.icon}"></i><h6>${escapeHtml(p.name)}</h6><small>${escapeHtml(p.schedule || '')}</small></div>`).join('');
         } catch (error) {
@@ -714,7 +773,6 @@ footer {
     
     document.addEventListener('DOMContentLoaded', async () => {
         showTab('sejarah');
-        document.getElementById('slideInner').innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>Memuat slide...</p></div>';
         await Promise.all([loadSlides(), loadJadwal(), loadOrganisasi(), loadPelayanan()]);
     });
 </script>
