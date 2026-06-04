@@ -27,6 +27,8 @@
     .upload-area:hover { border-color: #ff8c00; background: #fff8f0; }
     #fileInfo { font-size: 0.8rem; color: #6c757d; margin-top: 5px; }
     .error-text { color: #dc3545; font-size: 0.8rem; margin-top: 5px; }
+    .toast-notif { position: fixed; bottom: 30px; right: 30px; z-index: 1050; min-width: 300px; }
+    .modal-wa { backdrop-filter: blur(5px); }
 </style>
 </head>
 <body>
@@ -48,20 +50,11 @@
             <!-- STEP 1: DATA DIRI -->
             <div id="step1">
                 <div class="mb-3"><label class="form-label">Nama Lengkap *</label><input type="text" id="namaLengkap" class="form-control" required></div>
-                
-                <div class="row">
-                    <div class="col-md-6 mb-3"><label class="form-label">Tempat Lahir</label><input type="text" id="tempatLahir" class="form-control"></div>
-                    <div class="col-md-6 mb-3"><label class="form-label">Tanggal Lahir</label><input type="date" id="tanggalLahir" class="form-control"></div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-6 mb-3"><label class="form-label">Jenis Kelamin</label><select id="jenisKelamin" class="form-select"><option>Laki-laki</option><option>Perempuan</option></select></div>
-                    <div class="col-md-6 mb-3"><label class="form-label">Golongan Darah</label><select id="golonganDarah" class="form-select"><option value="">Pilih Golongan Darah</option><option>A</option><option>B</option><option>O</option><option>AB</option><option>AB+</option></select></div>
-                </div>
-                
+                <div class="row"><div class="col-md-6 mb-3"><label class="form-label">Tempat Lahir</label><input type="text" id="tempatLahir" class="form-control"></div><div class="col-md-6 mb-3"><label class="form-label">Tanggal Lahir</label><input type="date" id="tanggalLahir" class="form-control"></div></div>
+                <div class="row"><div class="col-md-6 mb-3"><label class="form-label">Jenis Kelamin</label><select id="jenisKelamin" class="form-select"><option>Laki-laki</option><option>Perempuan</option></select></div><div class="col-md-6 mb-3"><label class="form-label">Golongan Darah</label><select id="golonganDarah" class="form-select"><option value="">Pilih Golongan Darah</option><option>A</option><option>B</option><option>O</option><option>AB</option><option>AB+</option></select></div></div>
                 <div class="mb-3"><label class="form-label">Alamat Email *</label><input type="email" id="email" class="form-control" placeholder="contoh: nama@gmail.com" required></div>
                 
-                <!-- UPLOAD FOTO PROFIL (BASE64 - TANPA FIREBASE STORAGE) -->
+                <!-- UPLOAD FOTO PROFIL (BASE64) -->
                 <div class="mb-3">
                     <label class="form-label">Foto Profil Terbaru *</label>
                     <div class="upload-area" onclick="document.getElementById('fileFoto').click()">
@@ -71,14 +64,12 @@
                     </div>
                     <input type="file" id="fileFoto" class="d-none" accept="image/jpeg,image/png" onchange="previewFoto(this)">
                     <div id="previewContainer" class="text-center mt-2"></div>
-                    <input type="hidden" id="fotoBase64">
                     <div id="fotoError" class="error-text"></div>
                 </div>
 
                 <div class="mb-3"><label class="form-label">No. HP / WhatsApp *</label><input type="tel" id="noHp" class="form-control" placeholder="Contoh: 08123456789" required></div>
                 <div class="mb-3"><label class="form-label">Alamat Lengkap</label><textarea id="alamat" class="form-control" rows="2"></textarea></div>
                 <div class="mb-3"><label class="form-label">Pekerjaan</label><input type="text" id="pekerjaan" class="form-control"></div>
-                
                 <button type="button" class="btn-submit" onclick="nextStep(2)">Selanjutnya <i class="fa-solid fa-arrow-right"></i></button>
             </div>
             
@@ -88,13 +79,8 @@
                 <div class="mb-3"><label class="form-label">Status Pernikahan</label><select id="pernikahan" class="form-select"><option>Belum Menikah</option><option>Menikah</option><option>Janda/Duda</option></select></div>
                 <div class="mb-3"><label class="form-label">Komisi / Kelompok Sel</label><select id="komisi" class="form-select"><option>Umum</option><option>Pemuda</option><option>Remaja</option><option>Sekolah Minggu</option><option>Lansia</option><option>Belum menentukan</option></select></div>
                 <div class="mb-3"><label class="form-label">Keahlian / Bakat (opsional)</label><input type="text" id="keahlian" class="form-control" placeholder="Musik, Mengajar, Multimedia, dll"></div>
-                
                 <div class="mb-3"><label class="form-label">Alasan Berjemaat *</label><select id="alasanBergabung" class="form-select" required><option value="">Pilih Alasan Berjemaat</option><option>Tertanam dan Komitmen Sebagai Jemaat</option><option>Simpatisan</option><option>Jemaat Sementara Karena Tugas</option></select></div>
-                
-                <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep(1)"><i class="fa-solid fa-arrow-left"></i> Sebelumnya</button>
-                    <button type="button" class="btn-submit" onclick="nextStep(3)">Selanjutnya <i class="fa-solid fa-arrow-right"></i></button>
-                </div>
+                <div class="d-flex gap-2"><button type="button" class="btn btn-secondary" onclick="prevStep(1)"><i class="fa-solid fa-arrow-left"></i> Sebelumnya</button><button type="button" class="btn-submit" onclick="nextStep(3)">Selanjutnya <i class="fa-solid fa-arrow-right"></i></button></div>
             </div>
             
             <!-- STEP 3: KONFIRMASI -->
@@ -105,10 +91,45 @@
                 <div class="d-flex gap-2"><button type="button" class="btn btn-secondary" onclick="prevStep(2)"><i class="fa-solid fa-arrow-left"></i> Sebelumnya</button><button type="submit" class="btn-submit"><i class="fa-solid fa-check"></i> Kirim Pendaftaran</button></div>
             </div>
         </form>
-        <div id="successMsg" class="alert alert-success mt-3 d-none"></div>
-        <div id="errorMsg" class="alert alert-danger mt-3 d-none"></div>
     </div>
 </div>
+
+<!-- TOAST NOTIFIKASI -->
+<div class="toast-notif" id="successToast">
+    <div class="toast align-items-center text-bg-success border-0" role="alert" data-bs-autohide="true" data-bs-delay="5000">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="fa-solid fa-check-circle"></i> <span id="toastMessage">Pendaftaran berhasil!</span>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI WHATSAPP -->
+<div class="modal fade modal-wa" id="waModal" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(135deg, #0b4ea2, #0a3d7a); color: white;">
+                <h5 class="modal-title"><i class="fa-brands fa-whatsapp"></i> Notifikasi WhatsApp</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="fa-brands fa-whatsapp fa-4x" style="color: #25D366;"></i>
+                <h4 class="mt-3">Kirim Notifikasi WhatsApp?</h4>
+                <p class="text-muted" id="modalWaText">Anda akan menerima pesan konfirmasi pendaftaran melalui WhatsApp.</p>
+                <div class="mt-4">
+                    <button id="btnKirimWA" class="btn btn-success me-3"><i class="fa-brands fa-whatsapp"></i> Kirim WA</button>
+                    <button id="btnTidakWA" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-times"></i> Tidak</button>
+                </div>
+            </div>
+            <div class="modal-footer text-muted small">
+                <i class="fa-solid fa-info-circle"></i> Pesan akan dikirim secara otomatis ke nomor WhatsApp Anda
+            </div>
+        </div>
+    </div>
+</div>
+
 <footer>GBI Karang Mulia - Selamat Datang Keluarga Baru</footer>
 
 <script>
@@ -127,83 +148,79 @@
     
     let currentStep = 1;
     let fotoBase64Data = "";
+    let generatedNomorRegistrasi = "";
+    let generatedNomorUrut = "";
+    let generatedBulanRomawi = "";
+    let generatedTahun = "";
+    let currentNama = "";
+    let currentNoHp = "";
     
-    // Preview foto dan konversi ke Base64 (tanpa Firebase Storage)
+    // Preview foto dan konversi Base64
     window.previewFoto = function(input) {
         const previewDiv = document.getElementById('previewContainer');
         const fotoError = document.getElementById('fotoError');
         
         if (input.files && input.files[0]) {
             const file = input.files[0];
-            
             if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
                 fotoError.innerHTML = "Format foto harus JPG atau PNG!";
-                input.value = "";
-                previewDiv.innerHTML = "";
-                fotoBase64Data = "";
-                return;
+                input.value = ""; previewDiv.innerHTML = ""; fotoBase64Data = ""; return;
             }
-            
             if (file.size > 2 * 1024 * 1024) {
                 fotoError.innerHTML = "Ukuran foto maksimal 2MB!";
-                input.value = "";
-                previewDiv.innerHTML = "";
-                fotoBase64Data = "";
-                return;
+                input.value = ""; previewDiv.innerHTML = ""; fotoBase64Data = ""; return;
             }
-            
             fotoError.innerHTML = "";
-            
             const reader = new FileReader();
-            reader.onload = function(e) {
-                fotoBase64Data = e.target.result;
-                previewDiv.innerHTML = `<img src="${e.target.result}" class="preview-img" alt="Preview Foto">`;
-            }
+            reader.onload = function(e) { fotoBase64Data = e.target.result; previewDiv.innerHTML = `<img src="${e.target.result}" class="preview-img" alt="Preview Foto">`; }
             reader.readAsDataURL(file);
             document.getElementById('fileInfo').innerHTML = `<i class="fa-solid fa-check-circle text-success"></i> Terpilih: ${file.name}`;
         } else {
-            previewDiv.innerHTML = "";
-            fotoBase64Data = "";
-            document.getElementById('fileInfo').innerHTML = "Format JPG/PNG, max 2MB";
+            previewDiv.innerHTML = ""; fotoBase64Data = ""; document.getElementById('fileInfo').innerHTML = "Format JPG/PNG, max 2MB";
         }
     }
-
+    
     // Konversi bulan ke Romawi
     function getBulanRomawi(monthNumber) {
         const romawi = { 1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI", 7: "VII", 8: "VIII", 9: "IX", 10: "X", 11: "XI", 12: "XII" };
         return romawi[monthNumber] || "I";
     }
     
-    // Generate nomor registrasi
+    // Generate nomor registrasi otomatis
     async function generateNomorRegistrasi() {
         const now = new Date();
         const tahun = now.getFullYear();
         const bulan = now.getMonth() + 1;
         const bulanRomawi = getBulanRomawi(bulan);
-        
         const startDate = new Date(tahun, bulan - 1, 1);
         const endDate = new Date(tahun, bulan, 0);
-        
         const snapshot = await db.collection('pendaftaran_jemaat')
             .where('createdAt', '>=', startDate)
             .where('createdAt', '<=', endDate)
             .get();
-        
         const urutan = (snapshot.size + 1).toString().padStart(3, '0');
         const nomorRegistrasi = `GBI/KRGMLA/JEMAAT/${urutan}/${bulanRomawi}/${tahun}`;
         return { nomorRegistrasi, urutan, bulanRomawi, tahun };
     }
     
-    // Kirim notifikasi WhatsApp
-    function sendWhatsAppNotification(noHp, nomorRegistrasi, nama) {
+    // Kirim WhatsApp (buka link)
+    function sendWhatsApp(noHp, nomorRegistrasi, nama) {
         let waNumber = noHp.replace(/\D/g, '');
         if (waNumber.startsWith('0')) waNumber = '62' + waNumber.substring(1);
         if (!waNumber.startsWith('62')) waNumber = '62' + waNumber;
-        
         const pesan = `*Selamat!*%0A%0AData anda telah teregistrasi sebagai anggota jemaat GBI Karang Mulia.%0A%0A*Nomor Jemaat:* ${nomorRegistrasi}%0A*Nama:* ${nama}%0A%0ATerimakasih, Tuhan Yesus Memberkati.%0A%0A_GBI Karang Mulia_`;
         window.open(`https://wa.me/${waNumber}?text=${pesan}`, '_blank');
     }
-
+    
+    // Tampilkan toast notifikasi
+    function showToast(message, isSuccess = true) {
+        const toastEl = document.querySelector('#successToast .toast');
+        const toastBody = document.querySelector('#toastMessage');
+        toastBody.innerHTML = message;
+        const toast = new bootstrap.Toast(toastEl, { delay: 4000, autohide: true });
+        toast.show();
+    }
+    
     function updateStepIndicator() {
         document.querySelectorAll('.step').forEach((step, idx) => { 
             step.classList.remove('active', 'completed'); 
@@ -217,19 +234,16 @@
             const nama = document.getElementById('namaLengkap').value.trim();
             const email = document.getElementById('email').value.trim();
             const noHp = document.getElementById('noHp').value.trim();
-            
             if(!nama) { alert("Nama Lengkap harus diisi!"); return; }
             if(!email) { alert("Alamat Email harus diisi!"); return; }
             if(!email.match(/^\S+@\S+\.\S+$/)) { alert("Format email tidak valid!"); return; }
             if(!noHp) { alert("No. HP harus diisi!"); return; }
             if(!fotoBase64Data) { alert("Silakan upload foto profil terbaru!"); return; }
         }
-        
         if(step === 3) {
             const alasan = document.getElementById('alasanBergabung').value;
             if(!alasan) { alert("Alasan Berjemaat harus dipilih!"); return; }
         }
-        
         currentStep = step; 
         document.getElementById('step1').style.display = step===1 ? 'block' : 'none'; 
         document.getElementById('step2').style.display = step===2 ? 'block' : 'none'; 
@@ -246,6 +260,8 @@
         updateStepIndicator(); 
     }
     
+    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m==='&'?'&amp;':(m==='<'?'&lt;':'&gt;')); }
+    
     function showReview() { 
         const nama = document.getElementById('namaLengkap').value;
         const email = document.getElementById('email').value;
@@ -260,63 +276,44 @@
         const pernikahan = document.getElementById('pernikahan').value;
         const komisi = document.getElementById('komisi').value;
         const keahlian = document.getElementById('keahlian').value;
-        const alasanBergabung = document.getElementById('alasanBergabung').value;
-        
+        const alasan = document.getElementById('alasanBergabung').value;
         let fotoPreview = document.getElementById('previewContainer').innerHTML;
         let fotoHTML = fotoPreview ? fotoPreview : '<span class="text-muted">Belum ada foto</span>';
-        
-        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m==='&'?'&amp;':(m==='<'?'&lt;':'&gt;')); }
-        
-        document.getElementById('reviewData').innerHTML = `
-            <table class="table table-sm table-bordered">
-                <tr><th style="width:35%">Nama Lengkap</th><td>${escapeHtml(nama)}</br></td></tr>
-                <tr><th>Email</th><td>${escapeHtml(email)}</br></td></tr>
-                <tr><th>Tempat/Tgl Lahir</th><td>${escapeHtml(tempatLahir)}${tempatLahir ? ', ' : ''}${escapeHtml(tanggalLahir)}</br></td></tr>
-                <tr><th>Jenis Kelamin</th><td>${escapeHtml(jenisKelamin)}</br></td></tr>
-                <tr><th>Golongan Darah</th><td>${escapeHtml(golonganDarah) || '-'}</br></td></tr>
-                <tr><th>No HP</th><td>${escapeHtml(noHp)}</br></td></tr>
-                <tr><th>Alamat</th><td>${escapeHtml(alamat) || '-'}</br></td></tr>
-                <tr><th>Pekerjaan</th><td>${escapeHtml(pekerjaan) || '-'}</br></td></tr>
-                <tr><th>Status Baptis</th><td>${escapeHtml(baptis)}</br></td></tr>
-                <tr><th>Status Pernikahan</th><td>${escapeHtml(pernikahan)}</br></td></tr>
-                <tr><th>Komisi</th><td>${escapeHtml(komisi)}</br></td></tr>
-                <tr><th>Keahlian</th><td>${escapeHtml(keahlian) || '-'}</br></td></tr>
-                <tr><th>Alasan Berjemaat</th><td>${escapeHtml(alasanBergabung)}</br></td></tr>
-                <tr><th>Foto Profil</th><td>${fotoHTML}</br></td></tr>
-            </table>
-        `; 
+        document.getElementById('reviewData').innerHTML = `<table class="table table-sm table-bordered"><tr><th style="width:35%">Nama Lengkap</th><td>${escapeHtml(nama)}</td></tr><tr><th>Email</th><td>${escapeHtml(email)}</td></tr><tr><th>Tempat/Tgl Lahir</th><td>${escapeHtml(tempatLahir)}${tempatLahir ? ', ' : ''}${escapeHtml(tanggalLahir)}</td></tr><tr><th>Jenis Kelamin</th><td>${escapeHtml(jenisKelamin)}</td></tr><tr><th>Golongan Darah</th><td>${escapeHtml(golonganDarah) || '-'}</td></tr><tr><th>No HP</th><td>${escapeHtml(noHp)}</td></tr><tr><th>Alamat</th><td>${escapeHtml(alamat) || '-'}</td></tr><tr><th>Pekerjaan</th><td>${escapeHtml(pekerjaan) || '-'}</td></tr><tr><th>Status Baptis</th><td>${escapeHtml(baptis)}</td></tr><tr><th>Status Pernikahan</th><td>${escapeHtml(pernikahan)}</td></tr><tr><th>Komisi</th><td>${escapeHtml(komisi)}</td></tr><tr><th>Keahlian</th><td>${escapeHtml(keahlian) || '-'}</td></tr><tr><th>Alasan Berjemaat</th><td>${escapeHtml(alasan)}</td></tr><tr><th>Foto Profil</th><td>${fotoHTML}</td></tr></table>`; 
     }
     
     document.getElementById('daftarForm').addEventListener('submit', async (e) => { 
         e.preventDefault(); 
-        
         if(!document.getElementById('agree').checked){ alert("Harap centang persetujuan data"); return; }
         if(!fotoBase64Data) { alert("Foto profil wajib diupload!"); return; }
         
         const submitBtn = document.querySelector('#daftarForm button[type="submit"]');
-        const successDiv = document.getElementById('successMsg');
-        const errorDiv = document.getElementById('errorMsg');
-        
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
-        successDiv.classList.add('d-none');
-        errorDiv.classList.add('d-none');
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
         
         try {
-            const { nomorRegistrasi, urutan, bulanRomawi, tahun } = await generateNomorRegistrasi();
+            // Generate nomor registrasi
+            const reg = await generateNomorRegistrasi();
+            generatedNomorRegistrasi = reg.nomorRegistrasi;
+            generatedNomorUrut = reg.urutan;
+            generatedBulanRomawi = reg.bulanRomawi;
+            generatedTahun = reg.tahun;
+            currentNama = document.getElementById('namaLengkap').value;
+            currentNoHp = document.getElementById('noHp').value;
             
+            // Simpan ke Firestore
             const data = { 
-                nomorRegistrasi: nomorRegistrasi,
-                nomorUrut: parseInt(urutan),
-                bulanRegistrasi: bulanRomawi,
-                tahunRegistrasi: tahun,
-                namaLengkap: document.getElementById('namaLengkap').value,
+                nomorRegistrasi: generatedNomorRegistrasi,
+                nomorUrut: parseInt(generatedNomorUrut),
+                bulanRegistrasi: generatedBulanRomawi,
+                tahunRegistrasi: generatedTahun,
+                namaLengkap: currentNama,
                 email: document.getElementById('email').value,
                 tempatLahir: document.getElementById('tempatLahir').value || '',
                 tanggalLahir: document.getElementById('tanggalLahir').value || '',
                 jenisKelamin: document.getElementById('jenisKelamin').value,
                 golonganDarah: document.getElementById('golonganDarah').value || '',
-                noHp: document.getElementById('noHp').value,
+                noHp: currentNoHp,
                 alamat: document.getElementById('alamat').value || '',
                 pekerjaan: document.getElementById('pekerjaan').value || '',
                 statusBaptis: document.getElementById('baptis').value,
@@ -325,34 +322,44 @@
                 keahlian: document.getElementById('keahlian').value || '',
                 alasanBergabung: document.getElementById('alasanBergabung').value,
                 fotoProfilBase64: fotoBase64Data,
-                status: "Terverifikasi", 
+                status: "Menunggu Verifikasi", 
                 tanggalDaftar: new Date().toLocaleDateString('id-ID'), 
                 createdAt: firebase.firestore.FieldValue.serverTimestamp() 
             }; 
             
             await db.collection('pendaftaran_jemaat').add(data); 
             
+            // Reset form
             document.getElementById('daftarForm').reset(); 
             document.getElementById('previewContainer').innerHTML = "";
             fotoBase64Data = "";
             
-            successDiv.innerHTML = `
-                <i class="fa-solid fa-check-circle"></i> Pendaftaran berhasil!<br>
-                <strong>Nomor Registrasi Jemaat:</strong> ${nomorRegistrasi}<br><br>
-                <i class="fa-solid fa-whatsapp"></i> Notifikasi WhatsApp akan dibuka di tab baru.
-            `; 
-            successDiv.classList.remove('d-none'); 
+            // Tampilkan modal pilihan WhatsApp
+            const modalElement = document.getElementById('waModal');
+            const modal = new bootstrap.Modal(modalElement, { backdrop: 'static', keyboard: false });
+            modal.show();
             
-            const noHp = document.getElementById('noHp').value;
-            const nama = document.getElementById('namaLengkap').value;
-            sendWhatsAppNotification(noHp, nomorRegistrasi, nama);
+            // Event tombol Kirim WA
+            document.getElementById('btnKirimWA').onclick = () => {
+                sendWhatsApp(currentNoHp, generatedNomorRegistrasi, currentNama);
+                modal.hide();
+                showToast("✅ Pendaftaran berhasil! Nomor Jemaat: " + generatedNomorRegistrasi + "<br>📱 Notifikasi WhatsApp telah dikirim.");
+                setTimeout(() => { window.location.href = '../index.html'; }, 4000);
+            };
             
-            setTimeout(() => { window.location.href = '../index.html'; }, 5000);
+            // Event tombol Tidak
+            document.getElementById('btnTidakWA').onclick = () => {
+                modal.hide();
+                showToast("✅ Pendaftaran berhasil! Nomor Jemaat: " + generatedNomorRegistrasi + "<br>ℹ️ Selamat! Data registrasi anda telah terkirim ke Administrator.");
+                setTimeout(() => { window.location.href = '../index.html'; }, 4000);
+            };
+            
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Kirim Pendaftaran';
             
         } catch (error) {
             console.error("Error:", error);
-            errorDiv.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + error.message;
-            errorDiv.classList.remove('d-none');
+            alert("Terjadi kesalahan: " + error.message);
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Kirim Pendaftaran';
         }
