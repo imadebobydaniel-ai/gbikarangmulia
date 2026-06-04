@@ -53,7 +53,7 @@ body {
 .navbar-brand img {
     width: 45px;
     height: 45px;
-    object-fit: contain;  /* Menjaga rasio asli gambar */
+    object-fit: contain;
     background: white;
     padding: 6px;
     border-radius: 8px;
@@ -117,9 +117,10 @@ body {
     color: white;
 }
 
+/* ============ PERBAIKAN UTAMA: CMS BUTTON TIDAK OVERLAP DI HP ============ */
 .cms-fixed-btn {
     position: fixed;
-    top: 20px;
+    top: 80px;  /* DITURUNKAN agar tidak menimpa navbar toggler */
     right: 20px;
     z-index: 9999;
     background: linear-gradient(135deg, #ff8c00, #e07a00);
@@ -161,7 +162,7 @@ body {
 .hero img {
     width: 120px;
     height: 120px;
-    object-fit: contain;  /* Kunci: menjaga rasio asli */
+    object-fit: contain;
     background: white;
     padding: 12px;
     border-radius: 16px;
@@ -466,23 +467,60 @@ footer {
     color: #6c757d;
 }
 
+/* ============ PERBAIKAN MEDIA QUERY UNTUK HP ============ */
 @media (max-width: 768px) {
     .hero-title { font-size: 1.5rem; }
     .hero-church-name { font-size: 1.3rem; }
     .hero img { width: 80px; height: 80px; }
     .slide-carousel .carousel-inner img { height: 250px; }
-    .cms-fixed-btn { padding: 6px 16px; font-size: 0.7rem; }
-    .cms-fixed-btn span { display: none; }
+    
+    /* PERBAIKAN CMS BUTTON DI HP - DIPERKECIL DAN DI BAWAH NAVBAR */
+    .cms-fixed-btn { 
+        padding: 6px 12px; 
+        font-size: 0.7rem;
+        top: 70px;  /* Posisi aman di bawah navbar toggler */
+        right: 12px;
+    }
+    .cms-fixed-btn span { 
+        display: inline;  /* TETAP TAMPIL teksnya, hanya diperkecil */
+        font-size: 0.65rem;
+    }
+    .cms-fixed-btn i {
+        font-size: 0.8rem;
+    }
+    
     .footer-grid { flex-direction: column; text-align: center; }
     .footer-col h4:after { left: 50%; transform: translateX(-50%); }
     .social-icons-list { justify-content: center; }
     .footer-contact { text-align: center; }
+    
+    /* Pastikan navbar toggler tidak tertimpa */
+    .navbar-toggler {
+        z-index: 9998;
+        position: relative;
+    }
+}
+
+/* Untuk HP yang lebih kecil (max-width: 480px) */
+@media (max-width: 480px) {
+    .cms-fixed-btn {
+        padding: 5px 10px;
+        top: 65px;
+        right: 8px;
+    }
+    .cms-fixed-btn span {
+        display: inline;
+        font-size: 0.6rem;
+    }
+    .cms-fixed-btn i {
+        font-size: 0.7rem;
+    }
 }
 </style>
 </head>
 <body>
 
-<!-- CMS BUTTON -->
+<!-- CMS BUTTON - SEKARANG TIDAK AKAN OVERLAP DENGAN NAVBAR TOGGLER -->
 <button class="cms-fixed-btn" onclick="window.location.href='cms.html'">
     <i class="fa-solid fa-user-shield"></i>
     <span>CMS</span>
@@ -498,7 +536,7 @@ footer {
             <small>Gereja Bethel Indonesia</small>
         </div>
     </a>
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="menu">
@@ -603,7 +641,8 @@ footer {
         <h3 class="section-title">Struktur Organisasi</h3>
         <div class="table-responsive">
             <table class="table table-bordered org-table">
-                <thead><tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr></thead>
+                <thead><tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr>
+                </thead>
                 <tbody id="organisasiBody"></tbody>
             </table>
         </div>
@@ -771,7 +810,7 @@ footer {
             snapshot.forEach(doc => data.push(doc.data()));
             const container = document.getElementById('organisasiBody');
             if (!container) return;
-            if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada数据</td></tr>'; return; }
+            if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada data</td></tr>'; return; }
             container.innerHTML = data.map(o => `<tr><td>${escapeHtml(o.jabatan)}</td><td>${escapeHtml(o.nama)}</td><td>${escapeHtml(o.keterangan || '')}</td></tr>`).join('');
         } catch (error) {
             console.error("Error loading organisasi:", error);
