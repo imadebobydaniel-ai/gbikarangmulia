@@ -15,10 +15,9 @@
     .container-custom { max-width: 800px; margin: 100px auto 50px; padding: 0 20px; }
     .form-card { background: white; border-radius: 24px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
     .page-title { text-align: center; color: white; margin-bottom: 30px; }
-    .btn-submit { background: linear-gradient(135deg, #ff8c00, #e07a00); border: none; padding: 12px; border-radius: 50px; font-weight: 600; width: 100%; color: white; }
+    .btn-submit { background: linear-gradient(135deg, #ff8c00, #e07a00); border: none; padding: 12px; border-radius: 50px; font-weight: 600; width: 100%; color: white; transition: 0.3s; }
     .btn-submit:hover { transform: translateY(-2px); }
     footer { text-align: center; color: white; padding: 30px; opacity: 0.8; }
-    .list-group-item { border-radius: 12px !important; margin-bottom: 8px; }
 </style>
 </head>
 <body>
@@ -45,13 +44,14 @@
 
 <script>
     const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_SENDER_ID",
-        appId: "YOUR_APP_ID"
+        apiKey: "AIzaSyBnTg18qJ233oh-1Mgj4ewwRMUwMh8iVTo",
+        authDomain: "gbi-karang-mulia-web.firebaseapp.com",
+        projectId: "gbi-karang-mulia-web",
+        storageBucket: "gbi-karang-mulia-web.firebasestorage.app",
+        messagingSenderId: "198652175873",
+        appId: "1:198652175873:web:82a8f9cb00557dcac88200"
     };
+    
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     
