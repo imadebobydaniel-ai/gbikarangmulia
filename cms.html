@@ -61,7 +61,6 @@
 </head>
 <body>
 
-<!-- LOGIN SECTION -->
 <div id="loginSection" class="login-wrapper">
     <div class="login-box">
         <div class="text-center">
@@ -74,11 +73,10 @@
             <div class="mb-4"><input type="password" id="password" class="form-control" placeholder="Password" required></div>
             <button type="submit" class="btn-cms"><i class="fa-solid fa-sign-in-alt me-2"></i>Login</button>
         </form>
-       
+        <div class="text-center mt-4 small text-muted">Default: admin / admin123</div>
     </div>
 </div>
 
-<!-- DASHBOARD SECTION -->
 <div id="dashboardSection" style="display:none;">
     <div class="dashboard-wrapper">
         <div class="top-navbar">
@@ -125,7 +123,7 @@
                                     <p class="mb-0 small">Klik untuk upload gambar</p>
                                 </div>
                                 <input type="hidden" id="slideImageUrl">
-                                <div id="uploadSuccessMsg" class="upload-success"><i class="fa-solid fa-check-circle"></i> Gambar siap</div>
+                                <div id="uploadSuccessMsg" class="upload-success"><i class="fa-solid fa-check-circle"></i> Gambar siap disimpan</div>
                             </div>
                             <div class="col-md-1">
                                 <button id="addSlideBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i> Tambah</button>
@@ -145,11 +143,11 @@
                     <div class="card-body-custom">
                         <div class="row g-3 mb-4">
                             <div class="col-md-5"><input type="text" id="jadwalName" class="form-control" placeholder="Nama Ibadah"></div>
-                            <div class="col-md-5"><input type="text" id="jadwalTime" class="form-control" placeholder="Waktu (contoh: Minggu | 09.00 WIT)"></div>
+                            <div class="col-md-5"><input type="text" id="jadwalTime" class="form-control" placeholder="Waktu"></div>
                             <div class="col-md-2"><button id="addJadwalBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i> Tambah</button></div>
                         </div>
                         <div id="jadwalListContainer"><div class="text-center py-4"><div class="spinner-border text-primary"></div> Memuat...</div></div>
-                        <div class="mt-3 text-center"><button id="resetJadwalBtn" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i> Reset ke Default</button></div>
+                        <div class="mt-3 text-center"><button id="resetJadwalBtn" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i> Reset Default</button></div>
                     </div>
                 </div>
             </div>
@@ -166,7 +164,7 @@
                             <div class="col-md-1"><button id="addOrganisasiBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i></button></div>
                         </div>
                         <div id="organisasiListContainer"><div class="text-center py-4"><div class="spinner-border text-primary"></div> Memuat...</div></div>
-                        <div class="mt-3 text-center"><button id="resetOrganisasiBtn" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i> Reset ke Default</button></div>
+                        <div class="mt-3 text-center"><button id="resetOrganisasiBtn" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i> Reset Default</button></div>
                     </div>
                 </div>
             </div>
@@ -183,7 +181,7 @@
                             <div class="col-md-2"><button id="addServiceBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i></button></div>
                         </div>
                         <div id="pelayananListContainer"><div class="text-center py-4"><div class="spinner-border text-primary"></div> Memuat...</div></div>
-                        <div class="mt-3 text-center"><button id="resetPelayananBtn" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i> Reset ke Default</button></div>
+                        <div class="mt-3 text-center"><button id="resetPelayananBtn" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i> Reset Default</button></div>
                     </div>
                 </div>
             </div>
@@ -243,6 +241,7 @@
     };
     
     // ============ KONFIGURASI CLOUDINARY ============
+    // PERHATIKAN: Cloud Name HARUS "dxzlslbgi" (bukan dzslsblgji)
     const CLOUD_NAME = "dxzlslbgi";
     const UPLOAD_PRESET = "gbi_karang_mulia";
     
@@ -328,15 +327,7 @@
             const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
             const container = document.getElementById('jadwalListContainer');
             if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada jadwal</div>'; return; }
-            container.innerHTML = data.map(j => `
-                <div class="data-item">
-                    <div class="flex-grow-1"><strong>${escapeHtml(j.name)}</strong><br><small>${escapeHtml(j.time)}</small></div>
-                    <div>
-                        <button class="btn btn-sm btn-warning me-1" onclick="editJadwal('${j.id}','${escapeHtml(j.name)}','${escapeHtml(j.time)}')"><i class="fa fa-pen"></i></button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteJadwal('${j.id}')"><i class="fa fa-trash"></i></button>
-                    </div>
-                </div>
-            `).join('');
+            container.innerHTML = data.map(j => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(j.name)}</strong><br><small>${escapeHtml(j.time)}</small></div><div><button class="btn btn-sm btn-warning me-1" onclick="editJadwal('${j.id}','${escapeHtml(j.name)}','${escapeHtml(j.time)}')"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deleteJadwal('${j.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
         } catch(e) { console.error(e); }
     }
     
@@ -360,20 +351,12 @@
             const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
             const container = document.getElementById('organisasiListContainer');
             if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data</div>'; return; }
-            container.innerHTML = data.map(o => `
-                <div class="data-item">
-                    <div class="flex-grow-1"><strong>${escapeHtml(o.jabatan)}</strong><br><small>${escapeHtml(o.nama)} - ${escapeHtml(o.keterangan)}</small></div>
-                    <div>
-                        <button class="btn btn-sm btn-warning me-1" onclick="editOrganisasi('${o.id}','${escapeHtml(o.jabatan)}','${escapeHtml(o.nama)}','${escapeHtml(o.keterangan)}')"><i class="fa fa-pen"></i></button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteOrganisasi('${o.id}')"><i class="fa fa-trash"></i></button>
-                    </div>
-                </div>
-            `).join('');
+            container.innerHTML = data.map(o => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(o.jabatan)}</strong><br><small>${escapeHtml(o.nama)} - ${escapeHtml(o.keterangan)}</small></div><div><button class="btn btn-sm btn-warning me-1" onclick="editOrganisasi('${o.id}','${escapeHtml(o.jabatan)}','${escapeHtml(o.nama)}','${escapeHtml(o.keterangan)}')"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deleteOrganisasi('${o.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
         } catch(e) { console.error(e); }
     }
     
     window.editOrganisasi = async (id, oldJab, oldNama, oldKet) => { 
-        let j=prompt("Jabatan:", oldJ); 
+        let j=prompt("Jabatan:", oldJab); 
         let n=prompt("Nama:", oldNama); 
         let k=prompt("Keterangan:", oldKet); 
         if(j && n){ await db.collection('organisasi').doc(id).update({jabatan:j, nama:n, keterangan:k}); loadOrganisasi(); alert("Data diupdate"); } 
@@ -393,16 +376,7 @@
             const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
             const container = document.getElementById('pelayananListContainer');
             if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data</div>'; return; }
-            container.innerHTML = data.map(p => `
-                <div class="data-item">
-                    <div><i class="${p.icon} fa-2x text-primary"></i></div>
-                    <div class="flex-grow-1"><strong>${escapeHtml(p.name)}</strong><br><small>${escapeHtml(p.schedule)}</small></div>
-                    <div>
-                        <button class="btn btn-sm btn-warning me-1" onclick="editPelayanan('${p.id}','${escapeHtml(p.name)}','${escapeHtml(p.icon)}','${escapeHtml(p.schedule)}')"><i class="fa fa-pen"></i></button>
-                        <button class="btn btn-sm btn-danger" onclick="deletePelayanan('${p.id}')"><i class="fa fa-trash"></i></button>
-                    </div>
-                </div>
-            `).join('');
+            container.innerHTML = data.map(p => `<div class="data-item"><div><i class="${p.icon} fa-2x text-primary"></i></div><div class="flex-grow-1"><strong>${escapeHtml(p.name)}</strong><br><small>${escapeHtml(p.schedule)}</small></div><div><button class="btn btn-sm btn-warning me-1" onclick="editPelayanan('${p.id}','${escapeHtml(p.name)}','${escapeHtml(p.icon)}','${escapeHtml(p.schedule)}')"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deletePelayanan('${p.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
         } catch(e) { console.error(e); }
     }
     
@@ -427,15 +401,7 @@
             const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
             const container = document.getElementById('kontakListContainer');
             if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data kontak</div>'; return; }
-            container.innerHTML = data.map(k => `
-                <div class="data-item">
-                    <div class="flex-grow-1"><strong>${escapeHtml(k.nama)}</strong><br><small>${escapeHtml(k.jabatan)} | ${escapeHtml(k.divisi)}<br><i class="fa fa-phone"></i> ${escapeHtml(k.telp)} | <i class="fa fa-envelope"></i> ${escapeHtml(k.email)}</small></div>
-                    <div>
-                        <button class="btn btn-sm btn-warning me-1" onclick="editKontak('${k.id}','${escapeHtml(k.nama)}','${escapeHtml(k.jabatan)}','${escapeHtml(k.telp)}','${escapeHtml(k.email)}','${escapeHtml(k.divisi)}')"><i class="fa fa-pen"></i></button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteKontak('${k.id}')"><i class="fa fa-trash"></i></button>
-                    </div>
-                </div>
-            `).join('');
+            container.innerHTML = data.map(k => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(k.nama)}</strong><br><small>${escapeHtml(k.jabatan)} | ${escapeHtml(k.divisi)}<br><i class="fa fa-phone"></i> ${escapeHtml(k.telp)} | <i class="fa fa-envelope"></i> ${escapeHtml(k.email)}</small></div><div><button class="btn btn-sm btn-warning me-1" onclick="editKontak('${k.id}','${escapeHtml(k.nama)}','${escapeHtml(k.jabatan)}','${escapeHtml(k.telp)}','${escapeHtml(k.email)}','${escapeHtml(k.divisi)}')"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deleteKontak('${k.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
         } catch(e) { console.error(e); }
     }
     
@@ -462,16 +428,7 @@
             const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
             const container = document.getElementById('layananListContainer');
             if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada permohonan layanan</div>'; return; }
-            container.innerHTML = data.map(l => `
-                <div class="data-item">
-                    <div class="flex-grow-1"><strong>${escapeHtml(l.nama)}</strong><br><small>${escapeHtml(l.jenisLayanan)}<br><i class="fa fa-phone"></i> ${escapeHtml(l.telp)} | ${escapeHtml(l.tanggal)}<br>Status: <span class="badge ${l.status==='Selesai'?'bg-success':(l.status==='Diproses'?'bg-warning':'bg-secondary')}">${escapeHtml(l.status||'Baru')}</span></small></div>
-                    <div>
-                        <button class="btn btn-sm btn-success me-1" onclick="updateLayananStatus('${l.id}','Diproses')"><i class="fa fa-check"></i> Proses</button>
-                        <button class="btn btn-sm btn-primary me-1" onclick="updateLayananStatus('${l.id}','Selesai')"><i class="fa fa-check-double"></i> Selesai</button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteLayanan('${l.id}')"><i class="fa fa-trash"></i></button>
-                    </div>
-                </div>
-            `).join('');
+            container.innerHTML = data.map(l => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(l.nama)}</strong><br><small>${escapeHtml(l.jenisLayanan)}<br><i class="fa fa-phone"></i> ${escapeHtml(l.telp)} | ${escapeHtml(l.tanggal)}<br>Status: <span class="badge ${l.status==='Selesai'?'bg-success':(l.status==='Diproses'?'bg-warning':'bg-secondary')}">${escapeHtml(l.status||'Baru')}</span></small></div><div><button class="btn btn-sm btn-success me-1" onclick="updateLayananStatus('${l.id}','Diproses')"><i class="fa fa-check"></i> Proses</button><button class="btn btn-sm btn-primary me-1" onclick="updateLayananStatus('${l.id}','Selesai')"><i class="fa fa-check-double"></i> Selesai</button><button class="btn btn-sm btn-danger" onclick="deleteLayanan('${l.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
         } catch(e) { console.error(e); }
     }
     window.updateLayananStatus = async (id, status) => { await db.collection('permohonan_layanan').doc(id).update({status}); loadLayanan(); alert("Status diupdate menjadi " + status); };
@@ -484,12 +441,7 @@
             const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
             const container = document.getElementById('pendaftaranListContainer');
             if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada pendaftaran anggota</div>'; return; }
-            container.innerHTML = data.map(p => `
-                <div class="data-item">
-                    <div class="flex-grow-1"><strong>${escapeHtml(p.namaLengkap)}</strong><br><small><i class="fa fa-phone"></i> ${escapeHtml(p.noHp)} | ${escapeHtml(p.alamat)}<br>Status Baptis: ${escapeHtml(p.statusBaptis)} | Komisi: ${escapeHtml(p.komisi)}<br>Tanggal Daftar: ${p.tanggalDaftar}</small></div>
-                    <div><button class="btn btn-sm btn-danger" onclick="deletePendaftaran('${p.id}')"><i class="fa fa-trash"></i> Hapus</button></div>
-                </div>
-            `).join('');
+            container.innerHTML = data.map(p => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(p.namaLengkap)}</strong><br><small><i class="fa fa-phone"></i> ${escapeHtml(p.noHp)} | ${escapeHtml(p.alamat)}<br>Status Baptis: ${escapeHtml(p.statusBaptis)} | Komisi: ${escapeHtml(p.komisi)}<br>Tanggal Daftar: ${p.tanggalDaftar}</small></div><div><button class="btn btn-sm btn-danger" onclick="deletePendaftaran('${p.id}')"><i class="fa fa-trash"></i> Hapus</button></div></div>`).join('');
         } catch(e) { console.error(e); }
     }
     window.deletePendaftaran = async (id) => { if(confirm("Hapus pendaftaran?")){ await db.collection('pendaftaran_jemaat').doc(id).delete(); loadPendaftaran(); } };
@@ -589,6 +541,9 @@
     // ============ CLOUDINARY WIDGET ============
     let myWidget = null;
     function initCloudinary() {
+        console.log("Initializing Cloudinary with Cloud Name:", CLOUD_NAME);
+        console.log("Upload Preset:", UPLOAD_PRESET);
+        
         myWidget = cloudinary.createUploadWidget({ 
             cloudName: CLOUD_NAME, 
             uploadPreset: UPLOAD_PRESET, 
@@ -608,14 +563,17 @@
                 console.log("Upload success:", result.info);
                 document.getElementById('slideImageUrl').value = result.info.secure_url; 
                 document.getElementById('uploadSuccessMsg').style.display = 'block';
-                alert("✓ Gambar berhasil diupload ke Cloudinary!");
+                alert("✓ Gambar berhasil diupload ke Cloudinary!\nURL: " + result.info.secure_url.substring(0, 50) + "...");
             } else if (result && result.event === "close") {
                 console.log("Widget ditutup");
             }
         });
         const uploadBtn = document.getElementById("uploadWidget");
         if (uploadBtn) {
-            uploadBtn.onclick = () => myWidget.open();
+            uploadBtn.onclick = () => {
+                console.log("Opening Cloudinary widget...");
+                myWidget.open();
+            };
         }
     }
     
