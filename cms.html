@@ -59,7 +59,6 @@
 </head>
 <body>
 
-<!-- LOGIN SECTION -->
 <div id="loginSection" class="login-wrapper">
     <div class="login-box">
         <div class="text-center">
@@ -76,7 +75,6 @@
     </div>
 </div>
 
-<!-- DASHBOARD SECTION -->
 <div id="dashboardSection" style="display:none;">
     <div class="dashboard-wrapper">
         <div class="top-navbar">
@@ -102,7 +100,6 @@
                 <button class="cms-tab-btn" data-tab="pendaftaranTab"><i class="fa-solid fa-user-plus"></i> Pendaftaran</button>
             </div>
             
-            <!-- SLIDE TAB -->
             <div id="slideTab" class="tab-pane-custom active">
                 <div class="dashboard-card">
                     <div class="card-header-custom">
@@ -111,12 +108,8 @@
                     </div>
                     <div class="card-body-custom">
                         <div class="row g-3 mb-4">
-                            <div class="col-md-4">
-                                <input type="text" id="slideTitle" class="form-control" placeholder="Judul Slide (wajib)">
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" id="slideDesc" class="form-control" placeholder="Deskripsi (opsional)">
-                            </div>
+                            <div class="col-md-4"><input type="text" id="slideTitle" class="form-control" placeholder="Judul Slide (wajib)"></div>
+                            <div class="col-md-4"><input type="text" id="slideDesc" class="form-control" placeholder="Deskripsi (opsional)"></div>
                             <div class="col-md-3">
                                 <div id="uploadWidget" class="upload-area text-center">
                                     <i class="fa-solid fa-cloud-upload-alt fa-2x text-muted"></i>
@@ -125,18 +118,13 @@
                                 <input type="hidden" id="slideImageUrl">
                                 <div id="uploadSuccessMsg" class="text-success small mt-1" style="display:none;"><i class="fa-solid fa-check-circle"></i> Gambar siap disimpan</div>
                             </div>
-                            <div class="col-md-1">
-                                <button id="addSlideBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i> Tambah</button>
-                            </div>
+                            <div class="col-md-1"><button id="addSlideBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i> Tambah</button></div>
                         </div>
-                        <div id="slideListContainer">
-                            <div class="text-center py-4"><div class="spinner-border text-primary"></div> Memuat slide...</div>
-                        </div>
+                        <div id="slideListContainer"><div class="text-center py-4"><div class="spinner-border text-primary"></div> Memuat slide...</div></div>
                     </div>
                 </div>
             </div>
             
-            <!-- JADWAL TAB (ringkas) -->
             <div id="jadwalTab" class="tab-pane-custom">
                 <div class="dashboard-card">
                     <div class="card-header-custom"><h4><i class="fa-solid fa-calendar"></i> Kelola Jadwal Ibadah</h4></div>
@@ -152,7 +140,6 @@
                 </div>
             </div>
             
-            <!-- ORGANISASI TAB -->
             <div id="organisasiTab" class="tab-pane-custom">
                 <div class="dashboard-card">
                     <div class="card-header-custom"><h4><i class="fa-solid fa-sitemap"></i> Kelola Struktur Organisasi</h4></div>
@@ -169,7 +156,6 @@
                 </div>
             </div>
             
-            <!-- PELAYANAN TAB -->
             <div id="pelayananTab" class="tab-pane-custom">
                 <div class="dashboard-card">
                     <div class="card-header-custom"><h4><i class="fa-solid fa-hands-praying"></i> Kelola Pelayanan</h4></div>
@@ -186,7 +172,6 @@
                 </div>
             </div>
             
-            <!-- KONTAK PEMIMPIN TAB -->
             <div id="kontakTab" class="tab-pane-custom">
                 <div class="dashboard-card">
                     <div class="card-header-custom"><h4><i class="fa-solid fa-address-card"></i> Kelola Kontak Pemimpin</h4></div>
@@ -205,23 +190,17 @@
                 </div>
             </div>
             
-            <!-- LAYANAN JEMAAT TAB -->
             <div id="layananTab" class="tab-pane-custom">
                 <div class="dashboard-card">
                     <div class="card-header-custom"><h4><i class="fa-solid fa-hand-holding-heart"></i> Permohonan Layanan Jemaat</h4></div>
-                    <div class="card-body-custom">
-                        <div id="layananListContainer"></div>
-                    </div>
+                    <div class="card-body-custom"><div id="layananListContainer"></div></div>
                 </div>
             </div>
             
-            <!-- PENDAFTARAN TAB -->
             <div id="pendaftaranTab" class="tab-pane-custom">
                 <div class="dashboard-card">
                     <div class="card-header-custom"><h4><i class="fa-solid fa-user-plus"></i> Pendaftaran Anggota Jemaat</h4></div>
-                    <div class="card-body-custom">
-                        <div id="pendaftaranListContainer"></div>
-                    </div>
+                    <div class="card-body-custom"><div id="pendaftaranListContainer"></div></div>
                 </div>
             </div>
         </div>
@@ -230,7 +209,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // ============ KONFIGURASI FIREBASE ============
+    // ============ KONFIGURASI FIREBASE (DIPERBAIKI) ============
     const firebaseConfig = {
         apiKey: "AIzaSyBnTg18qJ233oh-1Mgj4ewwRMUwMh8iVTo",
         authDomain: "gbi-karang-mulia-web.firebaseapp.com",
@@ -240,7 +219,7 @@
         appId: "1:198652175873:web:82a8f9cb00557dcac88200"
     };
     
-    // ============ KONFIGURASI CLOUDINARY - PASTIKAN BENAR ============
+    // ============ KONFIGURASI CLOUDINARY (DIPERBAIKI) ============
     const CLOUD_NAME = "dxzlslbgi";
     const UPLOAD_PRESET = "gbi_karang_mulia";
     
@@ -250,7 +229,6 @@
     const DEFAULT_USERNAME = "admin";
     const DEFAULT_PASSWORD = "admin123";
     
-    // DEFAULT DATA
     const DEFAULT_JADWAL = [
         { name: "Ibadah Raya", time: "Minggu | 09.00 - 11.00 WIT", order: 1 },
         { name: "Doa Pagi", time: "Selasa - Kamis | 06.00 - 07.00 WIT", order: 2 },
@@ -285,19 +263,16 @@
     
     function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m==='&'?'&amp;':(m==='<'?'&lt;':'&gt;')); }
     
-    // ============ SLIDE FUNCTIONS ============
     async function loadSlides() {
         try {
             const snapshot = await db.collection('slides').orderBy('order', 'asc').get();
             const data = []; 
             snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
-            
             const container = document.getElementById('slideListContainer');
             if (data.length === 0) { 
                 container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-images fa-3x mb-3"></i><p>Belum ada slide</p><small>Upload gambar dan klik tombol + untuk menambahkan</small></div>'; 
                 return; 
             }
-            
             container.innerHTML = data.map(s => `
                 <div class="data-item">
                     <img src="${s.imageUrl}" class="image-preview" onerror="this.src='https://via.placeholder.com/80x60?text=Error'">
@@ -305,10 +280,7 @@
                     <button class="btn btn-sm btn-danger" onclick="deleteSlide('${s.id}')"><i class="fa fa-trash"></i> Hapus</button>
                 </div>
             `).join('');
-        } catch (error) {
-            console.error("Error loading slides:", error);
-            document.getElementById('slideListContainer').innerHTML = '<div class="empty-state text-danger">Error loading data. Periksa koneksi Firestore.</div>';
-        }
+        } catch (error) { console.error(error); }
     }
     
     window.deleteSlide = async (id) => { 
@@ -319,141 +291,85 @@
         } 
     };
     
-    // ============ JADWAL FUNCTIONS ============
     async function loadJadwal() {
-        try {
-            const snapshot = await db.collection('jadwal').orderBy('order', 'asc').get();
-            const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
-            const container = document.getElementById('jadwalListContainer');
-            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada jadwal</div>'; return; }
-            container.innerHTML = data.map(j => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(j.name)}</strong><br><small>${escapeHtml(j.time)}</small></div><div><button class="btn btn-sm btn-warning me-1" onclick="editJadwal('${j.id}','${escapeHtml(j.name)}','${escapeHtml(j.time)}')"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deleteJadwal('${j.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
-        } catch(e) { console.error(e); }
+        const snapshot = await db.collection('jadwal').orderBy('order', 'asc').get();
+        const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
+        const container = document.getElementById('jadwalListContainer');
+        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada jadwal</div>'; return; }
+        container.innerHTML = data.map(j => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(j.name)}</strong><br><small>${escapeHtml(j.time)}</small></div><div><button class="btn btn-sm btn-warning me-1" onclick="editJadwal('${j.id}','${escapeHtml(j.name)}','${escapeHtml(j.time)}')"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deleteJadwal('${j.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
     }
-    
-    window.editJadwal = async (id, oldName, oldTime) => { 
-        let n=prompt("Nama Ibadah:", oldName); 
-        let t=prompt("Waktu:", oldTime); 
-        if(n && t){ await db.collection('jadwal').doc(id).update({name:n, time:t}); loadJadwal(); } 
-    };
+    window.editJadwal = async (id, oldName, oldTime) => { let n=prompt("Nama:",oldName); let t=prompt("Waktu:",oldTime); if(n && t){ await db.collection('jadwal').doc(id).update({name:n,time:t}); loadJadwal(); } };
     window.deleteJadwal = async (id) => { if(confirm("Hapus?")){ await db.collection('jadwal').doc(id).delete(); loadJadwal(); } };
-    async function resetJadwal() { 
-        const snapshot=await db.collection('jadwal').get(); snapshot.forEach(doc=>doc.ref.delete()); 
-        for(const j of DEFAULT_JADWAL) await db.collection('jadwal').add(j); loadJadwal(); alert("Reset jadwal berhasil"); 
-    }
+    async function resetJadwal() { const snapshot=await db.collection('jadwal').get(); snapshot.forEach(doc=>doc.ref.delete()); for(const j of DEFAULT_JADWAL) await db.collection('jadwal').add(j); loadJadwal(); alert("Reset berhasil"); }
     
-    // ============ ORGANISASI FUNCTIONS ============
     async function loadOrganisasi() {
-        try {
-            const snapshot = await db.collection('organisasi').orderBy('order', 'asc').get();
-            const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
-            const container = document.getElementById('organisasiListContainer');
-            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data</div>'; return; }
-            container.innerHTML = data.map(o => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(o.jabatan)}</strong><br><small>${escapeHtml(o.nama)} - ${escapeHtml(o.keterangan)}</small></div><div><button class="btn btn-sm btn-warning me-1" onclick="editOrganisasi('${o.id}','${escapeHtml(o.jabatan)}','${escapeHtml(o.nama)}','${escapeHtml(o.keterangan)}')"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deleteOrganisasi('${o.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
-        } catch(e) { console.error(e); }
+        const snapshot = await db.collection('organisasi').orderBy('order', 'asc').get();
+        const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
+        const container = document.getElementById('organisasiListContainer');
+        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data</div>'; return; }
+        container.innerHTML = data.map(o => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(o.jabatan)}</strong><br><small>${escapeHtml(o.nama)} - ${escapeHtml(o.keterangan)}</small></div><div><button class="btn btn-sm btn-warning me-1" onclick="editOrganisasi('${o.id}','${escapeHtml(o.jabatan)}','${escapeHtml(o.nama)}','${escapeHtml(o.keterangan)}')"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deleteOrganisasi('${o.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
     }
-    
-    window.editOrganisasi = async (id, oldJab, oldNama, oldKet) => { 
-        let j=prompt("Jabatan:", oldJab); let n=prompt("Nama:", oldNama); let k=prompt("Keterangan:", oldKet); 
-        if(j && n){ await db.collection('organisasi').doc(id).update({jabatan:j, nama:n, keterangan:k}); loadOrganisasi(); } 
-    };
+    window.editOrganisasi = async (id, oldJab, oldNama, oldKet) => { let j=prompt("Jabatan:",oldJab); let n=prompt("Nama:",oldNama); let k=prompt("Keterangan:",oldKet); if(j && n){ await db.collection('organisasi').doc(id).update({jabatan:j,nama:n,keterangan:k}); loadOrganisasi(); } };
     window.deleteOrganisasi = async (id) => { if(confirm("Hapus?")){ await db.collection('organisasi').doc(id).delete(); loadOrganisasi(); } };
-    async function resetOrganisasi() { 
-        const snapshot=await db.collection('organisasi').get(); snapshot.forEach(doc=>doc.ref.delete()); 
-        for(const o of DEFAULT_ORGANISASI) await db.collection('organisasi').add(o); loadOrganisasi(); alert("Reset organisasi berhasil"); 
-    }
+    async function resetOrganisasi() { const snapshot=await db.collection('organisasi').get(); snapshot.forEach(doc=>doc.ref.delete()); for(const o of DEFAULT_ORGANISASI) await db.collection('organisasi').add(o); loadOrganisasi(); alert("Reset berhasil"); }
     
-    // ============ PELAYANAN FUNCTIONS ============
     async function loadPelayanan() {
-        try {
-            const snapshot = await db.collection('pelayanan').orderBy('order', 'asc').get();
-            const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
-            const container = document.getElementById('pelayananListContainer');
-            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data</div>'; return; }
-            container.innerHTML = data.map(p => `<div class="data-item"><div><i class="${p.icon} fa-2x text-primary"></i></div><div class="flex-grow-1"><strong>${escapeHtml(p.name)}</strong><br><small>${escapeHtml(p.schedule)}</small></div><div><button class="btn btn-sm btn-warning me-1" onclick="editPelayanan('${p.id}','${escapeHtml(p.name)}','${escapeHtml(p.icon)}','${escapeHtml(p.schedule)}')"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deletePelayanan('${p.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
-        } catch(e) { console.error(e); }
+        const snapshot = await db.collection('pelayanan').orderBy('order', 'asc').get();
+        const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
+        const container = document.getElementById('pelayananListContainer');
+        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data</div>'; return; }
+        container.innerHTML = data.map(p => `<div class="data-item"><div><i class="${p.icon} fa-2x text-primary"></i></div><div class="flex-grow-1"><strong>${escapeHtml(p.name)}</strong><br><small>${escapeHtml(p.schedule)}</small></div><div><button class="btn btn-sm btn-warning me-1" onclick="editPelayanan('${p.id}','${escapeHtml(p.name)}','${escapeHtml(p.icon)}','${escapeHtml(p.schedule)}')"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deletePelayanan('${p.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
     }
-    
-    window.editPelayanan = async (id, oldName, oldIcon, oldSchedule) => { 
-        let n=prompt("Nama:", oldName); let i=prompt("Icon:", oldIcon); let s=prompt("Jadwal:", oldSchedule); 
-        if(n && i){ await db.collection('pelayanan').doc(id).update({name:n, icon:i, schedule:s}); loadPelayanan(); } 
-    };
+    window.editPelayanan = async (id, oldName, oldIcon, oldSchedule) => { let n=prompt("Nama:",oldName); let i=prompt("Icon:",oldIcon); let s=prompt("Jadwal:",oldSchedule); if(n && i){ await db.collection('pelayanan').doc(id).update({name:n,icon:i,schedule:s}); loadPelayanan(); } };
     window.deletePelayanan = async (id) => { if(confirm("Hapus?")){ await db.collection('pelayanan').doc(id).delete(); loadPelayanan(); } };
-    async function resetPelayanan() { 
-        const snapshot=await db.collection('pelayanan').get(); snapshot.forEach(doc=>doc.ref.delete()); 
-        for(const p of DEFAULT_PELAYANAN) await db.collection('pelayanan').add(p); loadPelayanan(); alert("Reset pelayanan berhasil"); 
-    }
+    async function resetPelayanan() { const snapshot=await db.collection('pelayanan').get(); snapshot.forEach(doc=>doc.ref.delete()); for(const p of DEFAULT_PELAYANAN) await db.collection('pelayanan').add(p); loadPelayanan(); alert("Reset berhasil"); }
     
-    // ============ KONTAK FUNCTIONS ============
     async function loadKontak() {
-        try {
-            const snapshot = await db.collection('kontak_pemimpin').orderBy('order', 'asc').get();
-            const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
-            const container = document.getElementById('kontakListContainer');
-            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data kontak</div>'; return; }
-            container.innerHTML = data.map(k => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(k.nama)}</strong><br><small>${escapeHtml(k.jabatan)} | ${escapeHtml(k.divisi)}<br><i class="fa fa-phone"></i> ${escapeHtml(k.telp)} | <i class="fa fa-envelope"></i> ${escapeHtml(k.email)}</small></div><div><button class="btn btn-sm btn-warning me-1" onclick="editKontak('${k.id}','${escapeHtml(k.nama)}','${escapeHtml(k.jabatan)}','${escapeHtml(k.telp)}','${escapeHtml(k.email)}','${escapeHtml(k.divisi)}')"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deleteKontak('${k.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
-        } catch(e) { console.error(e); }
+        const snapshot = await db.collection('kontak_pemimpin').orderBy('order', 'asc').get();
+        const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
+        const container = document.getElementById('kontakListContainer');
+        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data kontak</div>'; return; }
+        container.innerHTML = data.map(k => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(k.nama)}</strong><br><small>${escapeHtml(k.jabatan)} | ${escapeHtml(k.divisi)}<br><i class="fa fa-phone"></i> ${escapeHtml(k.telp)} | <i class="fa fa-envelope"></i> ${escapeHtml(k.email)}</small></div><div><button class="btn btn-sm btn-warning me-1" onclick="editKontak('${k.id}','${escapeHtml(k.nama)}','${escapeHtml(k.jabatan)}','${escapeHtml(k.telp)}','${escapeHtml(k.email)}','${escapeHtml(k.divisi)}')"><i class="fa fa-pen"></i></button><button class="btn btn-sm btn-danger" onclick="deleteKontak('${k.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
     }
-    
     window.editKontak = async (id, oldNama, oldJab, oldTelp, oldEmail, oldDivisi) => {
-        let n=prompt("Nama:", oldNama); let j=prompt("Jabatan:", oldJab); let t=prompt("Telepon:", oldTelp); 
-        let e=prompt("Email:", oldEmail); let d=prompt("Divisi:", oldDivisi);
-        if(n){ await db.collection('kontak_pemimpin').doc(id).update({nama:n, jabatan:j, telp:t, email:e, divisi:d}); loadKontak(); }
+        let n=prompt("Nama:",oldNama); let j=prompt("Jabatan:",oldJab); let t=prompt("Telepon:",oldTelp); let e=prompt("Email:",oldEmail); let d=prompt("Divisi:",oldDivisi);
+        if(n){ await db.collection('kontak_pemimpin').doc(id).update({nama:n,jabatan:j,telp:t,email:e,divisi:d}); loadKontak(); }
     };
     window.deleteKontak = async (id) => { if(confirm("Hapus kontak?")){ await db.collection('kontak_pemimpin').doc(id).delete(); loadKontak(); } };
-    async function resetKontak() { 
-        const snapshot=await db.collection('kontak_pemimpin').get(); snapshot.forEach(doc=>doc.ref.delete()); 
-        for(const k of DEFAULT_KONTAK) await db.collection('kontak_pemimpin').add(k); loadKontak(); alert("Reset kontak berhasil"); 
-    }
+    async function resetKontak() { const snapshot=await db.collection('kontak_pemimpin').get(); snapshot.forEach(doc=>doc.ref.delete()); for(const k of DEFAULT_KONTAK) await db.collection('kontak_pemimpin').add(k); loadKontak(); alert("Reset berhasil"); }
     
-    // ============ LAYANAN FUNCTIONS ============
     async function loadLayanan() {
-        try {
-            const snapshot = await db.collection('permohonan_layanan').orderBy('createdAt', 'desc').get();
-            const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
-            const container = document.getElementById('layananListContainer');
-            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada permohonan</div>'; return; }
-            container.innerHTML = data.map(l => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(l.nama)}</strong><br><small>${escapeHtml(l.jenisLayanan)}<br><i class="fa fa-phone"></i> ${escapeHtml(l.telp)}<br>Status: <span class="badge ${l.status==='Selesai'?'bg-success':(l.status==='Diproses'?'bg-warning':'bg-secondary')}">${escapeHtml(l.status||'Baru')}</span></small></div><div><button class="btn btn-sm btn-success me-1" onclick="updateLayananStatus('${l.id}','Diproses')"><i class="fa fa-check"></i> Proses</button><button class="btn btn-sm btn-primary me-1" onclick="updateLayananStatus('${l.id}','Selesai')"><i class="fa fa-check-double"></i> Selesai</button><button class="btn btn-sm btn-danger" onclick="deleteLayanan('${l.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
-        } catch(e) { console.error(e); }
+        const snapshot = await db.collection('permohonan_layanan').orderBy('createdAt', 'desc').get();
+        const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
+        const container = document.getElementById('layananListContainer');
+        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada permohonan</div>'; return; }
+        container.innerHTML = data.map(l => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(l.nama)}</strong><br><small>${escapeHtml(l.jenisLayanan)}<br><i class="fa fa-phone"></i> ${escapeHtml(l.telp)}<br>Status: <span class="badge ${l.status==='Selesai'?'bg-success':(l.status==='Diproses'?'bg-warning':'bg-secondary')}">${escapeHtml(l.status||'Baru')}</span></small></div><div><button class="btn btn-sm btn-success me-1" onclick="updateLayananStatus('${l.id}','Diproses')"><i class="fa fa-check"></i> Proses</button><button class="btn btn-sm btn-primary me-1" onclick="updateLayananStatus('${l.id}','Selesai')"><i class="fa fa-check-double"></i> Selesai</button><button class="btn btn-sm btn-danger" onclick="deleteLayanan('${l.id}')"><i class="fa fa-trash"></i></button></div></div>`).join('');
     }
-    window.updateLayananStatus = async (id, status) => { await db.collection('permohonan_layanan').doc(id).update({status}); loadLayanan(); alert("Status: " + status); };
+    window.updateLayananStatus = async (id, status) => { await db.collection('permohonan_layanan').doc(id).update({status}); loadLayanan(); alert("Status: "+status); };
     window.deleteLayanan = async (id) => { if(confirm("Hapus?")){ await db.collection('permohonan_layanan').doc(id).delete(); loadLayanan(); } };
     
-    // ============ PENDAFTARAN FUNCTIONS ============
     async function loadPendaftaran() {
-        try {
-            const snapshot = await db.collection('pendaftaran_jemaat').orderBy('createdAt', 'desc').get();
-            const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
-            const container = document.getElementById('pendaftaranListContainer');
-            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada pendaftaran</div>'; return; }
-            container.innerHTML = data.map(p => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(p.namaLengkap)}</strong><br><small><i class="fa fa-phone"></i> ${escapeHtml(p.noHp)}<br>Status Baptis: ${escapeHtml(p.statusBaptis)} | Komisi: ${escapeHtml(p.komisi)}<br>Tgl: ${p.tanggalDaftar}</small></div><div><button class="btn btn-sm btn-danger" onclick="deletePendaftaran('${p.id}')"><i class="fa fa-trash"></i> Hapus</button></div></div>`).join('');
-        } catch(e) { console.error(e); }
+        const snapshot = await db.collection('pendaftaran_jemaat').orderBy('createdAt', 'desc').get();
+        const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
+        const container = document.getElementById('pendaftaranListContainer');
+        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada pendaftaran</div>'; return; }
+        container.innerHTML = data.map(p => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(p.namaLengkap)}</strong><br><small><i class="fa fa-phone"></i> ${escapeHtml(p.noHp)}<br>Status Baptis: ${escapeHtml(p.statusBaptis)} | Komisi: ${escapeHtml(p.komisi)}<br>Tgl: ${p.tanggalDaftar}</small></div><div><button class="btn btn-sm btn-danger" onclick="deletePendaftaran('${p.id}')"><i class="fa fa-trash"></i> Hapus</button></div></div>`).join('');
     }
     window.deletePendaftaran = async (id) => { if(confirm("Hapus?")){ await db.collection('pendaftaran_jemaat').doc(id).delete(); loadPendaftaran(); } };
     
-    // ============ ADD BUTTONS ============
     document.getElementById('addSlideBtn')?.addEventListener('click', async () => { 
         let title = document.getElementById('slideTitle').value.trim(); 
         let url = document.getElementById('slideImageUrl').value.trim(); 
         let desc = document.getElementById('slideDesc').value.trim(); 
-        if(!title || !url){ 
-            alert("Judul dan gambar harus diisi! Upload gambar terlebih dahulu."); 
-            return;
-        } 
-        try {
-            let snap = await db.collection('slides').get(); 
-            await db.collection('slides').add({
-                title: title, imageUrl: url, description: desc, order: snap.size 
-            }); 
-            document.getElementById('slideTitle').value = ''; 
-            document.getElementById('slideDesc').value = ''; 
-            document.getElementById('slideImageUrl').value = ''; 
-            document.getElementById('uploadSuccessMsg').style.display = 'none';
-            await loadSlides(); 
-            alert("Slide berhasil ditambahkan!"); 
-        } catch(error) {
-            console.error("Error adding slide:", error);
-            alert("Gagal menambahkan slide: " + error.message);
-        }
+        if(!title || !url){ alert("Judul dan gambar harus diisi! Upload gambar terlebih dahulu."); return; } 
+        let snap = await db.collection('slides').get(); 
+        await db.collection('slides').add({ title, imageUrl: url, description: desc, order: snap.size }); 
+        document.getElementById('slideTitle').value = ''; 
+        document.getElementById('slideDesc').value = ''; 
+        document.getElementById('slideImageUrl').value = ''; 
+        document.getElementById('uploadSuccessMsg').style.display = 'none';
+        await loadSlides(); 
+        alert("Slide berhasil ditambahkan!"); 
     });
     
     document.getElementById('addJadwalBtn')?.addEventListener('click', async () => { 
@@ -519,47 +435,26 @@
     document.getElementById('resetPelayananBtn')?.addEventListener('click', resetPelayanan);
     document.getElementById('resetKontakBtn')?.addEventListener('click', resetKontak);
     
-    // ============ CLOUDINARY WIDGET ============
-    let myWidget = null;
     function initCloudinary() {
-        console.log("Cloudinary Init - Cloud Name:", CLOUD_NAME);
-        console.log("Upload Preset:", UPLOAD_PRESET);
-        
-        myWidget = cloudinary.createUploadWidget({ 
+        const widget = cloudinary.createUploadWidget({ 
             cloudName: CLOUD_NAME, 
             uploadPreset: UPLOAD_PRESET, 
             sources: ['local', 'url', 'camera'], 
             multiple: false, 
             cropping: true, 
             croppingAspectRatio: 16/9,
-            showPoweredBy: false,
-            styles: { palette: { window: "#FFFFFF", sourceBg: "#f8f9fa", link: "#ff8c00" } }
+            showPoweredBy: false
         }, (error, result) => { 
-            if(error) {
-                console.error("Cloudinary Error Detail:", error);
-                alert("Error upload: " + (error.message || JSON.stringify(error)));
-                return;
-            }
+            if(error) { console.error("Cloudinary Error:", error); alert("Error upload: " + JSON.stringify(error)); return; }
             if(result && result.event === "success") { 
-                console.log("Upload success:", result.info.secure_url);
                 document.getElementById('slideImageUrl').value = result.info.secure_url; 
                 document.getElementById('uploadSuccessMsg').style.display = 'block';
-                alert("✓ Gambar berhasil diupload!\nURL: " + result.info.secure_url.substring(0, 60) + "...");
-            } else if (result && result.event === "close") {
-                console.log("Widget ditutup");
+                alert("✓ Gambar berhasil diupload!");
             }
         });
-        
-        const uploadBtn = document.getElementById("uploadWidget");
-        if (uploadBtn) {
-            uploadBtn.onclick = () => {
-                console.log("Opening Cloudinary widget...");
-                myWidget.open();
-            };
-        }
+        document.getElementById("uploadWidget").onclick = () => widget.open();
     }
     
-    // ============ TAB SWITCHING ============
     function switchTab(tabId) { 
         document.querySelectorAll('.tab-pane-custom').forEach(t=>t.classList.remove('active')); 
         document.getElementById(tabId).classList.add('active'); 
@@ -568,7 +463,6 @@
     }
     document.querySelectorAll('.cms-tab-btn').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.getAttribute('data-tab'))));
     
-    // ============ LOGIN ============
     document.getElementById('loginForm')?.addEventListener('submit', (e) => { 
         e.preventDefault(); 
         let user = document.getElementById('username').value; 
