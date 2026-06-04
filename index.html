@@ -245,17 +245,6 @@ body {
     padding: 20px;
 }
 
-.carousel-caption h5 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
-.carousel-caption p {
-    font-size: 0.9rem;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
 .content-card {
     background: rgba(255, 255, 255, 0.98);
     border-radius: 16px;
@@ -308,38 +297,37 @@ body {
     color: white;
 }
 
+/* ============ FOOTER YANG RAPIH ============ */
 footer {
     background: rgba(11, 37, 69, 0.96);
     color: white;
-    padding: 45px 20px 30px;
+    padding: 50px 20px 30px;
     margin-top: auto;
 }
 
 .footer-container {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .footer-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 30px;
-    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
 }
 
 .footer-col {
-    flex: 1;
-    min-width: 200px;
+    text-align: left;
 }
 
 .footer-col h4 {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 20px;
     color: var(--secondary);
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 12px;
 }
 
 .footer-col h4:after {
@@ -347,9 +335,10 @@ footer {
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 40px;
-    height: 2px;
+    width: 50px;
+    height: 3px;
     background: var(--secondary);
+    border-radius: 2px;
 }
 
 .footer-logo-img {
@@ -372,10 +361,11 @@ footer {
 .footer-col ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .footer-col ul li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .footer-col ul li a {
@@ -383,13 +373,32 @@ footer {
     text-decoration: none;
     font-size: 0.85rem;
     opacity: 0.8;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    display: inline-block;
 }
 
 .footer-col ul li a:hover {
     opacity: 1;
     color: var(--secondary);
-    padding-left: 5px;
+    transform: translateX(5px);
+}
+
+.footer-contact {
+    margin-bottom: 20px;
+}
+
+.footer-contact p {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.footer-contact i {
+    width: 25px;
+    color: var(--secondary);
+    font-size: 1rem;
 }
 
 .social-icons-list {
@@ -400,8 +409,8 @@ footer {
 
 .social-icons-list a {
     color: white;
-    font-size: 1.3rem;
-    transition: 0.3s;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
     background: rgba(255,255,255,0.1);
     width: 38px;
     height: 38px;
@@ -409,6 +418,7 @@ footer {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    text-decoration: none;
 }
 
 .social-icons-list a:hover {
@@ -417,16 +427,10 @@ footer {
     transform: translateY(-3px);
 }
 
-.footer-contact i {
-    width: 25px;
-    color: var(--secondary);
-    margin-right: 8px;
-}
-
 .footer-bottom {
     text-align: center;
-    padding-top: 25px;
-    margin-top: 25px;
+    padding-top: 30px;
+    margin-top: 20px;
     border-top: 1px solid rgba(255,255,255,0.1);
     font-size: 0.75rem;
     opacity: 0.7;
@@ -460,18 +464,7 @@ footer {
     color: #6c757d;
 }
 
-/* PERBAIKAN UNTUK SLIDE YANG ERROR */
-.slide-error {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    min-height: 300px;
-    background: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
+/* Responsive */
 @media (max-width: 768px) {
     .hero-title { font-size: 1.5rem; }
     .hero-church-name { font-size: 1.3rem; }
@@ -484,22 +477,28 @@ footer {
         top: 70px;
         right: 12px;
     }
-    .cms-fixed-btn span { 
-        display: inline;
-        font-size: 0.65rem;
-    }
-    .cms-fixed-btn i {
-        font-size: 0.8rem;
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
     }
     
-    .footer-grid { flex-direction: column; text-align: center; }
-    .footer-col h4:after { left: 50%; transform: translateX(-50%); }
-    .social-icons-list { justify-content: center; }
-    .footer-contact { text-align: center; }
+    .footer-col {
+        text-align: center;
+    }
     
-    .navbar-toggler {
-        z-index: 9998;
-        position: relative;
+    .footer-col h4:after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .footer-contact p {
+        justify-content: center;
+    }
+    
+    .social-icons-list {
+        justify-content: center;
     }
 }
 
@@ -510,11 +509,7 @@ footer {
         right: 8px;
     }
     .cms-fixed-btn span {
-        display: inline;
         font-size: 0.6rem;
-    }
-    .cms-fixed-btn i {
-        font-size: 0.7rem;
     }
 }
 </style>
@@ -535,24 +530,24 @@ footer {
             <small>Gereja Bethel Indonesia</small>
         </div>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="menu">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link" onclick="showTab('sejarah')"><i class="fa-solid fa-landmark"></i> Sejarah</a></li>
             <li class="nav-item"><a class="nav-link" onclick="showTab('profil')"><i class="fa-solid fa-church"></i> Profil</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('organisasi')"><i class="fa-solid fa-sitemap"></i> Struktur Organisasi</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('pelayanan')"><i class="fa-solid fa-hands-praying"></i> Pelayanan Kami</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('jadwal')"><i class="fa-solid fa-calendar-days"></i> Jadwal Kegiatan Ibadah</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('organisasi')"><i class="fa-solid fa-sitemap"></i> Organisasi</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('pelayanan')"><i class="fa-solid fa-hands-praying"></i> Pelayanan</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('jadwal')"><i class="fa-solid fa-calendar-days"></i> Jadwal</a></li>
             
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="jemaatDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-users"></i> Jemaat
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="jemaatDropdown">
+                <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="pages/kontak-pemimpin.html"><i class="fa-solid fa-address-card"></i> Kontak Para Pemimpin & Koordinator</a></li>
-                    <li><a class="dropdown-item" href="pages/layanan-jemaat.html"><i class="fa-solid fa-hand-holding-heart"></i> Permohonan Pelayanan Pastoral</a></li>
+                    <li><a class="dropdown-item" href="pages/layanan-jemaat.html"><i class="fa-solid fa-hand-holding-heart"></i> Permohonan Layanan Jemaat</a></li>
                     <li><a class="dropdown-item" href="pages/pendaftaran-jemaat.html"><i class="fa-solid fa-user-plus"></i> Pendaftaran Anggota Jemaat</a></li>
                 </ul>
             </li>
@@ -574,13 +569,12 @@ footer {
 
 <div class="tab-content-wrapper">
     <div id="sejarah" class="tab-content">
-        <h3 class="section-title"><i class="fa-solid fa-landmark"></i> Sejarah Gereja</h3>
-        
+        <h3 class="section-title">Sejarah Gereja</h3>
         <div id="historyCarousel" class="carousel slide slide-carousel carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
             <div class="carousel-indicators" id="slideIndicators"></div>
             <div class="carousel-inner" id="slideInner">
                 <div class="carousel-item active">
-                    <img src="https://via.placeholder.com/1200x420?text=Memuat+Slide..." class="d-block w-100" alt="Loading" style="object-fit: cover;">
+                    <img src="https://via.placeholder.com/1200x420?text=Memuat+Slide..." class="d-block w-100" alt="Loading">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#historyCarousel" data-bs-slide="prev">
@@ -590,7 +584,6 @@ footer {
                 <span class="carousel-control-next-icon"></span>
             </button>
         </div>
-        
         <div class="row">
             <div class="col-md-8">
                 <p><strong>GBI Karang Mulia</strong> berdiri sejak tahun 1995 sebagai wadah persekutuan bagi warga Kristen di wilayah Karang Mulia, Nabire.</p>
@@ -600,7 +593,7 @@ footer {
             <div class="col-md-4">
                 <div class="content-card">
                     <i class="fa-solid fa-quote-left fa-2x text-primary mb-2"></i>
-                    <p class="mb-0"><em>"Hati kami bersukacita karena Dia, sebab kepada nama-Nya yang kudus kami percaya." - Mazmur 33:21</em></p>
+                    <p><em>"Hati kami bersukacita karena Dia, sebab kepada nama-Nya yang kudus kami percaya." - Mazmur 33:21</em></p>
                 </div>
             </div>
         </div>
@@ -609,36 +602,14 @@ footer {
     <div id="profil" class="tab-content">
         <h3 class="section-title">Profil Gereja</h3>
         <div class="row">
-            <div class="col-md-6 mb-3">
-                <div class="content-card">
-                    <i class="fa-solid fa-eye fa-2x text-primary mb-2"></i>
-                    <h4>Visi</h4>
-                    <p>Menjadi gereja yang bertumbuh dalam iman, berdampak bagi masyarakat, dan memenangkan jiwa bagi kemuliaan Tuhan Yesus Kristus.</p>
-                </div>
-            </div>
-            <div class="col-md-6 mb-3">
-                <div class="content-card">
-                    <i class="fa-solid fa-bullseye fa-2x text-primary mb-2"></i>
-                    <h4>Misi</h4>
-                    <ul class="mb-0">
-                        <li>Memuridkan setiap jemaat untuk bertumbuh dalam Firman Tuhan</li>
-                        <li>Mengembangkan pelayanan yang relevan dengan kebutuhan zaman</li>
-                        <li>Melayani masyarakat melalui program sosial</li>
-                        <li>Menjangkau jiwa-jiwa baru dengan Injil Keselamatan</li>
-                    </ul>
-                </div>
-            </div>
+            <div class="col-md-6 mb-3"><div class="content-card"><i class="fa-solid fa-eye fa-2x text-primary mb-2"></i><h4>Visi</h4><p>Menjadi gereja yang bertumbuh dalam iman, berdampak bagi masyarakat, dan memenangkan jiwa bagi kemuliaan Tuhan Yesus Kristus.</p></div></div>
+            <div class="col-md-6 mb-3"><div class="content-card"><i class="fa-solid fa-bullseye fa-2x text-primary mb-2"></i><h4>Misi</h4><ul><li>Memuridkan setiap jemaat untuk bertumbuh dalam Firman Tuhan</li><li>Mengembangkan pelayanan yang relevan dengan kebutuhan zaman</li><li>Melayani masyarakat melalui program sosial</li><li>Menjangkau jiwa-jiwa baru dengan Injil Keselamatan</li></ul></div></div>
         </div>
     </div>
 
     <div id="organisasi" class="tab-content">
         <h3 class="section-title">Struktur Organisasi</h3>
-        <div class="table-responsive">
-            <table class="table table-bordered org-table">
-                <thead><tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr></thead>
-                <tbody id="organisasiBody"></tbody>
-            </table>
-        </div>
+        <div class="table-responsive"><table class="table table-bordered org-table"><thead><tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr></thead><tbody id="organisasiBody"></tbody></table></div>
     </div>
 
     <div id="pelayanan" class="tab-content">
@@ -652,6 +623,7 @@ footer {
     </div>
 </div>
 
+<!-- ============ FOOTER YANG RAPIH ============ -->
 <footer>
     <div class="footer-container">
         <div class="footer-grid">
@@ -659,6 +631,7 @@ footer {
                 <img src="logo_gbi.png" alt="Logo GBI" class="footer-logo-img" onerror="this.style.display='none'">
                 <h4>GBI Karang Mulia</h4>
                 <p>"Menjadi Gereja yang Berdampak, Bertumbuh dan Menjangkau Jiwa bagi Kemuliaan Tuhan."</p>
+                <p style="margin-top: 15px; font-size: 0.8rem;">Gereja Bethel Indonesia</p>
             </div>
             
             <div class="footer-col">
@@ -668,23 +641,23 @@ footer {
                     <li><a href="#" onclick="showTab('profil')">Profil</a></li>
                     <li><a href="#" onclick="showTab('organisasi')">Organisasi</a></li>
                     <li><a href="#" onclick="showTab('pelayanan')">Pelayanan</a></li>
-                    <li><a href="#" onclick="showTab('jadwal')">Jadwal</a></li>
+                    <li><a href="#" onclick="showTab('jadwal')">Jadwal Ibadah</a></li>
                 </ul>
             </div>
             
             <div class="footer-col">
                 <h4>Jemaat</h4>
                 <ul>
-                    <li><a href="pages/kontak-pemimpin.html">Kontak Pemimpin</a></li>
-                    <li><a href="pages/layanan-jemaat.html">Layanan Jemaat</a></li>
-                    <li><a href="pages/pendaftaran-jemaat.html">Pendaftaran Anggota</a></li>
+                    <li><a href="pages/kontak-pemimpin.html">Kontak Pemimpin & Koordinator</a></li>
+                    <li><a href="pages/layanan-jemaat.html">Permohonan Layanan Jemaat</a></li>
+                    <li><a href="pages/pendaftaran-jemaat.html">Pendaftaran Anggota Jemaat</a></li>
                 </ul>
             </div>
             
             <div class="footer-col">
                 <h4>Hubungi Kami</h4>
                 <div class="footer-contact">
-                    <p><i class="fa-solid fa-location-dot"></i> Jl. Ujung Pandang, Karang Mulia, Nabire, Papua Tengah</p>
+                    <p><i class="fa-solid fa-location-dot"></i> Jl. Ujung Pandang, Karang Mulia,<br>Nabire, Papua Tengah</p>
                     <p><i class="fa-regular fa-envelope"></i> info@gbi-karangmulia.org</p>
                     <p><i class="fa-solid fa-phone"></i> +62 812-3456-7890</p>
                 </div>
@@ -714,15 +687,8 @@ footer {
         appId: "1:198652175873:web:82a8f9cb00557dcac88200"
     };
     
-    // Inisialisasi Firebase dengan error handling
-    let db = null;
-    try {
-        firebase.initializeApp(firebaseConfig);
-        db = firebase.firestore();
-        console.log("Firebase berhasil diinisialisasi");
-    } catch (error) {
-        console.error("Error inisialisasi Firebase:", error);
-    }
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
     
     function showTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -735,77 +701,23 @@ footer {
     }
     
     async function loadSlides() {
-        const inner = document.getElementById('slideInner');
-        const indicators = document.getElementById('slideIndicators');
-        
-        if (!inner) return;
-        
-        // Tampilkan loading terlebih dahulu
-        inner.innerHTML = `<div class="carousel-item active">
-            <img src="https://via.placeholder.com/1200x420?text=Memuat+Slide..." class="d-block w-100" alt="Loading" style="object-fit: cover;">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Memuat Slide...</h5>
-                <p>Harap tunggu sebentar</p>
-            </div>
-        </div>`;
-        
-        // Cek koneksi Firebase
-        if (!db) {
-            inner.innerHTML = `<div class="carousel-item active">
-                <img src="https://via.placeholder.com/1200x420?text=Koneksi+Gagal" class="d-block w-100" alt="Error">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>⚠️ Koneksi Database Gagal</h5>
-                    <p>Silakan periksa koneksi internet Anda</p>
-                </div>
-            </div>`;
-            if (indicators) indicators.innerHTML = '<button data-bs-target="#historyCarousel" data-bs-slide-to="0" class="active"></button>';
-            return;
-        }
-        
         try {
-            // Gunakan timeout untuk menghindari loading terlalu lama
-            const timeoutPromise = new Promise((_, reject) => 
-                setTimeout(() => reject(new Error("Timeout - Koneksi lambat")), 15000)
-            );
-            
-            const snapshotPromise = db.collection('slides').orderBy('order', 'asc').get();
-            const snapshot = await Promise.race([snapshotPromise, timeoutPromise]);
-            
+            const snapshot = await db.collection('slides').orderBy('order', 'asc').get();
             const slidesData = [];
             snapshot.forEach(doc => slidesData.push(doc.data()));
             
+            const inner = document.getElementById('slideInner');
+            const indicators = document.getElementById('slideIndicators');
+            
             if (slidesData.length === 0) {
-                inner.innerHTML = `<div class="carousel-item active">
-                    <img src="https://via.placeholder.com/1200x420?text=Belum+Ada+Slide" class="d-block w-100" alt="Belum Ada Slide" style="object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>📸 Belum Ada Slide</h5>
-                        <p>Silakan tambah slide melalui CMS pada menu Slide Foto</p>
-                    </div>
-                </div>`;
+                inner.innerHTML = `<div class="carousel-item active"><img src="https://via.placeholder.com/1200x420?text=Belum+Ada+Slide" class="d-block w-100"><div class="carousel-caption d-none d-md-block"><h5>📸 Belum Ada Slide</h5><p>Silakan tambah slide melalui CMS pada menu Slide Foto</p></div></div>`;
                 if (indicators) indicators.innerHTML = '<button data-bs-target="#historyCarousel" data-bs-slide-to="0" class="active"></button>';
                 return;
             }
             
-            // Filter slides dengan imageUrl yang valid
-            const validSlides = slidesData.filter(s => s.imageUrl && s.imageUrl.trim() !== '');
-            
-            if (validSlides.length === 0) {
-                inner.innerHTML = `<div class="carousel-item active">
-                    <img src="https://via.placeholder.com/1200x420?text=Slide+Invalid" class="d-block w-100" alt="Invalid">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>⚠️ Slide Tidak Valid</h5>
-                        <p>Gambar tidak tersedia, silakan upload ulang melalui CMS</p>
-                    </div>
-                </div>`;
-                if (indicators) indicators.innerHTML = '<button data-bs-target="#historyCarousel" data-bs-slide-to="0" class="active"></button>';
-                return;
-            }
-            
-            inner.innerHTML = validSlides.map((s, idx) => `
+            inner.innerHTML = slidesData.map((s, idx) => `
                 <div class="carousel-item ${idx === 0 ? 'active' : ''}">
-                    <img src="${s.imageUrl}" class="d-block w-100" alt="${s.title}" 
-                         onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x420?text=Gambar+Error';"
-                         style="object-fit: cover;">
+                    <img src="${s.imageUrl}" class="d-block w-100" alt="${s.title}" onerror="this.src='https://via.placeholder.com/1200x420?text=Gambar+Error'">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>${escapeHtml(s.title)}</h5>
                         <p>${escapeHtml(s.description || '')}</p>
@@ -814,103 +726,62 @@ footer {
             `).join('');
             
             if (indicators) {
-                indicators.innerHTML = validSlides.map((_, idx) => `<button type="button" data-bs-target="#historyCarousel" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>`).join('');
+                indicators.innerHTML = slidesData.map((_, idx) => `<button type="button" data-bs-target="#historyCarousel" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>`).join('');
             }
             
-            // Refresh carousel
             let carouselEl = document.querySelector('#historyCarousel');
             if (carouselEl) {
                 let bsCarousel = bootstrap.Carousel.getInstance(carouselEl);
                 if (bsCarousel) bsCarousel.dispose();
                 new bootstrap.Carousel(carouselEl, { interval: 4000, wrap: true, ride: 'carousel' });
             }
-            
         } catch (error) {
             console.error("Error loading slides:", error);
-            inner.innerHTML = `<div class="carousel-item active">
-                <img src="https://via.placeholder.com/1200x420?text=Error+Load+Data" class="d-block w-100" alt="Error" style="object-fit: cover;">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>⚠️ Gagal Memuat Data</h5>
-                    <p>Silakan refresh halaman atau periksa koneksi internet</p>
-                </div>
-            </div>`;
-            if (indicators) indicators.innerHTML = '<button data-bs-target="#historyCarousel" data-bs-slide-to="0" class="active"></button>';
         }
     }
     
     async function loadJadwal() {
-        const container = document.getElementById('jadwalList');
-        if (!container) return;
-        
-        if (!db) {
-            container.innerHTML = '<div class="empty-state">⚠️ Koneksi database gagal</div>';
-            return;
-        }
-        
         try {
             const snapshot = await db.collection('jadwal').orderBy('order', 'asc').get();
             const data = [];
             snapshot.forEach(doc => data.push(doc.data()));
+            const container = document.getElementById('jadwalList');
             if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada jadwal</div>'; return; }
             container.innerHTML = data.map(j => `<div class="schedule-item"><h5><i class="fa-solid fa-church me-2"></i> ${escapeHtml(j.name)}</h5><p>${escapeHtml(j.time)}</p></div>`).join('');
         } catch (error) {
             console.error("Error loading jadwal:", error);
-            container.innerHTML = '<div class="empty-state">Gagal memuat jadwal</div>';
         }
     }
     
     async function loadOrganisasi() {
-        const container = document.getElementById('organisasiBody');
-        if (!container) return;
-        
-        if (!db) {
-            container.innerHTML = '<tr><td colspan="3" class="text-center">⚠️ Koneksi database gagal</td></tr>';
-            return;
-        }
-        
         try {
             const snapshot = await db.collection('organisasi').orderBy('order', 'asc').get();
             const data = [];
             snapshot.forEach(doc => data.push(doc.data()));
-            if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada data</td></tr>'; return; }
+            const container = document.getElementById('organisasiBody');
+            if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada数据</td><td class="text-center">Belum ada数据</td></tr>'; return; }
             container.innerHTML = data.map(o => `<tr><td>${escapeHtml(o.jabatan)}</td><td>${escapeHtml(o.nama)}</td><td>${escapeHtml(o.keterangan || '')}</td></tr>`).join('');
         } catch (error) {
             console.error("Error loading organisasi:", error);
-            container.innerHTML = '<tr><td colspan="3" class="text-center">Gagal memuat data</td></tr>';
         }
     }
     
     async function loadPelayanan() {
-        const container = document.getElementById('serviceGrid');
-        if (!container) return;
-        
-        if (!db) {
-            container.innerHTML = '<div class="empty-state">⚠️ Koneksi database gagal</div>';
-            return;
-        }
-        
         try {
             const snapshot = await db.collection('pelayanan').orderBy('order', 'asc').get();
             const data = [];
             snapshot.forEach(doc => data.push(doc.data()));
-            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data pelayanan</div>'; return; }
+            const container = document.getElementById('serviceGrid');
+            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada数据 pelayanan</div>'; return; }
             container.innerHTML = data.map(p => `<div class="service-card"><i class="${p.icon}"></i><h6>${escapeHtml(p.name)}</h6><small>${escapeHtml(p.schedule || '')}</small></div>`).join('');
         } catch (error) {
             console.error("Error loading pelayanan:", error);
-            container.innerHTML = '<div class="empty-state">Gagal memuat data pelayanan</div>';
         }
     }
     
     document.addEventListener('DOMContentLoaded', async () => {
         showTab('sejarah');
-        
-        // Load semua data dengan timeout handling
-        await Promise.all([
-            loadSlides(),
-            loadJadwal(),
-            loadOrganisasi(),
-            loadPelayanan()
-        ]);
+        await Promise.all([loadSlides(), loadJadwal(), loadOrganisasi(), loadPelayanan()]);
     });
 </script>
 </body>
