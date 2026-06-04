@@ -43,7 +43,6 @@ body {
     padding: 0.8rem 0;
 }
 
-/* ============ PERBAIKAN LOGO NAVBAR - TIDAK STRETCH ============ */
 .navbar-brand {
     display: flex;
     align-items: center;
@@ -117,10 +116,9 @@ body {
     color: white;
 }
 
-/* ============ PERBAIKAN UTAMA: CMS BUTTON TIDAK OVERLAP DI HP ============ */
 .cms-fixed-btn {
     position: fixed;
-    top: 80px;  /* DITURUNKAN agar tidak menimpa navbar toggler */
+    top: 80px;
     right: 20px;
     z-index: 9999;
     background: linear-gradient(135deg, #ff8c00, #e07a00);
@@ -142,7 +140,6 @@ body {
     transform: scale(1.05);
 }
 
-/* ============ HERO SECTION ============ */
 .hero {
     min-height: 40vh;
     background: transparent;
@@ -152,7 +149,6 @@ body {
     padding: 100px 0 20px;
 }
 
-/* PERBAIKAN LOGO HERO - TIDAK STRETCH */
 .hero-logo {
     display: flex;
     justify-content: center;
@@ -228,7 +224,6 @@ body {
     font-size: 1.5rem;
 }
 
-/* SLIDE CAROUSEL */
 .slide-carousel {
     border-radius: 20px;
     overflow: hidden;
@@ -313,7 +308,6 @@ body {
     color: white;
 }
 
-/* ============ FOOTER ============ */
 footer {
     background: rgba(11, 37, 69, 0.96);
     color: white;
@@ -358,7 +352,6 @@ footer {
     background: var(--secondary);
 }
 
-/* PERBAIKAN LOGO FOOTER - TIDAK STRETCH */
 .footer-logo-img {
     width: 70px;
     height: 70px;
@@ -467,22 +460,32 @@ footer {
     color: #6c757d;
 }
 
-/* ============ PERBAIKAN MEDIA QUERY UNTUK HP ============ */
+/* PERBAIKAN UNTUK SLIDE YANG ERROR */
+.slide-error {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media (max-width: 768px) {
     .hero-title { font-size: 1.5rem; }
     .hero-church-name { font-size: 1.3rem; }
     .hero img { width: 80px; height: 80px; }
     .slide-carousel .carousel-inner img { height: 250px; }
     
-    /* PERBAIKAN CMS BUTTON DI HP - DIPERKECIL DAN DI BAWAH NAVBAR */
     .cms-fixed-btn { 
         padding: 6px 12px; 
         font-size: 0.7rem;
-        top: 70px;  /* Posisi aman di bawah navbar toggler */
+        top: 70px;
         right: 12px;
     }
     .cms-fixed-btn span { 
-        display: inline;  /* TETAP TAMPIL teksnya, hanya diperkecil */
+        display: inline;
         font-size: 0.65rem;
     }
     .cms-fixed-btn i {
@@ -494,14 +497,12 @@ footer {
     .social-icons-list { justify-content: center; }
     .footer-contact { text-align: center; }
     
-    /* Pastikan navbar toggler tidak tertimpa */
     .navbar-toggler {
         z-index: 9998;
         position: relative;
     }
 }
 
-/* Untuk HP yang lebih kecil (max-width: 480px) */
 @media (max-width: 480px) {
     .cms-fixed-btn {
         padding: 5px 10px;
@@ -520,13 +521,11 @@ footer {
 </head>
 <body>
 
-<!-- CMS BUTTON - SEKARANG TIDAK AKAN OVERLAP DENGAN NAVBAR TOGGLER -->
 <button class="cms-fixed-btn" onclick="window.location.href='cms.html'">
     <i class="fa-solid fa-user-shield"></i>
     <span>CMS</span>
 </button>
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
 <div class="container">
     <a class="navbar-brand" href="#">
@@ -562,7 +561,6 @@ footer {
 </div>
 </nav>
 
-<!-- HERO SECTION -->
 <section class="hero">
 <div class="container text-center">
     <div class="hero-logo">
@@ -574,9 +572,7 @@ footer {
 </div>
 </section>
 
-<!-- MAIN CONTENT -->
 <div class="tab-content-wrapper">
-    <!-- SEJARAH TAB -->
     <div id="sejarah" class="tab-content">
         <h3 class="section-title"><i class="fa-solid fa-landmark"></i> Sejarah Gereja</h3>
         
@@ -584,7 +580,7 @@ footer {
             <div class="carousel-indicators" id="slideIndicators"></div>
             <div class="carousel-inner" id="slideInner">
                 <div class="carousel-item active">
-                    <img src="https://via.placeholder.com/1200x420?text=Memuat+Slide..." class="d-block w-100" alt="Loading">
+                    <img src="https://via.placeholder.com/1200x420?text=Memuat+Slide..." class="d-block w-100" alt="Loading" style="object-fit: cover;">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#historyCarousel" data-bs-slide="prev">
@@ -610,7 +606,6 @@ footer {
         </div>
     </div>
 
-    <!-- PROFIL TAB -->
     <div id="profil" class="tab-content">
         <h3 class="section-title">Profil Gereja</h3>
         <div class="row">
@@ -636,32 +631,27 @@ footer {
         </div>
     </div>
 
-    <!-- ORGANISASI TAB -->
     <div id="organisasi" class="tab-content">
         <h3 class="section-title">Struktur Organisasi</h3>
         <div class="table-responsive">
             <table class="table table-bordered org-table">
-                <thead><tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr>
-                </thead>
+                <thead><tr><th>Jabatan</th><th>Nama</th><th>Keterangan</th></tr></thead>
                 <tbody id="organisasiBody"></tbody>
             </table>
         </div>
     </div>
 
-    <!-- PELAYANAN TAB -->
     <div id="pelayanan" class="tab-content">
         <h3 class="section-title">Pelayanan Kami</h3>
         <div class="service-grid" id="serviceGrid"></div>
     </div>
 
-    <!-- JADWAL TAB -->
     <div id="jadwal" class="tab-content">
         <h3 class="section-title">Jadwal Ibadah</h3>
         <div id="jadwalList"></div>
     </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
     <div class="footer-container">
         <div class="footer-grid">
@@ -724,8 +714,15 @@ footer {
         appId: "1:198652175873:web:82a8f9cb00557dcac88200"
     };
     
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    // Inisialisasi Firebase dengan error handling
+    let db = null;
+    try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        console.log("Firebase berhasil diinisialisasi");
+    } catch (error) {
+        console.error("Error inisialisasi Firebase:", error);
+    }
     
     function showTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -738,19 +735,48 @@ footer {
     }
     
     async function loadSlides() {
+        const inner = document.getElementById('slideInner');
+        const indicators = document.getElementById('slideIndicators');
+        
+        if (!inner) return;
+        
+        // Tampilkan loading terlebih dahulu
+        inner.innerHTML = `<div class="carousel-item active">
+            <img src="https://via.placeholder.com/1200x420?text=Memuat+Slide..." class="d-block w-100" alt="Loading" style="object-fit: cover;">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Memuat Slide...</h5>
+                <p>Harap tunggu sebentar</p>
+            </div>
+        </div>`;
+        
+        // Cek koneksi Firebase
+        if (!db) {
+            inner.innerHTML = `<div class="carousel-item active">
+                <img src="https://via.placeholder.com/1200x420?text=Koneksi+Gagal" class="d-block w-100" alt="Error">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>⚠️ Koneksi Database Gagal</h5>
+                    <p>Silakan periksa koneksi internet Anda</p>
+                </div>
+            </div>`;
+            if (indicators) indicators.innerHTML = '<button data-bs-target="#historyCarousel" data-bs-slide-to="0" class="active"></button>';
+            return;
+        }
+        
         try {
-            const snapshot = await db.collection('slides').orderBy('order', 'asc').get();
+            // Gunakan timeout untuk menghindari loading terlalu lama
+            const timeoutPromise = new Promise((_, reject) => 
+                setTimeout(() => reject(new Error("Timeout - Koneksi lambat")), 15000)
+            );
+            
+            const snapshotPromise = db.collection('slides').orderBy('order', 'asc').get();
+            const snapshot = await Promise.race([snapshotPromise, timeoutPromise]);
+            
             const slidesData = [];
             snapshot.forEach(doc => slidesData.push(doc.data()));
             
-            const inner = document.getElementById('slideInner');
-            const indicators = document.getElementById('slideIndicators');
-            
-            if (!inner) return;
-            
             if (slidesData.length === 0) {
                 inner.innerHTML = `<div class="carousel-item active">
-                    <img src="https://via.placeholder.com/1200x420?text=Belum+Ada+Slide" class="d-block w-100" alt="Belum Ada Slide">
+                    <img src="https://via.placeholder.com/1200x420?text=Belum+Ada+Slide" class="d-block w-100" alt="Belum Ada Slide" style="object-fit: cover;">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>📸 Belum Ada Slide</h5>
                         <p>Silakan tambah slide melalui CMS pada menu Slide Foto</p>
@@ -760,9 +786,26 @@ footer {
                 return;
             }
             
-            inner.innerHTML = slidesData.map((s, idx) => `
+            // Filter slides dengan imageUrl yang valid
+            const validSlides = slidesData.filter(s => s.imageUrl && s.imageUrl.trim() !== '');
+            
+            if (validSlides.length === 0) {
+                inner.innerHTML = `<div class="carousel-item active">
+                    <img src="https://via.placeholder.com/1200x420?text=Slide+Invalid" class="d-block w-100" alt="Invalid">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>⚠️ Slide Tidak Valid</h5>
+                        <p>Gambar tidak tersedia, silakan upload ulang melalui CMS</p>
+                    </div>
+                </div>`;
+                if (indicators) indicators.innerHTML = '<button data-bs-target="#historyCarousel" data-bs-slide-to="0" class="active"></button>';
+                return;
+            }
+            
+            inner.innerHTML = validSlides.map((s, idx) => `
                 <div class="carousel-item ${idx === 0 ? 'active' : ''}">
-                    <img src="${s.imageUrl}" class="d-block w-100" alt="${s.title}" onerror="this.src='https://via.placeholder.com/1200x420?text=Gambar+Error'">
+                    <img src="${s.imageUrl}" class="d-block w-100" alt="${s.title}" 
+                         onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x420?text=Gambar+Error';"
+                         style="object-fit: cover;">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>${escapeHtml(s.title)}</h5>
                         <p>${escapeHtml(s.description || '')}</p>
@@ -771,69 +814,103 @@ footer {
             `).join('');
             
             if (indicators) {
-                indicators.innerHTML = slidesData.map((_, idx) => `<button type="button" data-bs-target="#historyCarousel" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>`).join('');
+                indicators.innerHTML = validSlides.map((_, idx) => `<button type="button" data-bs-target="#historyCarousel" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>`).join('');
             }
             
+            // Refresh carousel
             let carouselEl = document.querySelector('#historyCarousel');
             if (carouselEl) {
                 let bsCarousel = bootstrap.Carousel.getInstance(carouselEl);
                 if (bsCarousel) bsCarousel.dispose();
                 new bootstrap.Carousel(carouselEl, { interval: 4000, wrap: true, ride: 'carousel' });
             }
+            
         } catch (error) {
             console.error("Error loading slides:", error);
-            const inner = document.getElementById('slideInner');
-            if (inner) {
-                inner.innerHTML = `<div class="carousel-item active"><img src="https://via.placeholder.com/1200x420?text=Error+Load+Data" class="d-block w-100"></div>`;
-            }
+            inner.innerHTML = `<div class="carousel-item active">
+                <img src="https://via.placeholder.com/1200x420?text=Error+Load+Data" class="d-block w-100" alt="Error" style="object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>⚠️ Gagal Memuat Data</h5>
+                    <p>Silakan refresh halaman atau periksa koneksi internet</p>
+                </div>
+            </div>`;
+            if (indicators) indicators.innerHTML = '<button data-bs-target="#historyCarousel" data-bs-slide-to="0" class="active"></button>';
         }
     }
     
     async function loadJadwal() {
+        const container = document.getElementById('jadwalList');
+        if (!container) return;
+        
+        if (!db) {
+            container.innerHTML = '<div class="empty-state">⚠️ Koneksi database gagal</div>';
+            return;
+        }
+        
         try {
             const snapshot = await db.collection('jadwal').orderBy('order', 'asc').get();
             const data = [];
             snapshot.forEach(doc => data.push(doc.data()));
-            const container = document.getElementById('jadwalList');
-            if (!container) return;
             if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada jadwal</div>'; return; }
             container.innerHTML = data.map(j => `<div class="schedule-item"><h5><i class="fa-solid fa-church me-2"></i> ${escapeHtml(j.name)}</h5><p>${escapeHtml(j.time)}</p></div>`).join('');
         } catch (error) {
             console.error("Error loading jadwal:", error);
+            container.innerHTML = '<div class="empty-state">Gagal memuat jadwal</div>';
         }
     }
     
     async function loadOrganisasi() {
+        const container = document.getElementById('organisasiBody');
+        if (!container) return;
+        
+        if (!db) {
+            container.innerHTML = '<tr><td colspan="3" class="text-center">⚠️ Koneksi database gagal</td></tr>';
+            return;
+        }
+        
         try {
             const snapshot = await db.collection('organisasi').orderBy('order', 'asc').get();
             const data = [];
             snapshot.forEach(doc => data.push(doc.data()));
-            const container = document.getElementById('organisasiBody');
-            if (!container) return;
             if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada data</td></tr>'; return; }
             container.innerHTML = data.map(o => `<tr><td>${escapeHtml(o.jabatan)}</td><td>${escapeHtml(o.nama)}</td><td>${escapeHtml(o.keterangan || '')}</td></tr>`).join('');
         } catch (error) {
             console.error("Error loading organisasi:", error);
+            container.innerHTML = '<tr><td colspan="3" class="text-center">Gagal memuat data</td></tr>';
         }
     }
     
     async function loadPelayanan() {
+        const container = document.getElementById('serviceGrid');
+        if (!container) return;
+        
+        if (!db) {
+            container.innerHTML = '<div class="empty-state">⚠️ Koneksi database gagal</div>';
+            return;
+        }
+        
         try {
             const snapshot = await db.collection('pelayanan').orderBy('order', 'asc').get();
             const data = [];
             snapshot.forEach(doc => data.push(doc.data()));
-            const container = document.getElementById('serviceGrid');
-            if (!container) return;
             if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data pelayanan</div>'; return; }
             container.innerHTML = data.map(p => `<div class="service-card"><i class="${p.icon}"></i><h6>${escapeHtml(p.name)}</h6><small>${escapeHtml(p.schedule || '')}</small></div>`).join('');
         } catch (error) {
             console.error("Error loading pelayanan:", error);
+            container.innerHTML = '<div class="empty-state">Gagal memuat data pelayanan</div>';
         }
     }
     
     document.addEventListener('DOMContentLoaded', async () => {
         showTab('sejarah');
-        await Promise.all([loadSlides(), loadJadwal(), loadOrganisasi(), loadPelayanan()]);
+        
+        // Load semua data dengan timeout handling
+        await Promise.all([
+            loadSlides(),
+            loadJadwal(),
+            loadOrganisasi(),
+            loadPelayanan()
+        ]);
     });
 </script>
 </body>
