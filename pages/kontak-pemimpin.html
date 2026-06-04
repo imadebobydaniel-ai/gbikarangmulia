@@ -21,63 +21,10 @@
     .kontak-icon i { font-size: 1.8rem; color: white; }
     .divisi-badge { background: #ff8c00; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-top: 8px; }
     .loading { text-align: center; padding: 50px; color: white; }
+    .empty-state { text-align: center; padding: 50px; background: white; border-radius: 20px; color: #6c757d; }
     footer { text-align: center; color: white; padding: 30px; opacity: 0.8; }
 </style>
 </head>
 <body>
 
-<button class="back-btn" onclick="window.location.href='../index.html'"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
-
-<div class="container-custom">
-    <div class="page-title">
-        <h1><i class="fa-solid fa-address-card"></i> Kontak Para Pemimpin & Koordinator</h1>
-        <p>Hubungi pengurus gereja untuk informasi lebih lanjut</p>
-    </div>
-    <div id="kontakList"></div>
-</div>
-<footer>GBI Karang Mulia - Memberkati & Melayani</footer>
-
-<script>
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_SENDER_ID",
-        appId: "YOUR_APP_ID"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    
-    function escapeHtml(str) { if (!str) return '-'; return str.replace(/[&<>]/g, m => m==='&'?'&amp;':(m==='<'?'&lt;':'&gt;')); }
-    
-    async function loadKontak() {
-        const container = document.getElementById('kontakList');
-        container.innerHTML = '<div class="loading"><div class="spinner-border text-light"></div><p>Memuat data...</p></div>';
-        try {
-            const snapshot = await db.collection('kontak_pemimpin').orderBy('order', 'asc').get();
-            const data = [];
-            snapshot.forEach(doc => data.push(doc.data()));
-            if (data.length === 0) { container.innerHTML = '<div class="alert alert-info text-center">Belum ada data kontak</div>'; return; }
-            container.innerHTML = data.map(k => `
-                <div class="kontak-card">
-                    <div class="d-flex flex-wrap align-items-center">
-                        <div class="kontak-icon"><i class="fa-solid fa-user-pastor"></i></div>
-                        <div class="flex-grow-1">
-                            <h4 class="mb-1">${escapeHtml(k.nama)}</h4>
-                            <p class="mb-1 text-muted"><strong>${escapeHtml(k.jabatan)}</strong></p>
-                            <div class="divisi-badge"><i class="fa-solid fa-users"></i> ${escapeHtml(k.divisi)}</div>
-                        </div>
-                        <div class="mt-3 mt-md-0">
-                            <a href="tel:${escapeHtml(k.telp)}" class="btn btn-outline-primary me-2"><i class="fa-solid fa-phone"></i> ${escapeHtml(k.telp)}</a>
-                            <a href="mailto:${escapeHtml(k.email)}" class="btn btn-outline-secondary"><i class="fa-solid fa-envelope"></i> Email</a>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        } catch(e) { container.innerHTML = '<div class="alert alert-danger">Gagal memuat data</div>'; }
-    }
-    document.addEventListener('DOMContentLoaded', loadKontak);
-</script>
-</body>
-</html>
+<button class="back-btn" onclick="window.location.href='
