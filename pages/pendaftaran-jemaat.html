@@ -28,6 +28,7 @@
     .upload-area:hover { border-color: #ff8c00; background: #fff8f0; }
     #fileInfo { font-size: 0.8rem; color: #6c757d; margin-top: 5px; }
     .error-text { color: #dc3545; font-size: 0.8rem; margin-top: 5px; }
+    .form-section-title { font-weight: 600; color: #0b4ea2; margin-bottom: 15px; padding-bottom: 5px; border-bottom: 2px solid #ff8c00; display: inline-block; }
 </style>
 </head>
 <body>
@@ -46,12 +47,22 @@
             <div class="step">3. Konfirmasi</div>
         </div>
         <form id="daftarForm">
+            <!-- STEP 1: DATA DIRI -->
             <div id="step1">
                 <div class="mb-3"><label class="form-label">Nama Lengkap *</label><input type="text" id="namaLengkap" class="form-control" required></div>
-                <div class="row"><div class="col-md-6 mb-3"><label class="form-label">Tempat Lahir</label><input type="text" id="tempatLahir" class="form-control"></div><div class="col-md-6 mb-3"><label class="form-label">Tanggal Lahir</label><input type="date" id="tanggalLahir" class="form-control"></div></div>
-                <div class="mb-3"><label class="form-label">Jenis Kelamin</label><select id="jenisKelamin" class="form-select"><option>Laki-laki</option><option>Perempuan</option></select></div>
                 
-                <!-- KOLOM EMAIL -->
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">Tempat Lahir</label><input type="text" id="tempatLahir" class="form-control"></div>
+                    <div class="col-md-6 mb-3"><label class="form-label">Tanggal Lahir</label><input type="date" id="tanggalLahir" class="form-control"></div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label">Jenis Kelamin</label><select id="jenisKelamin" class="form-select"><option>Laki-laki</option><option>Perempuan</option></select></div>
+                    
+                    <!-- GOLONGAN DARAH - DROPDOWN BARU -->
+                    <div class="col-md-6 mb-3"><label class="form-label">Golongan Darah</label><select id="golonganDarah" class="form-select"><option value="">Pilih Golongan Darah</option><option>A</option><option>B</option><option>O</option><option>AB</option><option>AB+</option></select></div>
+                </div>
+                
                 <div class="mb-3"><label class="form-label">Alamat Email *</label><input type="email" id="email" class="form-control" placeholder="contoh: nama@gmail.com" required></div>
                 
                 <!-- UPLOAD FOTO PROFIL -->
@@ -70,16 +81,27 @@
                 <div class="mb-3"><label class="form-label">No. HP / WhatsApp *</label><input type="tel" id="noHp" class="form-control" required></div>
                 <div class="mb-3"><label class="form-label">Alamat Lengkap</label><textarea id="alamat" class="form-control" rows="2"></textarea></div>
                 <div class="mb-3"><label class="form-label">Pekerjaan</label><input type="text" id="pekerjaan" class="form-control"></div>
+                
                 <button type="button" class="btn-submit" onclick="nextStep(2)">Selanjutnya <i class="fa-solid fa-arrow-right"></i></button>
             </div>
+            
+            <!-- STEP 2: DATA ROHANI -->
             <div id="step2" style="display:none;">
                 <div class="mb-3"><label class="form-label">Status Baptis</label><select id="baptis" class="form-select"><option>Belum Baptis</option><option>Sudah Baptis Anak</option><option>Sudah Baptis Dewasa</option></select></div>
                 <div class="mb-3"><label class="form-label">Status Pernikahan</label><select id="pernikahan" class="form-select"><option>Belum Menikah</option><option>Menikah</option><option>Janda/Duda</option></select></div>
                 <div class="mb-3"><label class="form-label">Komisi / Kelompok Sel</label><select id="komisi" class="form-select"><option>Umum</option><option>Pemuda</option><option>Remaja</option><option>Sekolah Minggu</option><option>Lansia</option><option>Belum menentukan</option></select></div>
                 <div class="mb-3"><label class="form-label">Keahlian / Bakat (opsional)</label><input type="text" id="keahlian" class="form-control" placeholder="Musik, Mengajar, Multimedia, dll"></div>
-                <div class="mb-3"><label class="form-label">Alasan Bergabung</label><textarea id="alasan" class="form-control" rows="2" placeholder="Ceritakan mengapa Anda ingin bergabung..."></textarea></div>
-                <div class="d-flex gap-2"><button type="button" class="btn btn-secondary" onclick="prevStep(1)"><i class="fa-solid fa-arrow-left"></i> Sebelumnya</button><button type="button" class="btn-submit" onclick="nextStep(3)">Selanjutnya <i class="fa-solid fa-arrow-right"></i></button></div>
+                
+                <!-- ALASAN BERJEMAAT - DROPDOWN BARU -->
+                <div class="mb-3"><label class="form-label">Alasan Berjemaat *</label><select id="alasanBergabung" class="form-select" required><option value="">Pilih Alasan Berjemaat</option><option>Tertanam dan Komitmen Sebagai Jemaat</option><option>Simpatisan</option><option>Jemaat Sementara Karena Tugas</option></select></div>
+                
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep(1)"><i class="fa-solid fa-arrow-left"></i> Sebelumnya</button>
+                    <button type="button" class="btn-submit" onclick="nextStep(3)">Selanjutnya <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
             </div>
+            
+            <!-- STEP 3: KONFIRMASI -->
             <div id="step3" style="display:none;">
                 <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> Harap periksa kembali data Anda sebelum mengirimkan pendaftaran.</div>
                 <div id="reviewData" class="mb-3"></div>
@@ -121,7 +143,6 @@
         if (input.files && input.files[0]) {
             const file = input.files[0];
             
-            // Validasi tipe file
             if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
                 fotoError.innerHTML = "Format foto harus JPG atau PNG!";
                 input.value = "";
@@ -130,7 +151,6 @@
                 return;
             }
             
-            // Validasi ukuran (max 2MB)
             if (file.size > 2 * 1024 * 1024) {
                 fotoError.innerHTML = "Ukuran foto maksimal 2MB!";
                 input.value = "";
@@ -165,7 +185,6 @@
     
     function nextStep(step) { 
         if(step === 2) {
-            // Validasi step 1
             const nama = document.getElementById('namaLengkap').value.trim();
             const email = document.getElementById('email').value.trim();
             const noHp = document.getElementById('noHp').value.trim();
@@ -175,6 +194,11 @@
             if(!email.match(/^\S+@\S+\.\S+$/)) { alert("Format email tidak valid!"); return; }
             if(!noHp) { alert("No. HP harus diisi!"); return; }
             if(!uploadedFile) { alert("Silakan upload foto profil terbaru!"); return; }
+        }
+        
+        if(step === 3) {
+            const alasan = document.getElementById('alasanBergabung').value;
+            if(!alasan) { alert("Alasan Berjemaat harus dipilih!"); return; }
         }
         
         currentStep = step; 
@@ -200,6 +224,7 @@
         const tempatLahir = document.getElementById('tempatLahir').value;
         const tanggalLahir = document.getElementById('tanggalLahir').value;
         const jenisKelamin = document.getElementById('jenisKelamin').value;
+        const golonganDarah = document.getElementById('golonganDarah').value;
         const noHp = document.getElementById('noHp').value;
         const alamat = document.getElementById('alamat').value;
         const pekerjaan = document.getElementById('pekerjaan').value;
@@ -207,26 +232,27 @@
         const pernikahan = document.getElementById('pernikahan').value;
         const komisi = document.getElementById('komisi').value;
         const keahlian = document.getElementById('keahlian').value;
-        const alasan = document.getElementById('alasan').value;
+        const alasanBergabung = document.getElementById('alasanBergabung').value;
         
         let fotoPreview = document.getElementById('previewContainer').innerHTML;
         let fotoHTML = fotoPreview ? fotoPreview : '<span class="text-muted">Belum ada foto</span>';
         
         document.getElementById('reviewData').innerHTML = `
             <table class="table table-sm table-bordered">
-                <tr><th style="width:35%">Nama Lengkap</th><td>${escapeHtml(nama)}</td></tr>
-                <tr><th>Email</th><td>${escapeHtml(email)}</td></tr>
-                <tr><th>Tempat/Tgl Lahir</th><td>${escapeHtml(tempatLahir)}${tempatLahir ? ', ' : ''}${escapeHtml(tanggalLahir)}</td></tr>
-                <tr><th>Jenis Kelamin</th><td>${escapeHtml(jenisKelamin)}</td></tr>
-                <tr><th>No HP</th><td>${escapeHtml(noHp)}</td></tr>
-                <tr><th>Alamat</th><td>${escapeHtml(alamat) || '-'}</td></tr>
-                <tr><th>Pekerjaan</th><td>${escapeHtml(pekerjaan) || '-'}</td></tr>
-                <tr><th>Status Baptis</th><td>${escapeHtml(baptis)}</td></tr>
-                <tr><th>Status Pernikahan</th><td>${escapeHtml(pernikahan)}</td></tr>
-                <tr><th>Komisi</th><td>${escapeHtml(komisi)}</td></tr>
-                <tr><th>Keahlian</th><td>${escapeHtml(keahlian) || '-'}</td></tr>
-                <tr><th>Alasan Bergabung</th><td>${escapeHtml(alasan) || '-'}</td></tr>
-                <tr><th>Foto Profil</th><td>${fotoHTML}</td></tr>
+                <tr><th style="width:35%">Nama Lengkap</th><td>${escapeHtml(nama)}</br></br></br></br></br></br></br></br></br></td></tr>
+                <tr><th>Email</th><td>${escapeHtml(email)}</br></br></td></tr>
+                <tr><th>Tempat/Tgl Lahir</th><td>${escapeHtml(tempatLahir)}${tempatLahir ? ', ' : ''}${escapeHtml(tanggalLahir)}</br></td></tr>
+                <tr><th>Jenis Kelamin</th><td>${escapeHtml(jenisKelamin)}</br></td></tr>
+                <tr><th>Golongan Darah</th><td>${escapeHtml(golonganDarah) || '-'}</br></td></tr>
+                <tr><th>No HP</th><td>${escapeHtml(noHp)}</br></td></tr>
+                <tr><th>Alamat</th><td>${escapeHtml(alamat) || '-'}</br></td></tr>
+                <tr><th>Pekerjaan</th><td>${escapeHtml(pekerjaan) || '-'}</br></td></tr>
+                <tr><th>Status Baptis</th><td>${escapeHtml(baptis)}</br></td></tr>
+                <tr><th>Status Pernikahan</th><td>${escapeHtml(pernikahan)}</br></td></tr>
+                <tr><th>Komisi</th><td>${escapeHtml(komisi)}</br></td></tr>
+                <tr><th>Keahlian</th><td>${escapeHtml(keahlian) || '-'}</br></td></tr>
+                <tr><th>Alasan Berjemaat</th><td>${escapeHtml(alasanBergabung)}</br></td></tr>
+                <tr><th>Foto Profil</th><td>${fotoHTML}</br></td></tr>
             </table>
         `; 
     }
@@ -275,6 +301,7 @@
                 tempatLahir: document.getElementById('tempatLahir').value || '',
                 tanggalLahir: document.getElementById('tanggalLahir').value || '',
                 jenisKelamin: document.getElementById('jenisKelamin').value,
+                golonganDarah: document.getElementById('golonganDarah').value || '',
                 noHp: document.getElementById('noHp').value,
                 alamat: document.getElementById('alamat').value || '',
                 pekerjaan: document.getElementById('pekerjaan').value || '',
@@ -282,7 +309,7 @@
                 statusPernikahan: document.getElementById('pernikahan').value,
                 komisi: document.getElementById('komisi').value,
                 keahlian: document.getElementById('keahlian').value || '',
-                alasanBergabung: document.getElementById('alasan').value || '',
+                alasanBergabung: document.getElementById('alasanBergabung').value,
                 fotoProfilURL: photoURL,
                 status: "Menunggu Verifikasi", 
                 tanggalDaftar: new Date().toLocaleDateString('id-ID'), 
