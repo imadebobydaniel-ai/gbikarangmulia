@@ -8,7 +8,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 <style>
     body { background: linear-gradient(135deg, #0b4ea2, #072c5a); font-family: 'Segoe UI', sans-serif; }
     .back-btn { position: fixed; top: 20px; left: 20px; background: white; border: none; border-radius: 50px; padding: 10px 20px; font-weight: 600; color: #0b4ea2; cursor: pointer; z-index: 1000; transition: 0.3s; }
@@ -28,8 +27,6 @@
     .upload-area:hover { border-color: #ff8c00; background: #fff8f0; }
     #fileInfo { font-size: 0.8rem; color: #6c757d; margin-top: 5px; }
     .error-text { color: #dc3545; font-size: 0.8rem; margin-top: 5px; }
-    .nomor-registrasi-box { background: #f0f9ff; border-left: 4px solid #ff8c00; padding: 12px; border-radius: 8px; margin-top: 15px; text-align: center; }
-    .nomor-registrasi-box strong { color: #0b4ea2; }
 </style>
 </head>
 <body>
@@ -64,7 +61,7 @@
                 
                 <div class="mb-3"><label class="form-label">Alamat Email *</label><input type="email" id="email" class="form-control" placeholder="contoh: nama@gmail.com" required></div>
                 
-                <!-- UPLOAD FOTO PROFIL -->
+                <!-- UPLOAD FOTO PROFIL (BASE64 - TANPA FIREBASE STORAGE) -->
                 <div class="mb-3">
                     <label class="form-label">Foto Profil Terbaru *</label>
                     <div class="upload-area" onclick="document.getElementById('fileFoto').click()">
@@ -74,6 +71,7 @@
                     </div>
                     <input type="file" id="fileFoto" class="d-none" accept="image/jpeg,image/png" onchange="previewFoto(this)">
                     <div id="previewContainer" class="text-center mt-2"></div>
+                    <input type="hidden" id="fotoBase64">
                     <div id="fotoError" class="error-text"></div>
                 </div>
 
@@ -124,67 +122,13 @@
         appId: "1:198652175873:web:82a8f9cb00557dcac88200"
     };
     
-    // Inisialisasi Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    const storage = firebase.storage();
     
     let currentStep = 1;
-    let uploadedFile = null;
-    let photoURL = "";
+    let fotoBase64Data = "";
     
-    // ============ FUNGSI KONVERSI BULAN KE ROMAWI ============
-    function getBulanRomawi(monthNumber) {
-        const romawi = {
-            1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI",
-            7: "VII", 8: "VIII", 9: "IX", 10: "X", 11: "XI", 12: "XII"
-        };
-        return romawi[monthNumber] || "I";
-    }
-    
-    // ============ FUNGSI GENERATE NOMOR REGISTRASI ============
-    async function generateNomorRegistrasi() {
-        const now = new Date();
-        const tahun = now.getFullYear();
-        const bulan = now.getMonth() + 1; // 1-12
-        const bulanRomawi = getBulanRomawi(bulan);
-        
-        // Query untuk menghitung jumlah pendaftar di bulan dan tahun yang sama
-        const startDate = new Date(tahun, bulan - 1, 1);
-        const endDate = new Date(tahun, bulan, 0);
-        
-        const snapshot = await db.collection('pendaftaran_jemaat')
-            .where('createdAt', '>=', startDate)
-            .where('createdAt', '<=', endDate)
-            .get();
-        
-        const urutan = (snapshot.size + 1).toString().padStart(3, '0');
-        
-        const nomorRegistrasi = `GBI/KRGMLA/JEMAAT/${urutan}/${bulanRomawi}/${tahun}`;
-        return { nomorRegistrasi, urutan, bulanRomawi, tahun };
-    }
-    
-    // ============ FUNGSI KIRIM NOTIFIKASI VIA WHATSAPP LINK ============
-    function sendWhatsAppNotification(noHp, nomorRegistrasi, nama) {
-        // Format nomor WhatsApp (hapus karakter non-digit, tambah kode negara 62 jika perlu)
-        let waNumber = noHp.replace(/\D/g, '');
-        if (waNumber.startsWith('0')) {
-            waNumber = '62' + waNumber.substring(1);
-        }
-        if (!waNumber.startsWith('62')) {
-            waNumber = '62' + waNumber;
-        }
-        
-        // Pesan yang akan dikirim
-        const pesan = `*Selamat!*%0A%0AData anda telah teregistrasi sebagai anggota jemaat GBI Karang Mulia.%0A%0A*Nomor Jemaat:* ${nomorRegistrasi}%0A*Nama:* ${nama}%0A%0ATerimakasih, Tuhan Yesus Memberkati.%0A%0A_GBI Karang Mulia_`;
-        
-        const waLink = `https://wa.me/${waNumber}?text=${pesan}`;
-        
-        // Buka link WhatsApp di tab baru (jemaat tinggal klik kirim)
-        window.open(waLink, '_blank');
-    }
-    
-    // Preview foto
+    // Preview foto dan konversi ke Base64 (tanpa Firebase Storage)
     window.previewFoto = function(input) {
         const previewDiv = document.getElementById('previewContainer');
         const fotoError = document.getElementById('fotoError');
@@ -196,7 +140,7 @@
                 fotoError.innerHTML = "Format foto harus JPG atau PNG!";
                 input.value = "";
                 previewDiv.innerHTML = "";
-                uploadedFile = null;
+                fotoBase64Data = "";
                 return;
             }
             
@@ -204,24 +148,60 @@
                 fotoError.innerHTML = "Ukuran foto maksimal 2MB!";
                 input.value = "";
                 previewDiv.innerHTML = "";
-                uploadedFile = null;
+                fotoBase64Data = "";
                 return;
             }
             
             fotoError.innerHTML = "";
-            uploadedFile = file;
             
             const reader = new FileReader();
             reader.onload = function(e) {
+                fotoBase64Data = e.target.result;
                 previewDiv.innerHTML = `<img src="${e.target.result}" class="preview-img" alt="Preview Foto">`;
             }
             reader.readAsDataURL(file);
             document.getElementById('fileInfo').innerHTML = `<i class="fa-solid fa-check-circle text-success"></i> Terpilih: ${file.name}`;
         } else {
             previewDiv.innerHTML = "";
-            uploadedFile = null;
+            fotoBase64Data = "";
             document.getElementById('fileInfo').innerHTML = "Format JPG/PNG, max 2MB";
         }
+    }
+
+    // Konversi bulan ke Romawi
+    function getBulanRomawi(monthNumber) {
+        const romawi = { 1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI", 7: "VII", 8: "VIII", 9: "IX", 10: "X", 11: "XI", 12: "XII" };
+        return romawi[monthNumber] || "I";
+    }
+    
+    // Generate nomor registrasi
+    async function generateNomorRegistrasi() {
+        const now = new Date();
+        const tahun = now.getFullYear();
+        const bulan = now.getMonth() + 1;
+        const bulanRomawi = getBulanRomawi(bulan);
+        
+        const startDate = new Date(tahun, bulan - 1, 1);
+        const endDate = new Date(tahun, bulan, 0);
+        
+        const snapshot = await db.collection('pendaftaran_jemaat')
+            .where('createdAt', '>=', startDate)
+            .where('createdAt', '<=', endDate)
+            .get();
+        
+        const urutan = (snapshot.size + 1).toString().padStart(3, '0');
+        const nomorRegistrasi = `GBI/KRGMLA/JEMAAT/${urutan}/${bulanRomawi}/${tahun}`;
+        return { nomorRegistrasi, urutan, bulanRomawi, tahun };
+    }
+    
+    // Kirim notifikasi WhatsApp
+    function sendWhatsAppNotification(noHp, nomorRegistrasi, nama) {
+        let waNumber = noHp.replace(/\D/g, '');
+        if (waNumber.startsWith('0')) waNumber = '62' + waNumber.substring(1);
+        if (!waNumber.startsWith('62')) waNumber = '62' + waNumber;
+        
+        const pesan = `*Selamat!*%0A%0AData anda telah teregistrasi sebagai anggota jemaat GBI Karang Mulia.%0A%0A*Nomor Jemaat:* ${nomorRegistrasi}%0A*Nama:* ${nama}%0A%0ATerimakasih, Tuhan Yesus Memberkati.%0A%0A_GBI Karang Mulia_`;
+        window.open(`https://wa.me/${waNumber}?text=${pesan}`, '_blank');
     }
 
     function updateStepIndicator() {
@@ -242,7 +222,7 @@
             if(!email) { alert("Alamat Email harus diisi!"); return; }
             if(!email.match(/^\S+@\S+\.\S+$/)) { alert("Format email tidak valid!"); return; }
             if(!noHp) { alert("No. HP harus diisi!"); return; }
-            if(!uploadedFile) { alert("Silakan upload foto profil terbaru!"); return; }
+            if(!fotoBase64Data) { alert("Silakan upload foto profil terbaru!"); return; }
         }
         
         if(step === 3) {
@@ -254,7 +234,6 @@
         document.getElementById('step1').style.display = step===1 ? 'block' : 'none'; 
         document.getElementById('step2').style.display = step===2 ? 'block' : 'none'; 
         document.getElementById('step3').style.display = step===3 ? 'block' : 'none'; 
-        
         if(step === 3) showReview(); 
         updateStepIndicator(); 
     }
@@ -286,6 +265,8 @@
         let fotoPreview = document.getElementById('previewContainer').innerHTML;
         let fotoHTML = fotoPreview ? fotoPreview : '<span class="text-muted">Belum ada foto</span>';
         
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m==='&'?'&amp;':(m==='<'?'&lt;':'&gt;')); }
+        
         document.getElementById('reviewData').innerHTML = `
             <table class="table table-sm table-bordered">
                 <tr><th style="width:35%">Nama Lengkap</th><td>${escapeHtml(nama)}</br></td></tr>
@@ -306,23 +287,11 @@
         `; 
     }
     
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;'));
-    }
-
     document.getElementById('daftarForm').addEventListener('submit', async (e) => { 
         e.preventDefault(); 
         
-        if(!document.getElementById('agree').checked){ 
-            alert("Harap centang persetujuan data"); 
-            return; 
-        }
-        
-        if(!uploadedFile) { 
-            alert("Foto profil wajib diupload!"); 
-            return; 
-        }
+        if(!document.getElementById('agree').checked){ alert("Harap centang persetujuan data"); return; }
+        if(!fotoBase64Data) { alert("Foto profil wajib diupload!"); return; }
         
         const submitBtn = document.querySelector('#daftarForm button[type="submit"]');
         const successDiv = document.getElementById('successMsg');
@@ -334,16 +303,8 @@
         errorDiv.classList.add('d-none');
         
         try {
-            // 1. Upload foto ke Firebase Storage
-            const fileName = `profile_${Date.now()}_${uploadedFile.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-            const storageRef = storage.ref('foto_profil/' + fileName);
-            await storageRef.put(uploadedFile);
-            photoURL = await storageRef.getDownloadURL();
-            
-            // 2. Generate nomor registrasi otomatis
             const { nomorRegistrasi, urutan, bulanRomawi, tahun } = await generateNomorRegistrasi();
             
-            // 3. Simpan data ke Firestore
             const data = { 
                 nomorRegistrasi: nomorRegistrasi,
                 nomorUrut: parseInt(urutan),
@@ -363,7 +324,7 @@
                 komisi: document.getElementById('komisi').value,
                 keahlian: document.getElementById('keahlian').value || '',
                 alasanBergabung: document.getElementById('alasanBergabung').value,
-                fotoProfilURL: photoURL,
+                fotoProfilBase64: fotoBase64Data,
                 status: "Terverifikasi", 
                 tanggalDaftar: new Date().toLocaleDateString('id-ID'), 
                 createdAt: firebase.firestore.FieldValue.serverTimestamp() 
@@ -371,38 +332,26 @@
             
             await db.collection('pendaftaran_jemaat').add(data); 
             
-            // 4. Reset form
             document.getElementById('daftarForm').reset(); 
             document.getElementById('previewContainer').innerHTML = "";
-            uploadedFile = null;
+            fotoBase64Data = "";
             
-            // 5. Tampilkan pesan sukses dengan nomor registrasi
             successDiv.innerHTML = `
                 <i class="fa-solid fa-check-circle"></i> Pendaftaran berhasil!<br>
                 <strong>Nomor Registrasi Jemaat:</strong> ${nomorRegistrasi}<br><br>
-                <i class="fa-solid fa-whatsapp"></i> Notifikasi WhatsApp akan dibuka di tab baru.<br>
-                Silakan klik kirim untuk mengirimkan pesan konfirmasi ke nomor Anda.
+                <i class="fa-solid fa-whatsapp"></i> Notifikasi WhatsApp akan dibuka di tab baru.
             `; 
             successDiv.classList.remove('d-none'); 
             
-            // 6. Kirim notifikasi WhatsApp (buka link WA di tab baru)
             const noHp = document.getElementById('noHp').value;
             const nama = document.getElementById('namaLengkap').value;
             sendWhatsAppNotification(noHp, nomorRegistrasi, nama);
             
-            setTimeout(() => {
-                window.location.href = '../index.html';
-            }, 5000); // 5 detik, memberi waktu untuk klik kirim WA
+            setTimeout(() => { window.location.href = '../index.html'; }, 5000);
             
         } catch (error) {
-            console.error("Error detail:", error);
-            let errorMessage = error.message;
-            if (errorMessage.includes("storage")) {
-                errorMessage = "Gagal upload foto. Pastikan Firebase Storage sudah diaktifkan.";
-            } else if (errorMessage.includes("permission")) {
-                errorMessage = "Gagal menyimpan data. Periksa aturan keamanan Firestore.";
-            }
-            errorDiv.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + errorMessage;
+            console.error("Error:", error);
+            errorDiv.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + error.message;
             errorDiv.classList.remove('d-none');
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Kirim Pendaftaran';
