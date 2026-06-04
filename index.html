@@ -325,6 +325,14 @@ footer {
     100% { transform: rotate(360deg); }
 }
 
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    background: #f8f9fa;
+    border-radius: 16px;
+    color: #6c757d;
+}
+
 @media (max-width: 768px) {
     .hero-title { font-size: 1.5rem; }
     .hero-church-name { font-size: 1.3rem; }
@@ -494,6 +502,12 @@ footer {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // ============ KONFIGURASI FIREBASE ============
+    // GANTI DENGAN DATA PROJECT FIREBASE BARU ANDA
+    // Cara mendapatkannya:
+    // 1. Buka Firebase Console -> Project Settings
+    // 2. Scroll ke "Your apps" -> Klik </> (Web)
+    // 3. Copy konfigurasi dari sana
     const firebaseConfig = {
         apiKey: "YOUR_API_KEY",
         authDomain: "YOUR_AUTH_DOMAIN",
@@ -503,6 +517,7 @@ footer {
         appId: "YOUR_APP_ID"
     };
     
+    // Inisialisasi Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     
@@ -517,65 +532,101 @@ footer {
     }
     
     async function loadSlides() {
-        const snapshot = await db.collection('slides').orderBy('order', 'asc').get();
-        const slidesData = [];
-        snapshot.forEach(doc => slidesData.push(doc.data()));
-        
-        const inner = document.getElementById('slideInner');
-        const indicators = document.getElementById('slideIndicators');
-        
-        if (slidesData.length === 0) {
-            inner.innerHTML = `<div class="carousel-item active"><img src="https://via.placeholder.com/1200x400?text=Belum+Ada+Slide" class="d-block w-100"></div>`;
-            return;
-        }
-        
-        inner.innerHTML = slidesData.map((s, idx) => `
-            <div class="carousel-item ${idx === 0 ? 'active' : ''}">
-                <img src="${s.imageUrl}" class="d-block w-100" alt="${s.title}">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>${escapeHtml(s.title)}</h5>
-                    <p>${escapeHtml(s.description || '')}</p>
+        try {
+            const snapshot = await db.collection('slides').orderBy('order', 'asc').get();
+            const slidesData = [];
+            snapshot.forEach(doc => slidesData.push(doc.data()));
+            
+            const inner = document.getElementById('slideInner');
+            const indicators = document.getElementById('slideIndicators');
+            
+            if (slidesData.length === 0) {
+                inner.innerHTML = `<div class="carousel-item active"><img src="https://via.placeholder.com/1200x400?text=Belum+Ada+Slide" class="d-block w-100"><div class="carousel-caption"><h5>Belum Ada Slide</h5><p>Silakan tambah melalui CMS</p></div></div>`;
+                indicators.innerHTML = '<button data-bs-target="#historyCarousel" data-bs-slide-to="0" class="active"></button>';
+                return;
+            }
+            
+            inner.innerHTML = slidesData.map((s, idx) => `
+                <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                    <img src="${s.imageUrl}" class="d-block w-100" alt="${s.title}" onerror="this.src='https://via.placeholder.com/1200x400?text=Gambar+Error'">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>${escapeHtml(s.title)}</h5>
+                        <p>${escapeHtml(s.description || '')}</p>
+                    </div>
                 </div>
-            </div>
-        `).join('');
-        
-        indicators.innerHTML = slidesData.map((_, idx) => `
-            <button type="button" data-bs-target="#historyCarousel" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>
-        `).join('');
-        
-        new bootstrap.Carousel(document.querySelector('#historyCarousel'), { interval: 4000, wrap: true });
+            `).join('');
+            
+            indicators.innerHTML = slidesData.map((_, idx) => `
+                <button type="button" data-bs-target="#historyCarousel" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>
+            `).join('');
+            
+            // Refresh carousel
+            let carouselEl = document.querySelector('#historyCarousel');
+            if (carouselEl) {
+                let bsCarousel = bootstrap.Carousel.getInstance(carouselEl);
+                if (bsCarousel) bsCarousel.dispose();
+                new bootstrap.Carousel(carouselEl, { interval: 4000, wrap: true, ride: 'carousel' });
+            }
+        } catch (error) {
+            console.error("Error loading slides:", error);
+            document.getElementById('slideInner').innerHTML = `<div class="carousel-item active"><img src="https://via.placeholder.com/1200x400?text=Error+Load+Data" class="d-block w-100"></div>`;
+        }
     }
     
     async function loadJadwal() {
-        const snapshot = await db.collection('jadwal').orderBy('order', 'asc').get();
-        const data = [];
-        snapshot.forEach(doc => data.push(doc.data()));
-        const container = document.getElementById('jadwalList');
-        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada jadwal</div>'; return; }
-        container.innerHTML = data.map(j => `<div class="schedule-item"><h5><i class="fa-solid fa-church me-2"></i> ${escapeHtml(j.name)}</h5><p>${escapeHtml(j.time)}</p></div>`).join('');
+        try {
+            const snapshot = await db.collection('jadwal').orderBy('order', 'asc').get();
+            const data = [];
+            snapshot.forEach(doc => data.push(doc.data()));
+            const container = document.getElementById('jadwalList');
+            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada jadwal</div>'; return; }
+            container.innerHTML = data.map(j => `<div class="schedule-item"><h5><i class="fa-solid fa-church me-2"></i> ${escapeHtml(j.name)}</h5><p>${escapeHtml(j.time)}</p></div>`).join('');
+        } catch (error) {
+            console.error("Error loading jadwal:", error);
+            document.getElementById('jadwalList').innerHTML = '<div class="empty-state">Gagal memuat jadwal</div>';
+        }
     }
     
     async function loadOrganisasi() {
-        const snapshot = await db.collection('organisasi').orderBy('order', 'asc').get();
-        const data = [];
-        snapshot.forEach(doc => data.push(doc.data()));
-        const container = document.getElementById('organisasiBody');
-        if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada数据</td><tr>'; return; }
-        container.innerHTML = data.map(o => `<tr><td>${escapeHtml(o.jabatan)}</td><td>${escapeHtml(o.nama)}</td><td>${escapeHtml(o.keterangan || '')}</td></tr>`).join('');
+        try {
+            const snapshot = await db.collection('organisasi').orderBy('order', 'asc').get();
+            const data = [];
+            snapshot.forEach(doc => data.push(doc.data()));
+            const container = document.getElementById('organisasiBody');
+            if (data.length === 0) { container.innerHTML = '<tr><td colspan="3" class="text-center">Belum ada data</td></tr>'; return; }
+            container.innerHTML = data.map(o => `<tr><td>${escapeHtml(o.jabatan)}</td><td>${escapeHtml(o.nama)}</td><td>${escapeHtml(o.keterangan || '')}</td></tr>`).join('');
+        } catch (error) {
+            console.error("Error loading organisasi:", error);
+            document.getElementById('organisasiBody').innerHTML = '<tr><td colspan="3" class="text-center">Gagal memuat data</td></tr>';
+        }
     }
     
     async function loadPelayanan() {
-        const snapshot = await db.collection('pelayanan').orderBy('order', 'asc').get();
-        const data = [];
-        snapshot.forEach(doc => data.push(doc.data()));
-        const container = document.getElementById('serviceGrid');
-        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada数据 pelayanan</div>'; return; }
-        container.innerHTML = data.map(p => `<div class="service-card"><i class="${p.icon}"></i><h6>${escapeHtml(p.name)}</h6><small>${escapeHtml(p.schedule || '')}</small></div>`).join('');
+        try {
+            const snapshot = await db.collection('pelayanan').orderBy('order', 'asc').get();
+            const data = [];
+            snapshot.forEach(doc => data.push(doc.data()));
+            const container = document.getElementById('serviceGrid');
+            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada data pelayanan</div>'; return; }
+            container.innerHTML = data.map(p => `<div class="service-card"><i class="${p.icon}"></i><h6>${escapeHtml(p.name)}</h6><small>${escapeHtml(p.schedule || '')}</small></div>`).join('');
+        } catch (error) {
+            console.error("Error loading pelayanan:", error);
+            document.getElementById('serviceGrid').innerHTML = '<div class="empty-state">Gagal memuat data pelayanan</div>';
+        }
     }
     
     document.addEventListener('DOMContentLoaded', async () => {
         showTab('sejarah');
-        await Promise.all([loadSlides(), loadJadwal(), loadOrganisasi(), loadPelayanan()]);
+        
+        // Tampilkan loading
+        document.getElementById('slideInner').innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>Memuat data...</p></div>';
+        
+        await Promise.all([
+            loadSlides(),
+            loadJadwal(),
+            loadOrganisasi(),
+            loadPelayanan()
+        ]);
     });
 </script>
 </body>
