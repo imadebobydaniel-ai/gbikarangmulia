@@ -49,16 +49,22 @@
     
     .data-item { background: #f8f9fa; border-radius: 16px; padding: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; border: 1px solid #e9ecef; transition: all 0.3s; }
     .data-item:hover { transform: translateX(5px); border-color: #ff8c00; }
-    .image-preview { width: 80px; height: 60px; object-fit: cover; border-radius: 12px; background: #e9ecef; }
+    .image-preview { width: 80px; height: 80px; object-fit: cover; border-radius: 50%; background: #e9ecef; border: 2px solid #ff8c00; }
     .upload-area { border: 2px dashed #dee2e6; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; background: #f8f9fa; transition: all 0.3s; }
     .upload-area:hover { border-color: #ff8c00; background: #fff3e6; }
     .empty-state { text-align: center; padding: 50px; background: #f8f9fa; border-radius: 20px; color: #6c757d; }
+    
+    /* Modal detail jemaat */
+    .modal-detail-img { width: 120px; height: 120px; object-fit: cover; border-radius: 50%; border: 3px solid #ff8c00; margin-bottom: 15px; }
+    .detail-label { font-weight: 700; color: #0b4ea2; width: 180px; display: inline-block; }
+    .detail-row { margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #e9ecef; }
     
     @media (max-width: 768px) { .cms-tab-btn { padding: 8px 16px; font-size: 0.8rem; } .data-item { flex-direction: column; text-align: center; } }
 </style>
 </head>
 <body>
 
+<!-- LOGIN SECTION -->
 <div id="loginSection" class="login-wrapper">
     <div class="login-box">
         <div class="text-center">
@@ -75,6 +81,7 @@
     </div>
 </div>
 
+<!-- DASHBOARD SECTION -->
 <div id="dashboardSection" style="display:none;">
     <div class="dashboard-wrapper">
         <div class="top-navbar">
@@ -91,105 +98,80 @@
         
         <div class="container py-4">
             <div class="cms-tabs">
-                <button class="cms-tab-btn active" data-tab="slideTab"><i class="fa-solid fa-images"></i> Slide</button>
+                <button class="cms-tab-btn" data-tab="slideTab"><i class="fa-solid fa-images"></i> Slide</button>
                 <button class="cms-tab-btn" data-tab="jadwalTab"><i class="fa-solid fa-calendar"></i> Jadwal</button>
                 <button class="cms-tab-btn" data-tab="organisasiTab"><i class="fa-solid fa-sitemap"></i> Organisasi</button>
                 <button class="cms-tab-btn" data-tab="pelayananTab"><i class="fa-solid fa-hands-praying"></i> Pelayanan</button>
                 <button class="cms-tab-btn" data-tab="kontakTab"><i class="fa-solid fa-address-card"></i> Kontak Pemimpin</button>
                 <button class="cms-tab-btn" data-tab="layananTab"><i class="fa-solid fa-hand-holding-heart"></i> Layanan Jemaat</button>
-                <button class="cms-tab-btn" data-tab="pendaftaranTab"><i class="fa-solid fa-user-plus"></i> Pendaftaran</button>
+                <button class="cms-tab-btn active" data-tab="pendaftaranTab"><i class="fa-solid fa-user-plus"></i> Pendaftaran</button>
             </div>
             
-            <div id="slideTab" class="tab-pane-custom active">
+            <!-- SLIDE TAB (Ringkas) -->
+            <div id="slideTab" class="tab-pane-custom">
                 <div class="dashboard-card">
-                    <div class="card-header-custom">
-                        <h4><i class="fa-solid fa-images"></i> Kelola Slide Foto</h4>
-                        <small>Slide akan tampil di halaman utama pada menu Sejarah</small>
-                    </div>
+                    <div class="card-header-custom"><h4><i class="fa-solid fa-images"></i> Kelola Slide Foto</h4></div>
                     <div class="card-body-custom">
                         <div class="row g-3 mb-4">
-                            <div class="col-md-4"><input type="text" id="slideTitle" class="form-control" placeholder="Judul Slide (wajib)"></div>
-                            <div class="col-md-4"><input type="text" id="slideDesc" class="form-control" placeholder="Deskripsi (opsional)"></div>
-                            <div class="col-md-3">
-                                <div id="uploadWidget" class="upload-area text-center">
-                                    <i class="fa-solid fa-cloud-upload-alt fa-2x text-muted"></i>
-                                    <p class="mb-0 small">Klik untuk upload gambar</p>
-                                </div>
-                                <input type="hidden" id="slideImageUrl">
-                                <div id="uploadSuccessMsg" class="text-success small mt-1" style="display:none;"><i class="fa-solid fa-check-circle"></i> Gambar siap disimpan</div>
-                            </div>
-                            <div class="col-md-1"><button id="addSlideBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i> Tambah</button></div>
+                            <div class="col-md-4"><input type="text" id="slideTitle" class="form-control" placeholder="Judul Slide"></div>
+                            <div class="col-md-4"><input type="text" id="slideDesc" class="form-control" placeholder="Deskripsi"></div>
+                            <div class="col-md-3"><div id="uploadWidget" class="upload-area text-center"><i class="fa-solid fa-cloud-upload-alt fa-2x text-muted"></i><p class="mb-0 small">Upload Gambar</p></div><input type="hidden" id="slideImageUrl"></div>
+                            <div class="col-md-1"><button id="addSlideBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i></button></div>
                         </div>
-                        <div id="slideListContainer"><div class="text-center py-4"><div class="spinner-border text-primary"></div> Memuat slide...</div></div>
+                        <div id="slideListContainer"></div>
                     </div>
                 </div>
             </div>
             
+            <!-- JADWAL TAB -->
             <div id="jadwalTab" class="tab-pane-custom">
                 <div class="dashboard-card">
                     <div class="card-header-custom"><h4><i class="fa-solid fa-calendar"></i> Kelola Jadwal Ibadah</h4></div>
                     <div class="card-body-custom">
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-5"><input type="text" id="jadwalName" class="form-control" placeholder="Nama Ibadah"></div>
-                            <div class="col-md-5"><input type="text" id="jadwalTime" class="form-control" placeholder="Waktu"></div>
-                            <div class="col-md-2"><button id="addJadwalBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i> Tambah</button></div>
-                        </div>
+                        <div class="row g-3 mb-4"><div class="col-md-5"><input type="text" id="jadwalName" class="form-control" placeholder="Nama Ibadah"></div><div class="col-md-5"><input type="text" id="jadwalTime" class="form-control" placeholder="Waktu"></div><div class="col-md-2"><button id="addJadwalBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i></button></div></div>
                         <div id="jadwalListContainer"></div>
                         <div class="mt-3 text-center"><button id="resetJadwalBtn" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i> Reset Default</button></div>
                     </div>
                 </div>
             </div>
             
+            <!-- ORGANISASI TAB -->
             <div id="organisasiTab" class="tab-pane-custom">
                 <div class="dashboard-card">
                     <div class="card-header-custom"><h4><i class="fa-solid fa-sitemap"></i> Kelola Struktur Organisasi</h4></div>
                     <div class="card-body-custom">
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-4"><input type="text" id="orgJabatan" class="form-control" placeholder="Jabatan"></div>
-                            <div class="col-md-4"><input type="text" id="orgNama" class="form-control" placeholder="Nama"></div>
-                            <div class="col-md-3"><input type="text" id="orgKeterangan" class="form-control" placeholder="Keterangan"></div>
-                            <div class="col-md-1"><button id="addOrganisasiBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i></button></div>
-                        </div>
+                        <div class="row g-3 mb-4"><div class="col-md-4"><input type="text" id="orgJabatan" class="form-control" placeholder="Jabatan"></div><div class="col-md-4"><input type="text" id="orgNama" class="form-control" placeholder="Nama"></div><div class="col-md-3"><input type="text" id="orgKeterangan" class="form-control" placeholder="Keterangan"></div><div class="col-md-1"><button id="addOrganisasiBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i></button></div></div>
                         <div id="organisasiListContainer"></div>
                         <div class="mt-3 text-center"><button id="resetOrganisasiBtn" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i> Reset Default</button></div>
                     </div>
                 </div>
             </div>
             
+            <!-- PELAYANAN TAB -->
             <div id="pelayananTab" class="tab-pane-custom">
                 <div class="dashboard-card">
                     <div class="card-header-custom"><h4><i class="fa-solid fa-hands-praying"></i> Kelola Pelayanan</h4></div>
                     <div class="card-body-custom">
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-4"><input type="text" id="serviceName" class="form-control" placeholder="Nama Pelayanan"></div>
-                            <div class="col-md-3"><input type="text" id="serviceIcon" class="form-control" placeholder="Icon (fa-solid fa-...)"></div>
-                            <div class="col-md-3"><input type="text" id="serviceSchedule" class="form-control" placeholder="Jadwal"></div>
-                            <div class="col-md-2"><button id="addServiceBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i></button></div>
-                        </div>
+                        <div class="row g-3 mb-4"><div class="col-md-4"><input type="text" id="serviceName" class="form-control" placeholder="Nama Pelayanan"></div><div class="col-md-3"><input type="text" id="serviceIcon" class="form-control" placeholder="Icon"></div><div class="col-md-3"><input type="text" id="serviceSchedule" class="form-control" placeholder="Jadwal"></div><div class="col-md-2"><button id="addServiceBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i></button></div></div>
                         <div id="pelayananListContainer"></div>
                         <div class="mt-3 text-center"><button id="resetPelayananBtn" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i> Reset Default</button></div>
                     </div>
                 </div>
             </div>
             
+            <!-- KONTAK PEMIMPIN TAB -->
             <div id="kontakTab" class="tab-pane-custom">
                 <div class="dashboard-card">
                     <div class="card-header-custom"><h4><i class="fa-solid fa-address-card"></i> Kelola Kontak Pemimpin</h4></div>
                     <div class="card-body-custom">
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-3"><input type="text" id="kontakNama" class="form-control" placeholder="Nama"></div>
-                            <div class="col-md-2"><input type="text" id="kontakJabatan" class="form-control" placeholder="Jabatan"></div>
-                            <div class="col-md-2"><input type="text" id="kontakTelp" class="form-control" placeholder="No. Telepon"></div>
-                            <div class="col-md-2"><input type="email" id="kontakEmail" class="form-control" placeholder="Email"></div>
-                            <div class="col-md-2"><input type="text" id="kontakDivisi" class="form-control" placeholder="Divisi"></div>
-                            <div class="col-md-1"><button id="addKontakBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i></button></div>
-                        </div>
+                        <div class="row g-3 mb-4"><div class="col-md-3"><input type="text" id="kontakNama" class="form-control" placeholder="Nama"></div><div class="col-md-2"><input type="text" id="kontakJabatan" class="form-control" placeholder="Jabatan"></div><div class="col-md-2"><input type="text" id="kontakTelp" class="form-control" placeholder="Telepon"></div><div class="col-md-2"><input type="email" id="kontakEmail" class="form-control" placeholder="Email"></div><div class="col-md-2"><input type="text" id="kontakDivisi" class="form-control" placeholder="Divisi"></div><div class="col-md-1"><button id="addKontakBtn" class="btn btn-cms w-100"><i class="fa fa-plus"></i></button></div></div>
                         <div id="kontakListContainer"></div>
                         <div class="mt-3"><button id="resetKontakBtn" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i> Reset Default</button></div>
                     </div>
                 </div>
             </div>
             
+            <!-- LAYANAN JEMAAT TAB -->
             <div id="layananTab" class="tab-pane-custom">
                 <div class="dashboard-card">
                     <div class="card-header-custom"><h4><i class="fa-solid fa-hand-holding-heart"></i> Permohonan Layanan Jemaat</h4></div>
@@ -197,11 +179,89 @@
                 </div>
             </div>
             
-            <div id="pendaftaranTab" class="tab-pane-custom">
+            <!-- ============ PENDAFTARAN JEMAAT TAB (LENGKAP DENGAN FOTO) ============ -->
+            <div id="pendaftaranTab" class="tab-pane-custom active">
                 <div class="dashboard-card">
-                    <div class="card-header-custom"><h4><i class="fa-solid fa-user-plus"></i> Pendaftaran Anggota Jemaat</h4></div>
-                    <div class="card-body-custom"><div id="pendaftaranListContainer"></div></div>
+                    <div class="card-header-custom">
+                        <h4><i class="fa-solid fa-user-plus"></i> Data Pendaftaran Anggota Jemaat</h4>
+                        <small>Semua data jemaat yang telah mendaftar akan muncul di sini</small>
+                    </div>
+                    <div class="card-body-custom">
+                        <!-- Filter dan Pencarian -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <input type="text" id="searchPendaftaran" class="form-control" placeholder="🔍 Cari nama atau nomor HP...">
+                            </div>
+                            <div class="col-md-3">
+                                <select id="filterKomisi" class="form-select">
+                                    <option value="">Semua Komisi</option>
+                                    <option>Umum</option><option>Pemuda</option><option>Remaja</option>
+                                    <option>Sekolah Minggu</option><option>Lansia</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="filterStatus" class="form-select">
+                                    <option value="">Semua Status</option>
+                                    <option>Terverifikasi</option><option>Menunggu Verifikasi</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button id="refreshPendaftaranBtn" class="btn btn-cms w-100"><i class="fa-solid fa-refresh"></i> Refresh</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Statistik -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-3">
+                                <div class="alert alert-primary text-center">
+                                    <h5 id="totalJemaat">0</h5>
+                                    <small>Total Jemaat</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="alert alert-success text-center">
+                                    <h5 id="totalTerverifikasi">0</h5>
+                                    <small>Terverifikasi</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="alert alert-warning text-center">
+                                    <h5 id="totalMenunggu">0</h5>
+                                    <small>Menunggu Verifikasi</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="alert alert-info text-center">
+                                    <h5 id="totalBulanIni">0</h5>
+                                    <small>Bulan Ini</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- List Data Jemaat -->
+                        <div id="pendaftaranListContainer">
+                            <div class="text-center py-4"><div class="spinner-border text-primary"></div> Memuat data jemaat...</div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DETAIL JEMAAT -->
+<div class="modal fade" id="detailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(135deg, #0b4ea2, #0a3d7a); color: white;">
+                <h5 class="modal-title"><i class="fa-solid fa-user-circle"></i> Detail Anggota Jemaat</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="detailModalBody">
+                <div class="text-center"><div class="spinner-border text-primary"></div> Memuat...</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
@@ -220,7 +280,6 @@
     };
     
     // ============ KONFIGURASI CLOUDINARY ============
-    // GANTI DENGAN CLOUD NAME ANDA YANG BENAR
     const CLOUD_NAME = "dxzllsbgi";
     const UPLOAD_PRESET = "gbi_karang_mulia";
     
@@ -230,68 +289,175 @@
     const DEFAULT_USERNAME = "admin";
     const DEFAULT_PASSWORD = "admin123";
     
-    const DEFAULT_JADWAL = [
-        { name: "Ibadah Raya", time: "Minggu | 09.00 - 11.00 WIT", order: 1 },
-        { name: "Doa Pagi", time: "Selasa - Kamis | 06.00 - 07.00 WIT", order: 2 },
-        { name: "Komsel", time: "Jumat | 19.00 - 21.00 WIT", order: 3 },
-        { name: "Sekolah Minggu", time: "Minggu | 08.00 - 09.00 WIT", order: 4 }
-    ];
+    function escapeHtml(str) { if (!str) return '-'; return str.replace(/[&<>]/g, m => m==='&'?'&amp;':(m==='<'?'&lt;':'&gt;')); }
     
-    const DEFAULT_ORGANISASI = [
-        { jabatan: "Gembala Sidang", nama: "Pdt. Dr. Markus Wenas, M.Th", keterangan: "Ketua Majelis Gereja", order: 1 },
-        { jabatan: "Wakil Gembala", nama: "Pdt. Samuel Kakiay, S.Th", keterangan: "Koordinasi Pelayanan", order: 2 },
-        { jabatan: "Sekretaris", nama: "Yulianti Pattikawa, S.Pd", keterangan: "Administrasi", order: 3 },
-        { jabatan: "Bendahara", nama: "Eliaser Rumbiak, S.E", keterangan: "Keuangan", order: 4 },
-        { jabatan: "Koordinator Pelayanan", nama: "Yohanes Mambraku", keterangan: "Koordinasi Komisi", order: 5 }
-    ];
+    // ============ PENDAFTARAN JEMAAT FUNCTIONS ============
+    let allPendaftaranData = [];
     
-    const DEFAULT_PELAYANAN = [
-        { name: "Sekolah Minggu", icon: "fa-solid fa-child-reaching", schedule: "Minggu, 08.00", order: 1 },
-        { name: "Worship Ministry", icon: "fa-solid fa-music", schedule: "Sabtu, 16.00", order: 2 },
-        { name: "Komsel", icon: "fa-solid fa-people-group", schedule: "Jumat, 19.00", order: 3 },
-        { name: "Diakonia", icon: "fa-solid fa-heart", schedule: "Pelayanan Sosial", order: 4 },
-        { name: "Doa Pagi", icon: "fa-solid fa-pray", schedule: "Selasa-Kamis, 06.00", order: 5 },
-        { name: "PA Pemuda", icon: "fa-solid fa-bible", schedule: "Sabtu, 17.00", order: 6 }
-    ];
+    async function loadPendaftaran() {
+        try {
+            const snapshot = await db.collection('pendaftaran_jemaat').orderBy('createdAt', 'desc').get();
+            allPendaftaranData = [];
+            snapshot.forEach(doc => allPendaftaranData.push({ id: doc.id, ...doc.data() }));
+            
+            updateStats();
+            filterAndDisplayPendaftaran();
+        } catch (error) {
+            console.error("Error loading pendaftaran:", error);
+            document.getElementById('pendaftaranListContainer').innerHTML = '<div class="empty-state text-danger">Error memuat data. Periksa koneksi Firestore.</div>';
+        }
+    }
     
-    const DEFAULT_KONTAK = [
-        { nama: "Pdt. Dr. Markus Wenas, M.Th", jabatan: "Gembala Sidang", telp: "0812-3456-7890", email: "gembala@gbi-karangmulia.org", divisi: "Majelis Gereja", order: 1 },
-        { nama: "Pdt. Samuel Kakiay, S.Th", jabatan: "Wakil Gembala", telp: "0812-3456-7891", email: "wakil.gembala@gbi-karangmulia.org", divisi: "Pelayanan", order: 2 },
-        { nama: "Yulianti Pattikawa, S.Pd", jabatan: "Sekretaris", telp: "0812-3456-7892", email: "sekretariat@gbi-karangmulia.org", divisi: "Administrasi", order: 3 },
-        { nama: "Eliaser Rumbiak, S.E", jabatan: "Bendahara", telp: "0812-3456-7893", email: "bendahara@gbi-karangmulia.org", divisi: "Keuangan", order: 4 },
-        { nama: "Yohanes Mambraku", jabatan: "Koordinator Pelayanan", telp: "0812-3456-7894", email: "pelayanan@gbi-karangmulia.org", divisi: "Komisi Pelayanan", order: 5 }
-    ];
+    function updateStats() {
+        const total = allPendaftaranData.length;
+        const terverifikasi = allPendaftaranData.filter(p => p.status === 'Terverifikasi').length;
+        const menunggu = allPendaftaranData.filter(p => p.status === 'Menunggu Verifikasi' || !p.status).length;
+        
+        const now = new Date();
+        const bulanIni = now.getMonth();
+        const tahunIni = now.getFullYear();
+        const bulanIniCount = allPendaftaranData.filter(p => {
+            if (!p.createdAt) return false;
+            const date = p.createdAt.toDate ? p.createdAt.toDate() : new Date(p.createdAt);
+            return date.getMonth() === bulanIni && date.getFullYear() === tahunIni;
+        }).length;
+        
+        document.getElementById('totalJemaat').innerText = total;
+        document.getElementById('totalTerverifikasi').innerText = terverifikasi;
+        document.getElementById('totalMenunggu').innerText = menunggu;
+        document.getElementById('totalBulanIni').innerText = bulanIniCount;
+    }
     
-    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m==='&'?'&amp;':(m==='<'?'&lt;':'&gt;')); }
+    function filterAndDisplayPendaftaran() {
+        const searchTerm = document.getElementById('searchPendaftaran')?.value.toLowerCase() || '';
+        const filterKomisi = document.getElementById('filterKomisi')?.value || '';
+        const filterStatus = document.getElementById('filterStatus')?.value || '';
+        
+        let filtered = allPendaftaranData.filter(p => {
+            const matchSearch = !searchTerm || 
+                (p.namaLengkap && p.namaLengkap.toLowerCase().includes(searchTerm)) ||
+                (p.noHp && p.noHp.includes(searchTerm)) ||
+                (p.nomorRegistrasi && p.nomorRegistrasi.toLowerCase().includes(searchTerm));
+            const matchKomisi = !filterKomisi || p.komisi === filterKomisi;
+            const matchStatus = !filterStatus || p.status === filterStatus;
+            return matchSearch && matchKomisi && matchStatus;
+        });
+        
+        displayPendaftaranList(filtered);
+    }
     
+    function displayPendaftaranList(data) {
+        const container = document.getElementById('pendaftaranListContainer');
+        if (data.length === 0) {
+            container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-users-slash fa-3x mb-3"></i><p>Belum ada data pendaftaran jemaat</p><small>Data akan muncul setelah jemaat melakukan pendaftaran</small></div>';
+            return;
+        }
+        
+        container.innerHTML = data.map((p, idx) => `
+            <div class="data-item" style="cursor: pointer;" onclick="showDetailModal('${p.id}')">
+                <img src="${p.fotoProfilBase64 || p.fotoProfilURL || 'https://via.placeholder.com/80x80?text=No+Photo'}" class="image-preview" onerror="this.src='https://via.placeholder.com/80x80?text=No+Photo'">
+                <div class="flex-grow-1">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start">
+                        <div>
+                            <strong>${escapeHtml(p.namaLengkap)}</strong>
+                            <br><small class="text-muted"><i class="fa-solid fa-id-card"></i> ${escapeHtml(p.nomorRegistrasi || '-')}</small>
+                        </div>
+                        <div>
+                            <span class="badge ${p.status === 'Terverifikasi' ? 'bg-success' : 'bg-warning'}">${escapeHtml(p.status || 'Menunggu Verifikasi')}</span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4"><small><i class="fa-solid fa-phone"></i> ${escapeHtml(p.noHp || '-')}</small></div>
+                        <div class="col-md-4"><small><i class="fa-regular fa-envelope"></i> ${escapeHtml(p.email || '-')}</small></div>
+                        <div class="col-md-4"><small><i class="fa-solid fa-users"></i> Komisi: ${escapeHtml(p.komisi || '-')}</small></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6"><small><i class="fa-solid fa-calendar"></i> Daftar: ${escapeHtml(p.tanggalDaftar || '-')}</small></div>
+                        <div class="col-md-6"><small><i class="fa-solid fa-droplet"></i> Gol. Darah: ${escapeHtml(p.golonganDarah || '-')}</small></div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-sm btn-warning me-1" onclick="event.stopPropagation(); updateStatus('${p.id}', 'Terverifikasi')"><i class="fa fa-check"></i> Verifikasi</button>
+                    <button class="btn btn-sm btn-danger" onclick="event.stopPropagation(); deletePendaftaran('${p.id}')"><i class="fa fa-trash"></i> Hapus</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    window.showDetailModal = async function(id) {
+        const jemaat = allPendaftaranData.find(p => p.id === id);
+        if (!jemaat) return;
+        
+        const modalBody = document.getElementById('detailModalBody');
+        modalBody.innerHTML = `
+            <div class="text-center">
+                <img src="${jemaat.fotoProfilBase64 || jemaat.fotoProfilURL || 'https://via.placeholder.com/120x120?text=No+Photo'}" class="modal-detail-img" onerror="this.src='https://via.placeholder.com/120x120?text=No+Photo'">
+                <h4>${escapeHtml(jemaat.namaLengkap)}</h4>
+                <p class="text-muted">${escapeHtml(jemaat.nomorRegistrasi || '-')}</p>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="detail-row"><span class="detail-label">📧 Email</span> ${escapeHtml(jemaat.email || '-')}</div>
+                    <div class="detail-row"><span class="detail-label">📱 No HP</span> ${escapeHtml(jemaat.noHp || '-')}</div>
+                    <div class="detail-row"><span class="detail-label">📍 Tempat Lahir</span> ${escapeHtml(jemaat.tempatLahir || '-')}</div>
+                    <div class="detail-row"><span class="detail-label">🎂 Tanggal Lahir</span> ${escapeHtml(jemaat.tanggalLahir || '-')}</div>
+                    <div class="detail-row"><span class="detail-label">⚧ Jenis Kelamin</span> ${escapeHtml(jemaat.jenisKelamin || '-')}</div>
+                    <div class="detail-row"><span class="detail-label">🩸 Golongan Darah</span> ${escapeHtml(jemaat.golonganDarah || '-')}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="detail-row"><span class="detail-label">🏠 Alamat</span> ${escapeHtml(jemaat.alamat || '-')}</div>
+                    <div class="detail-row"><span class="detail-label">💼 Pekerjaan</span> ${escapeHtml(jemaat.pekerjaan || '-')}</div>
+                    <div class="detail-row"><span class="detail-label">✝️ Status Baptis</span> ${escapeHtml(jemaat.statusBaptis || '-')}</div>
+                    <div class="detail-row"><span class="detail-label">💍 Status Pernikahan</span> ${escapeHtml(jemaat.statusPernikahan || '-')}</div>
+                    <div class="detail-row"><span class="detail-label">👥 Komisi</span> ${escapeHtml(jemaat.komisi || '-')}</div>
+                    <div class="detail-row"><span class="detail-label">🎵 Keahlian</span> ${escapeHtml(jemaat.keahlian || '-')}</div>
+                </div>
+            </div>
+            <div class="detail-row"><span class="detail-label">📝 Alasan Bergabung</span> ${escapeHtml(jemaat.alasanBergabung || '-')}</div>
+            <div class="detail-row"><span class="detail-label">📅 Tanggal Daftar</span> ${escapeHtml(jemaat.tanggalDaftar || '-')}</div>
+            <div class="detail-row"><span class="detail-label">✅ Status</span> <span class="badge ${jemaat.status === 'Terverifikasi' ? 'bg-success' : 'bg-warning'}">${escapeHtml(jemaat.status || 'Menunggu Verifikasi')}</span></div>
+        `;
+        
+        const modal = new bootstrap.Modal(document.getElementById('detailModal'));
+        modal.show();
+    };
+    
+    window.updateStatus = async function(id, newStatus) {
+        if(confirm(`Ubah status menjadi ${newStatus}?`)){
+            await db.collection('pendaftaran_jemaat').doc(id).update({ status: newStatus });
+            await loadPendaftaran();
+            alert("Status berhasil diupdate");
+        }
+    };
+    
+    window.deletePendaftaran = async function(id) {
+        if(confirm("Hapus data pendaftaran ini? Data tidak dapat dikembalikan!")){
+            await db.collection('pendaftaran_jemaat').doc(id).delete();
+            await loadPendaftaran();
+            alert("Data berhasil dihapus");
+        }
+    };
+    
+    // Event listeners untuk filter
+    document.getElementById('searchPendaftaran')?.addEventListener('keyup', filterAndDisplayPendaftaran);
+    document.getElementById('filterKomisi')?.addEventListener('change', filterAndDisplayPendaftaran);
+    document.getElementById('filterStatus')?.addEventListener('change', filterAndDisplayPendaftaran);
+    document.getElementById('refreshPendaftaranBtn')?.addEventListener('click', loadPendaftaran);
+    
+    // ============ SLIDE FUNCTIONS ============
     async function loadSlides() {
         try {
             const snapshot = await db.collection('slides').orderBy('order', 'asc').get();
-            const data = []; 
-            snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
+            const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
             const container = document.getElementById('slideListContainer');
-            if (data.length === 0) { 
-                container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-images fa-3x mb-3"></i><p>Belum ada slide</p><small>Upload gambar dan klik tombol + untuk menambahkan</small></div>'; 
-                return; 
-            }
-            container.innerHTML = data.map(s => `
-                <div class="data-item">
-                    <img src="${s.imageUrl}" class="image-preview" onerror="this.src='https://via.placeholder.com/80x60?text=Error'">
-                    <div class="flex-grow-1"><strong>${escapeHtml(s.title)}</strong><br><small>${escapeHtml(s.description)}</small></div>
-                    <button class="btn btn-sm btn-danger" onclick="deleteSlide('${s.id}')"><i class="fa fa-trash"></i> Hapus</button>
-                </div>
-            `).join('');
-        } catch (error) { console.error(error); }
+            if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada slide</div>'; return; }
+            container.innerHTML = data.map(s => `<div class="data-item"><img src="${s.imageUrl}" class="image-preview" style="border-radius:8px"><div class="flex-grow-1"><strong>${escapeHtml(s.title)}</strong><br><small>${escapeHtml(s.description)}</small></div><button class="btn btn-sm btn-danger" onclick="deleteSlide('${s.id}')"><i class="fa fa-trash"></i> Hapus</button></div>`).join('');
+        } catch(e) { console.error(e); }
     }
+    window.deleteSlide = async (id) => { if(confirm("Hapus slide?")){ await db.collection('slides').doc(id).delete(); loadSlides(); } };
     
-    window.deleteSlide = async (id) => { 
-        if(confirm("Hapus slide ini?")){ 
-            await db.collection('slides').doc(id).delete(); 
-            await loadSlides(); 
-            alert("Slide berhasil dihapus");
-        } 
-    };
-    
+    // ============ JADWAL FUNCTIONS ============
     async function loadJadwal() {
         const snapshot = await db.collection('jadwal').orderBy('order', 'asc').get();
         const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
@@ -301,8 +467,10 @@
     }
     window.editJadwal = async (id, oldName, oldTime) => { let n=prompt("Nama:",oldName); let t=prompt("Waktu:",oldTime); if(n && t){ await db.collection('jadwal').doc(id).update({name:n,time:t}); loadJadwal(); } };
     window.deleteJadwal = async (id) => { if(confirm("Hapus?")){ await db.collection('jadwal').doc(id).delete(); loadJadwal(); } };
-    async function resetJadwal() { const snapshot=await db.collection('jadwal').get(); snapshot.forEach(doc=>doc.ref.delete()); for(const j of DEFAULT_JADWAL) await db.collection('jadwal').add(j); loadJadwal(); alert("Reset berhasil"); }
+    async function resetJadwal() { const snapshot=await db.collection('jadwal').get(); snapshot.forEach(doc=>doc.ref.delete()); for(const j of [{name:"Ibadah Raya",time:"Minggu | 09.00 - 11.00 WIT"},{name:"Doa Pagi",time:"Selasa - Kamis | 06.00 - 07.00 WIT"},{name:"Komsel",time:"Jumat | 19.00 - 21.00 WIT"},{name:"Sekolah Minggu",time:"Minggu | 08.00 - 09.00 WIT"}]) await db.collection('jadwal').add(j); loadJadwal(); alert("Reset berhasil"); }
+    document.getElementById('resetJadwalBtn')?.addEventListener('click', resetJadwal);
     
+    // ============ ORGANISASI FUNCTIONS ============
     async function loadOrganisasi() {
         const snapshot = await db.collection('organisasi').orderBy('order', 'asc').get();
         const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
@@ -312,8 +480,10 @@
     }
     window.editOrganisasi = async (id, oldJab, oldNama, oldKet) => { let j=prompt("Jabatan:",oldJab); let n=prompt("Nama:",oldNama); let k=prompt("Keterangan:",oldKet); if(j && n){ await db.collection('organisasi').doc(id).update({jabatan:j,nama:n,keterangan:k}); loadOrganisasi(); } };
     window.deleteOrganisasi = async (id) => { if(confirm("Hapus?")){ await db.collection('organisasi').doc(id).delete(); loadOrganisasi(); } };
-    async function resetOrganisasi() { const snapshot=await db.collection('organisasi').get(); snapshot.forEach(doc=>doc.ref.delete()); for(const o of DEFAULT_ORGANISASI) await db.collection('organisasi').add(o); loadOrganisasi(); alert("Reset berhasil"); }
+    async function resetOrganisasi() { const snapshot=await db.collection('organisasi').get(); snapshot.forEach(doc=>doc.ref.delete()); for(const o of [{jabatan:"Gembala Sidang",nama:"Pdt. Dr. Markus Wenas, M.Th",keterangan:"Ketua Majelis Gereja"},{jabatan:"Wakil Gembala",nama:"Pdt. Samuel Kakiay, S.Th",keterangan:"Koordinasi Pelayanan"},{jabatan:"Sekretaris",nama:"Yulianti Pattikawa, S.Pd",keterangan:"Administrasi"},{jabatan:"Bendahara",nama:"Eliaser Rumbiak, S.E",keterangan:"Keuangan"},{jabatan:"Koordinator Pelayanan",nama:"Yohanes Mambraku",keterangan:"Koordinasi Komisi"}]) await db.collection('organisasi').add(o); loadOrganisasi(); alert("Reset berhasil"); }
+    document.getElementById('resetOrganisasiBtn')?.addEventListener('click', resetOrganisasi);
     
+    // ============ PELAYANAN FUNCTIONS ============
     async function loadPelayanan() {
         const snapshot = await db.collection('pelayanan').orderBy('order', 'asc').get();
         const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
@@ -323,8 +493,10 @@
     }
     window.editPelayanan = async (id, oldName, oldIcon, oldSchedule) => { let n=prompt("Nama:",oldName); let i=prompt("Icon:",oldIcon); let s=prompt("Jadwal:",oldSchedule); if(n && i){ await db.collection('pelayanan').doc(id).update({name:n,icon:i,schedule:s}); loadPelayanan(); } };
     window.deletePelayanan = async (id) => { if(confirm("Hapus?")){ await db.collection('pelayanan').doc(id).delete(); loadPelayanan(); } };
-    async function resetPelayanan() { const snapshot=await db.collection('pelayanan').get(); snapshot.forEach(doc=>doc.ref.delete()); for(const p of DEFAULT_PELAYANAN) await db.collection('pelayanan').add(p); loadPelayanan(); alert("Reset berhasil"); }
+    async function resetPelayanan() { const snapshot=await db.collection('pelayanan').get(); snapshot.forEach(doc=>doc.ref.delete()); for(const p of [{name:"Sekolah Minggu",icon:"fa-solid fa-child-reaching",schedule:"Minggu, 08.00"},{name:"Worship Ministry",icon:"fa-solid fa-music",schedule:"Sabtu, 16.00"},{name:"Komsel",icon:"fa-solid fa-people-group",schedule:"Jumat, 19.00"},{name:"Diakonia",icon:"fa-solid fa-heart",schedule:"Pelayanan Sosial"},{name:"Doa Pagi",icon:"fa-solid fa-pray",schedule:"Selasa-Kamis, 06.00"},{name:"PA Pemuda",icon:"fa-solid fa-bible",schedule:"Sabtu, 17.00"}]) await db.collection('pelayanan').add(p); loadPelayanan(); alert("Reset berhasil"); }
+    document.getElementById('resetPelayananBtn')?.addEventListener('click', resetPelayanan);
     
+    // ============ KONTAK FUNCTIONS ============
     async function loadKontak() {
         const snapshot = await db.collection('kontak_pemimpin').orderBy('order', 'asc').get();
         const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
@@ -337,8 +509,10 @@
         if(n){ await db.collection('kontak_pemimpin').doc(id).update({nama:n,jabatan:j,telp:t,email:e,divisi:d}); loadKontak(); }
     };
     window.deleteKontak = async (id) => { if(confirm("Hapus kontak?")){ await db.collection('kontak_pemimpin').doc(id).delete(); loadKontak(); } };
-    async function resetKontak() { const snapshot=await db.collection('kontak_pemimpin').get(); snapshot.forEach(doc=>doc.ref.delete()); for(const k of DEFAULT_KONTAK) await db.collection('kontak_pemimpin').add(k); loadKontak(); alert("Reset berhasil"); }
+    async function resetKontak() { const snapshot=await db.collection('kontak_pemimpin').get(); snapshot.forEach(doc=>doc.ref.delete()); for(const k of [{nama:"Pdt. Dr. Markus Wenas, M.Th",jabatan:"Gembala Sidang",telp:"0812-3456-7890",email:"gembala@gbi-karangmulia.org",divisi:"Majelis Gereja"}]) await db.collection('kontak_pemimpin').add(k); loadKontak(); alert("Reset berhasil"); }
+    document.getElementById('resetKontakBtn')?.addEventListener('click', resetKontak);
     
+    // ============ LAYANAN FUNCTIONS ============
     async function loadLayanan() {
         const snapshot = await db.collection('permohonan_layanan').orderBy('createdAt', 'desc').get();
         const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
@@ -349,124 +523,20 @@
     window.updateLayananStatus = async (id, status) => { await db.collection('permohonan_layanan').doc(id).update({status}); loadLayanan(); alert("Status: "+status); };
     window.deleteLayanan = async (id) => { if(confirm("Hapus?")){ await db.collection('permohonan_layanan').doc(id).delete(); loadLayanan(); } };
     
-    async function loadPendaftaran() {
-        const snapshot = await db.collection('pendaftaran_jemaat').orderBy('createdAt', 'desc').get();
-        const data = []; snapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
-        const container = document.getElementById('pendaftaranListContainer');
-        if (data.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada pendaftaran</div>'; return; }
-        container.innerHTML = data.map(p => `<div class="data-item"><div class="flex-grow-1"><strong>${escapeHtml(p.namaLengkap)}</strong><br><small><i class="fa fa-phone"></i> ${escapeHtml(p.noHp)}<br>Status Baptis: ${escapeHtml(p.statusBaptis)} | Komisi: ${escapeHtml(p.komisi)}<br>Tgl: ${p.tanggalDaftar}</small></div><div><button class="btn btn-sm btn-danger" onclick="deletePendaftaran('${p.id}')"><i class="fa fa-trash"></i> Hapus</button></div></div>`).join('');
-    }
-    window.deletePendaftaran = async (id) => { if(confirm("Hapus?")){ await db.collection('pendaftaran_jemaat').doc(id).delete(); loadPendaftaran(); } };
+    // ============ ADD BUTTONS ============
+    document.getElementById('addSlideBtn')?.addEventListener('click', async () => { let title=document.getElementById('slideTitle').value; let url=document.getElementById('slideImageUrl').value; let desc=document.getElementById('slideDesc').value; if(!title||!url){alert("Lengkapi data");return;} let snap=await db.collection('slides').get(); await db.collection('slides').add({title,imageUrl:url,description:desc,order:snap.size}); document.getElementById('slideTitle').value=''; document.getElementById('slideDesc').value=''; document.getElementById('slideImageUrl').value=''; loadSlides(); alert("Slide ditambahkan"); });
+    document.getElementById('addJadwalBtn')?.addEventListener('click', async () => { let name=document.getElementById('jadwalName').value; let time=document.getElementById('jadwalTime').value; if(!name||!time){alert("Lengkapi data");return;} let snap=await db.collection('jadwal').get(); await db.collection('jadwal').add({name,time,order:snap.size}); document.getElementById('jadwalName').value=''; document.getElementById('jadwalTime').value=''; loadJadwal(); alert("Jadwal ditambahkan"); });
+    document.getElementById('addOrganisasiBtn')?.addEventListener('click', async () => { let jabatan=document.getElementById('orgJabatan').value; let nama=document.getElementById('orgNama').value; let keterangan=document.getElementById('orgKeterangan').value; if(!jabatan||!nama){alert("Lengkapi data");return;} let snap=await db.collection('organisasi').get(); await db.collection('organisasi').add({jabatan,nama,keterangan,order:snap.size}); document.getElementById('orgJabatan').value=''; document.getElementById('orgNama').value=''; document.getElementById('orgKeterangan').value=''; loadOrganisasi(); alert("Data ditambahkan"); });
+    document.getElementById('addServiceBtn')?.addEventListener('click', async () => { let name=document.getElementById('serviceName').value; let icon=document.getElementById('serviceIcon').value; let schedule=document.getElementById('serviceSchedule').value; if(!name||!icon){alert("Lengkapi data");return;} let snap=await db.collection('pelayanan').get(); await db.collection('pelayanan').add({name,icon,schedule,order:snap.size}); document.getElementById('serviceName').value=''; document.getElementById('serviceIcon').value=''; document.getElementById('serviceSchedule').value=''; loadPelayanan(); alert("Data ditambahkan"); });
+    document.getElementById('addKontakBtn')?.addEventListener('click', async () => { let nama=document.getElementById('kontakNama').value; let jabatan=document.getElementById('kontakJabatan').value; let telp=document.getElementById('kontakTelp').value; let email=document.getElementById('kontakEmail').value; let divisi=document.getElementById('kontakDivisi').value; if(!nama||!jabatan){alert("Lengkapi data");return;} let snap=await db.collection('kontak_pemimpin').get(); await db.collection('kontak_pemimpin').add({nama,jabatan,telp,email,divisi,order:snap.size}); document.getElementById('kontakNama').value=''; document.getElementById('kontakJabatan').value=''; document.getElementById('kontakTelp').value=''; document.getElementById('kontakEmail').value=''; document.getElementById('kontakDivisi').value=''; loadKontak(); alert("Kontak ditambahkan"); });
     
-    document.getElementById('addSlideBtn')?.addEventListener('click', async () => { 
-        let title = document.getElementById('slideTitle').value.trim(); 
-        let url = document.getElementById('slideImageUrl').value.trim(); 
-        let desc = document.getElementById('slideDesc').value.trim(); 
-        if(!title || !url){ alert("Judul dan gambar harus diisi! Upload gambar terlebih dahulu."); return; } 
-        let snap = await db.collection('slides').get(); 
-        await db.collection('slides').add({ title, imageUrl: url, description: desc, order: snap.size }); 
-        document.getElementById('slideTitle').value = ''; 
-        document.getElementById('slideDesc').value = ''; 
-        document.getElementById('slideImageUrl').value = ''; 
-        document.getElementById('uploadSuccessMsg').style.display = 'none';
-        await loadSlides(); 
-        alert("Slide berhasil ditambahkan!"); 
-    });
-    
-    document.getElementById('addJadwalBtn')?.addEventListener('click', async () => { 
-        let name = document.getElementById('jadwalName').value.trim(); 
-        let time = document.getElementById('jadwalTime').value.trim(); 
-        if(!name || !time){ alert("Nama dan waktu harus diisi"); return; } 
-        let snap = await db.collection('jadwal').get(); 
-        await db.collection('jadwal').add({name, time, order: snap.size}); 
-        document.getElementById('jadwalName').value = ''; 
-        document.getElementById('jadwalTime').value = ''; 
-        loadJadwal(); 
-        alert("Jadwal ditambahkan"); 
-    });
-    
-    document.getElementById('addOrganisasiBtn')?.addEventListener('click', async () => { 
-        let jabatan = document.getElementById('orgJabatan').value.trim(); 
-        let nama = document.getElementById('orgNama').value.trim(); 
-        let keterangan = document.getElementById('orgKeterangan').value.trim(); 
-        if(!jabatan || !nama){ alert("Jabatan dan nama harus diisi"); return; } 
-        let snap = await db.collection('organisasi').get(); 
-        await db.collection('organisasi').add({jabatan, nama, keterangan, order: snap.size}); 
-        document.getElementById('orgJabatan').value = ''; 
-        document.getElementById('orgNama').value = ''; 
-        document.getElementById('orgKeterangan').value = ''; 
-        loadOrganisasi(); 
-        alert("Data ditambahkan"); 
-    });
-    
-    document.getElementById('addServiceBtn')?.addEventListener('click', async () => { 
-        let name = document.getElementById('serviceName').value.trim(); 
-        let icon = document.getElementById('serviceIcon').value.trim(); 
-        let schedule = document.getElementById('serviceSchedule').value.trim(); 
-        if(!name || !icon){ alert("Nama dan icon harus diisi"); return; } 
-        let snap = await db.collection('pelayanan').get(); 
-        await db.collection('pelayanan').add({name, icon, schedule, order: snap.size}); 
-        document.getElementById('serviceName').value = ''; 
-        document.getElementById('serviceIcon').value = ''; 
-        document.getElementById('serviceSchedule').value = ''; 
-        loadPelayanan(); 
-        alert("Data ditambahkan"); 
-    });
-    
-    document.getElementById('addKontakBtn')?.addEventListener('click', async () => { 
-        let nama = document.getElementById('kontakNama').value.trim(); 
-        let jabatan = document.getElementById('kontakJabatan').value.trim(); 
-        let telp = document.getElementById('kontakTelp').value.trim(); 
-        let email = document.getElementById('kontakEmail').value.trim(); 
-        let divisi = document.getElementById('kontakDivisi').value.trim(); 
-        if(!nama || !jabatan){ alert("Nama dan jabatan harus diisi"); return; } 
-        let snap = await db.collection('kontak_pemimpin').get(); 
-        await db.collection('kontak_pemimpin').add({nama, jabatan, telp, email, divisi, order: snap.size}); 
-        document.getElementById('kontakNama').value = ''; 
-        document.getElementById('kontakJabatan').value = ''; 
-        document.getElementById('kontakTelp').value = ''; 
-        document.getElementById('kontakEmail').value = ''; 
-        document.getElementById('kontakDivisi').value = ''; 
-        loadKontak(); 
-        alert("Kontak ditambahkan"); 
-    });
-    
-    document.getElementById('resetJadwalBtn')?.addEventListener('click', resetJadwal);
-    document.getElementById('resetOrganisasiBtn')?.addEventListener('click', resetOrganisasi);
-    document.getElementById('resetPelayananBtn')?.addEventListener('click', resetPelayanan);
-    document.getElementById('resetKontakBtn')?.addEventListener('click', resetKontak);
-    
+    // ============ CLOUDINARY ============
     function initCloudinary() {
-        console.log("Cloudinary Init - Cloud Name:", CLOUD_NAME);
-        console.log("Upload Preset:", UPLOAD_PRESET);
-        
-        const widget = cloudinary.createUploadWidget({ 
-            cloudName: CLOUD_NAME, 
-            uploadPreset: UPLOAD_PRESET, 
-            sources: ['local', 'url', 'camera'], 
-            multiple: false, 
-            cropping: true, 
-            croppingAspectRatio: 16/9,
-            showPoweredBy: false,
-            styles: { palette: { window: "#FFFFFF", sourceBg: "#f8f9fa", link: "#ff8c00" } }
-        }, (error, result) => { 
-            if(error) { 
-                console.error("Cloudinary Error:", error); 
-                alert("Error upload: " + JSON.stringify(error)); 
-                return; 
-            }
-            if(result && result.event === "success") { 
-                console.log("Upload success:", result.info.secure_url);
-                document.getElementById('slideImageUrl').value = result.info.secure_url; 
-                document.getElementById('uploadSuccessMsg').style.display = 'block';
-                alert("✓ Gambar berhasil diupload ke Cloudinary!");
-            } else if (result && result.event === "close") {
-                console.log("Widget ditutup");
-            }
-        });
-        document.getElementById("uploadWidget").onclick = () => widget.open();
+        const widget = cloudinary.createUploadWidget({ cloudName: CLOUD_NAME, uploadPreset: UPLOAD_PRESET, sources: ['local', 'url'], multiple: false, cropping: true }, (error, result) => { if(!error && result && result.event === "success") { document.getElementById('slideImageUrl').value = result.info.secure_url; alert("Gambar terupload!"); } });
+        document.getElementById("uploadWidget") && (document.getElementById("uploadWidget").onclick = () => widget.open());
     }
     
+    // ============ TAB SWITCHING ============
     function switchTab(tabId) { 
         document.querySelectorAll('.tab-pane-custom').forEach(t=>t.classList.remove('active')); 
         document.getElementById(tabId).classList.add('active'); 
@@ -475,6 +545,7 @@
     }
     document.querySelectorAll('.cms-tab-btn').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.getAttribute('data-tab'))));
     
+    // ============ LOGIN ============
     document.getElementById('loginForm')?.addEventListener('submit', (e) => { 
         e.preventDefault(); 
         let user = document.getElementById('username').value; 
