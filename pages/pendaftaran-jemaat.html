@@ -15,7 +15,7 @@
     .container-custom { max-width: 800px; margin: 100px auto 50px; padding: 0 20px; }
     .form-card { background: white; border-radius: 24px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
     .page-title { text-align: center; color: white; margin-bottom: 30px; }
-    .btn-submit { background: linear-gradient(135deg, #ff8c00, #e07a00); border: none; padding: 12px; border-radius: 50px; font-weight: 600; width: 100%; color: white; }
+    .btn-submit { background: linear-gradient(135deg, #ff8c00, #e07a00); border: none; padding: 12px; border-radius: 50px; font-weight: 600; width: 100%; color: white; transition: 0.3s; }
     .btn-submit:hover { transform: translateY(-2px); }
     footer { text-align: center; color: white; padding: 30px; opacity: 0.8; }
     .step-indicator { display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; }
@@ -71,13 +71,14 @@
 
 <script>
     const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_SENDER_ID",
-        appId: "YOUR_APP_ID"
+        apiKey: "AIzaSyBnTg18qJ233oh-1Mgj4ewwRMUwMh8iVTo",
+        authDomain: "gbi-karang-mulia-web.firebaseapp.com",
+        projectId: "gbi-karang-mulia-web",
+        storageBucket: "gbi-karang-mulia-web.firebasestorage.app",
+        messagingSenderId: "198652175873",
+        appId: "1:198652175873:web:82a8f9cb00557dcac88200"
     };
+    
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     
@@ -87,7 +88,7 @@
     }
     function nextStep(step) { currentStep = step; document.getElementById('step1').style.display = step===1?'block':'none'; document.getElementById('step2').style.display = step===2?'block':'none'; document.getElementById('step3').style.display = step===3?'block':'none'; if(step===3) showReview(); updateStepIndicator(); }
     function prevStep(step) { currentStep = step; document.getElementById('step1').style.display = step===1?'block':'none'; document.getElementById('step2').style.display = step===2?'block':'none'; document.getElementById('step3').style.display = step===3?'block':'none'; updateStepIndicator(); }
-    function showReview() { const data = { nama: document.getElementById('namaLengkap').value, tempatLahir: document.getElementById('tempatLahir').value, tanggalLahir: document.getElementById('tanggalLahir').value, jenisKelamin: document.getElementById('jenisKelamin').value, noHp: document.getElementById('noHp').value, alamat: document.getElementById('alamat').value, pekerjaan: document.getElementById('pekerjaan').value, baptis: document.getElementById('baptis').value, pernikahan: document.getElementById('pernikahan').value, komisi: document.getElementById('komisi').value, keahlian: document.getElementById('keahlian').value, alasan: document.getElementById('alasan').value }; document.getElementById('reviewData').innerHTML = `<table class="table table-sm"><tr><th>Nama</th><td>${data.nama}</td></tr><tr><th>Tempat/Tgl Lahir</th><td>${data.tempatLahir}, ${data.tanggalLahir}</td></tr><tr><th>No HP</th><td>${data.noHp}</td></tr><tr><th>Alamat</th><td>${data.alamat}</td></tr><tr><th>Status Baptis</th><td>${data.baptis}</td></tr><tr><th>Komisi</th><td>${data.komisi}</td></tr></table>`; }
+    function showReview() { const data = { nama: document.getElementById('namaLengkap').value, tempatLahir: document.getElementById('tempatLahir').value, tanggalLahir: document.getElementById('tanggalLahir').value, jenisKelamin: document.getElementById('jenisKelamin').value, noHp: document.getElementById('noHp').value, alamat: document.getElementById('alamat').value, pekerjaan: document.getElementById('pekerjaan').value, baptis: document.getElementById('baptis').value, pernikahan: document.getElementById('pernikahan').value, komisi: document.getElementById('komisi').value, keahlian: document.getElementById('keahlian').value, alasan: document.getElementById('alasan').value }; document.getElementById('reviewData').innerHTML = `<table class="table table-sm"><tr><th>Nama</th><td>${data.nama}</br></br></td></tr><tr><th>Tempat/Tgl Lahir</th><td>${data.tempatLahir}, ${data.tanggalLahir}</td></tr><tr><th>No HP</th><td>${data.noHp}</td></tr><tr><th>Alamat</th><td>${data.alamat}</td></tr><tr><th>Status Baptis</th><td>${data.baptis}</td></tr><tr><th>Komisi</th><td>${data.komisi}</td></tr></table>`; }
     document.getElementById('daftarForm').addEventListener('submit', async (e) => { e.preventDefault(); if(!document.getElementById('agree').checked){ alert("Harap centang persetujuan data"); return; } const data = { namaLengkap: document.getElementById('namaLengkap').value, tempatLahir: document.getElementById('tempatLahir').value, tanggalLahir: document.getElementById('tanggalLahir').value, jenisKelamin: document.getElementById('jenisKelamin').value, noHp: document.getElementById('noHp').value, alamat: document.getElementById('alamat').value, pekerjaan: document.getElementById('pekerjaan').value, statusBaptis: document.getElementById('baptis').value, statusPernikahan: document.getElementById('pernikahan').value, komisi: document.getElementById('komisi').value, keahlian: document.getElementById('keahlian').value, alasanBergabung: document.getElementById('alasan').value, status: "Menunggu Verifikasi", tanggalDaftar: new Date().toLocaleDateString('id-ID'), createdAt: firebase.firestore.FieldValue.serverTimestamp() }; await db.collection('pendaftaran_jemaat').add(data); document.getElementById('daftarForm').reset(); const msg = document.getElementById('successMsg'); msg.innerHTML = '<i class="fa-solid fa-check-circle"></i> Pendaftaran berhasil! Admin akan menghubungi Anda untuk verifikasi.'; msg.classList.remove('d-none'); setTimeout(() => window.location.href='../index.html', 3000); });
     updateStepIndicator();
 </script>
