@@ -17,10 +17,7 @@
     body { background: linear-gradient(135deg, #0b4ea2 0%, #072c5a 100%); font-family: 'Inter', sans-serif; }
     
     .login-wrapper { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-    .login-box {
-        background: white; border-radius: 32px; padding: 40px; max-width: 450px; width: 100%;
-        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); animation: slideUp 0.5s ease;
-    }
+    .login-box { background: white; border-radius: 32px; padding: 40px; max-width: 450px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); animation: slideUp 0.5s ease; }
     @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     
     .logo-icon { width: 70px; height: 70px; background: linear-gradient(135deg, #0b4ea2, #ff8c00); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
@@ -201,20 +198,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // ============ KONFIGURASI FIREBASE ============
-    // GANTI DENGAN KONFIGURASI FIREBASE PROJECT ANDA
     const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_SENDER_ID",
-        appId: "YOUR_APP_ID"
+        apiKey: "AIzaSyBnTg18qJ233oh-1Mgj4ewwRMUwMh8iVTo",
+        authDomain: "gbi-karang-mulia-web.firebaseapp.com",
+        projectId: "gbi-karang-mulia-web",
+        storageBucket: "gbi-karang-mulia-web.firebasestorage.app",
+        messagingSenderId: "198652175873",
+        appId: "1:198652175873:web:82a8f9cb00557dcac88200"
     };
     
     // ============ KONFIGURASI CLOUDINARY ============
-    // SUDAH DIUPDATE DENGAN AKUN ANDA
-    const CLOUD_NAME = "dxzlslbgi";              // Cloud name dari akun Anda
-    const UPLOAD_PRESET = "gbi_karang_mulia";    // Nama preset yang sudah dibuat
+    const CLOUD_NAME = "dxzlslbgi";
+    const UPLOAD_PRESET = "gbi_karang_mulia";
     
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
@@ -350,30 +345,10 @@
     document.getElementById('resetPelayananBtn')?.addEventListener('click', resetPelayanan);
     document.getElementById('resetKontakBtn')?.addEventListener('click', resetKontak);
     
-    // Cloudinary Widget - SUDAH DIKONFIGURASI
+    // Cloudinary
     function initCloudinary() {
-        const widget = cloudinary.createUploadWidget({ 
-            cloudName: CLOUD_NAME, 
-            uploadPreset: UPLOAD_PRESET, 
-            sources: ['local', 'url', 'camera'], 
-            multiple: false, 
-            cropping: true, 
-            croppingAspectRatio: 16/9,
-            folder: 'gbi_karang_mulia/slides',
-            showUploadMoreButton: false,
-            showPoweredBy: false
-        }, (error, result) => { 
-            if(!error && result && result.event === "success") { 
-                document.getElementById('slideImageUrl').value = result.info.secure_url; 
-                alert("✓ Gambar berhasil diupload ke Cloudinary!\nURL: " + result.info.secure_url); 
-            } else if (result && result.event === "close") {
-                console.log("Widget ditutup");
-            }
-        });
-        const uploadBtn = document.getElementById("uploadWidget");
-        if (uploadBtn) {
-            uploadBtn.onclick = () => widget.open();
-        }
+        const widget = cloudinary.createUploadWidget({ cloudName: CLOUD_NAME, uploadPreset: UPLOAD_PRESET, sources: ['local', 'url'], multiple: false, cropping: true, croppingAspectRatio: 16/9 }, (error, result) => { if(!error && result && result.event === "success") { document.getElementById('slideImageUrl').value = result.info.secure_url; alert("Gambar terupload!"); } });
+        document.getElementById("uploadWidget").onclick = () => widget.open();
     }
     
     // Tab Switching
@@ -381,32 +356,10 @@
     document.querySelectorAll('.cms-tab-btn').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.getAttribute('data-tab'))));
     
     // Login
-    document.getElementById('loginForm')?.addEventListener('submit', (e) => { 
-        e.preventDefault(); 
-        let user=document.getElementById('username').value; 
-        let pass=document.getElementById('password').value; 
-        if(user===DEFAULT_USERNAME && pass===DEFAULT_PASSWORD){ 
-            sessionStorage.setItem('cms_logged_in','true'); 
-            document.getElementById('loginSection').style.display='none'; 
-            document.getElementById('dashboardSection').style.display='block'; 
-            loadSlides(); loadJadwal(); loadOrganisasi(); loadPelayanan(); loadKontak(); loadLayanan(); loadPendaftaran(); 
-            initCloudinary(); 
-        } else { 
-            alert("Username atau password salah!"); 
-        } 
-    });
+    document.getElementById('loginForm')?.addEventListener('submit', (e) => { e.preventDefault(); let user=document.getElementById('username').value; let pass=document.getElementById('password').value; if(user===DEFAULT_USERNAME && pass===DEFAULT_PASSWORD){ sessionStorage.setItem('cms_logged_in','true'); document.getElementById('loginSection').style.display='none'; document.getElementById('dashboardSection').style.display='block'; loadSlides(); loadJadwal(); loadOrganisasi(); loadPelayanan(); loadKontak(); loadLayanan(); loadPendaftaran(); initCloudinary(); } else { alert("Login gagal!"); } });
+    document.getElementById('logoutBtn')?.addEventListener('click', () => { sessionStorage.removeItem('cms_logged_in'); window.location.href='index.html'; });
     
-    document.getElementById('logoutBtn')?.addEventListener('click', () => { 
-        sessionStorage.removeItem('cms_logged_in'); 
-        window.location.href='index.html'; 
-    });
-    
-    if(sessionStorage.getItem('cms_logged_in') === 'true'){ 
-        document.getElementById('loginSection').style.display='none'; 
-        document.getElementById('dashboardSection').style.display='block'; 
-        loadSlides(); loadJadwal(); loadOrganisasi(); loadPelayanan(); loadKontak(); loadLayanan(); loadPendaftaran(); 
-        initCloudinary(); 
-    }
+    if(sessionStorage.getItem('cms_logged_in') === 'true'){ document.getElementById('loginSection').style.display='none'; document.getElementById('dashboardSection').style.display='block'; loadSlides(); loadJadwal(); loadOrganisasi(); loadPelayanan(); loadKontak(); loadLayanan(); loadPendaftaran(); initCloudinary(); }
 </script>
 </body>
 </html>
